@@ -1,0 +1,79 @@
+[
+  {
+    "id": "event-1",
+    "title": "Entrenamiento - Juan Pérez",
+    "start": "2025-10-15T10:00:00",
+    "end": "2025-10-15T11:00:00",
+    "backgroundColor": "#22c55e",
+    "borderColor": "#16a34a",
+    "type": "training",
+    "studentId": "student-1",
+    "trainerId": "trainer-1"
+  },
+  {
+    "id": "event-2",
+    "title": "Entrenamiento - María González",
+    "start": "2025-10-15T14:00:00",
+    "end": "2025-10-15T15:00:00",
+    "backgroundColor": "#3b82f6",
+    "borderColor": "#2563eb",
+    "type": "training",
+    "studentId": "student-2",
+    "trainerId": "trainer-1"
+  },
+  {
+    "id": "event-3",
+    "title": "Clase Grupal - Funcional",
+    "start": "2025-10-16T18:00:00",
+    "end": "2025-10-16T19:00:00",
+    "backgroundColor": "#8b5cf6",
+    "borderColor": "#7c3aed",
+    "type": "group_class",
+    "capacity": 15,
+    "enrolled": 12
+  },
+  {
+    "id": "event-4",
+    "title": "Evaluación Física - Pedro Rodríguez",
+    "start": "2025-10-17T09:00:00",
+    "end": "2025-10-17T10:00:00",
+    "backgroundColor": "#f59e0b",
+    "borderColor": "#d97706",
+    "type": "evaluation",
+    "studentId": "student-3",
+    "trainerId": "trainer-1"
+  },
+  {
+    "id": "event-5",
+    "title": "Entrenamiento - Ana Martínez",
+    "start": "2025-10-17T16:00:00",
+    "end": "2025-10-17T17:00:00",
+    "backgroundColor": "#22c55e",
+    "borderColor": "#16a34a",
+    "type": "training",
+    "studentId": "student-4",
+    "trainerId": "trainer-1"
+  },
+  {
+    "id": "event-6",
+    "title": "Clase Grupal - Spinning",
+    "start": "2025-10-18T19:00:00",
+    "end": "2025-10-18T20:00:00",
+    "backgroundColor": "#8b5cf6",
+    "borderColor": "#7c3aed",
+    "type": "group_class",
+    "capacity": 20,
+    "enrolled": 18
+  },
+  {
+    "id": "event-7",
+    "title": "Entrenamiento - Juan Pérez",
+    "start": "2025-10-18T10:00:00",
+    "end": "2025-10-18T11:00:00",
+    "backgroundColor": "#22c55e",
+    "borderColor": "#16a34a",
+    "type": "training",
+    "studentId": "student-1",
+    "trainerId": "trainer-1"
+  }
+]

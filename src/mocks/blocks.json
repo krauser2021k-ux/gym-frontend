@@ -1,0 +1,110 @@
+[
+  {
+    "id": "block-preset-1",
+    "name": "Calentamiento General",
+    "description": "Rutina de calentamiento estándar",
+    "type": "preset",
+    "exercises": [
+      {
+        "exerciseId": "ex-9",
+        "sets": 3,
+        "reps": "30 seg",
+        "order": 1
+      },
+      {
+        "exerciseId": "ex-8",
+        "sets": 2,
+        "reps": "15",
+        "order": 2
+      }
+    ],
+    "createdBy": "trainer-1",
+    "createdAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "block-preset-2",
+    "name": "Fuerza Tren Superior",
+    "description": "Bloque enfocado en desarrollo de pecho y brazos",
+    "type": "preset",
+    "exercises": [
+      {
+        "exerciseId": "ex-1",
+        "sets": 4,
+        "reps": "10-12",
+        "rest": "90 seg",
+        "order": 1
+      },
+      {
+        "exerciseId": "ex-6",
+        "sets": 3,
+        "reps": "12",
+        "rest": "60 seg",
+        "order": 2
+      },
+      {
+        "exerciseId": "ex-7",
+        "sets": 3,
+        "reps": "12",
+        "rest": "60 seg",
+        "order": 3
+      }
+    ],
+    "createdBy": "trainer-1",
+    "createdAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "block-preset-3",
+    "name": "Piernas Completo",
+    "description": "Entrenamiento completo de tren inferior",
+    "type": "preset",
+    "exercises": [
+      {
+        "exerciseId": "ex-2",
+        "sets": 4,
+        "reps": "8-10",
+        "rest": "120 seg",
+        "order": 1
+      },
+      {
+        "exerciseId": "ex-3",
+        "sets": 3,
+        "reps": "8",
+        "rest": "120 seg",
+        "order": 2
+      },
+      {
+        "exerciseId": "ex-10",
+        "sets": 3,
+        "reps": "12 por pierna",
+        "rest": "60 seg",
+        "order": 3
+      }
+    ],
+    "createdBy": "trainer-1",
+    "createdAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "block-preset-4",
+    "name": "Espalda y Dorsales",
+    "description": "Desarrollo de espalda",
+    "type": "preset",
+    "exercises": [
+      {
+        "exerciseId": "ex-4",
+        "sets": 4,
+        "reps": "8-12",
+        "rest": "90 seg",
+        "order": 1
+      },
+      {
+        "exerciseId": "ex-3",
+        "sets": 3,
+        "reps": "6-8",
+        "rest": "120 seg",
+        "order": 2
+      }
+    ],
+    "createdBy": "trainer-1",
+    "createdAt": "2025-01-15T10:00:00Z"
+  }
+]

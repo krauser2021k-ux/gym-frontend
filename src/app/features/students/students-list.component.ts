@@ -1,0 +1,107 @@
+import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ApiService } from '../../core/api.service';
+import { Student } from '../../shared/models';
+
+@Component({
+  selector: 'app-students-list',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  template: `
+    <div class="space-y-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Alumnos</h1>
+        <a routerLink="/students/new"
+           class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 hover:shadow-lg">
+          Nuevo Alumno
+        </a>
+      </div>
+
+      @if (loading()) {
+        <div class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        </div>
+      } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          @for (student of students(); track student.id) {
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-center space-x-4">
+                  @if (student.photoUrl) {
+                    <img [src]="student.photoUrl" [alt]="student.firstName"
+                         class="w-16 h-16 rounded-full object-cover">
+                  } @else {
+                    <div class="w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                      <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                        {{ student.firstName.charAt(0) }}{{ student.lastName.charAt(0) }}
+                      </span>
+                    </div>
+                  }
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                      {{ student.firstName }} {{ student.lastName }}
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ student.email }}</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                  <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <svg class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    {{ student.phone }}
+                  </div>
+                  @if (student.weight && student.height) {
+                    <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                      <svg class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      {{ student.weight }}kg / {{ student.height }}cm
+                    </div>
+                  }
+                </div>
+
+                <div class="mt-4 flex space-x-2">
+                  <a [routerLink]="['/students', student.id]"
+                     class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg transition-colors font-medium">
+                    Ver Detalle
+                  </a>
+                  <a [routerLink]="['/routines/assign', student.id]"
+                     class="flex-1 text-center px-4 py-2 bg-primary-50 dark:bg-primary-900 hover:bg-primary-100 dark:hover:bg-primary-800 text-primary-700 dark:text-primary-300 rounded-lg transition-colors font-medium">
+                    Asignar Rutina
+                  </a>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  `,
+  styles: []
+})
+export class StudentsListComponent implements OnInit {
+  students = signal<Student[]>([]);
+  loading = signal(true);
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loadStudents();
+  }
+
+  loadStudents() {
+    this.apiService.get<Student[]>('/students').subscribe({
+      next: (data) => {
+        this.students.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading students:', err);
+        this.loading.set(false);
+      }
+    });
+  }
+}

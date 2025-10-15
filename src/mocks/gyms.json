@@ -1,0 +1,18 @@
+[
+  {
+    "id": "gym-1",
+    "name": "PowerFit Center",
+    "address": "Av. Corrientes 1234, Buenos Aires",
+    "phone": "+54 11 4567-8900",
+    "email": "info@powerfit.com",
+    "logoUrl": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200"
+  },
+  {
+    "id": "gym-2",
+    "name": "Elite Training",
+    "address": "Av. Santa Fe 5678, Buenos Aires",
+    "phone": "+54 11 4567-8901",
+    "email": "info@elitetraining.com",
+    "logoUrl": "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=200"
+  }
+]

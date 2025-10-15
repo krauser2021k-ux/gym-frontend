@@ -1,0 +1,37 @@
+{
+  "kpis": {
+    "totalStudents": 34,
+    "routinesCreated": 12,
+    "exercisesUsed": 87,
+    "routinesAssigned": 28
+  },
+  "routinesByMonth": [
+    { "month": "Ene", "count": 2 },
+    { "month": "Feb", "count": 3 },
+    { "month": "Mar", "count": 1 },
+    { "month": "Abr", "count": 2 },
+    { "month": "May", "count": 1 },
+    { "month": "Jun", "count": 1 },
+    { "month": "Jul", "count": 1 },
+    { "month": "Ago", "count": 0 },
+    { "month": "Sep", "count": 1 },
+    { "month": "Oct", "count": 0 }
+  ],
+  "exercisesByType": [
+    { "type": "Fuerza", "count": 45 },
+    { "type": "Cardio", "count": 18 },
+    { "type": "Flexibilidad", "count": 12 },
+    { "type": "Core", "count": 8 },
+    { "type": "Balance", "count": 4 }
+  ],
+  "averageAttendance": [
+    { "week": "Sem 1", "attendance": 78 },
+    { "week": "Sem 2", "attendance": 82 },
+    { "week": "Sem 3", "attendance": 75 },
+    { "week": "Sem 4", "attendance": 88 },
+    { "week": "Sem 5", "attendance": 85 },
+    { "week": "Sem 6", "attendance": 90 },
+    { "week": "Sem 7", "attendance": 87 },
+    { "week": "Sem 8", "attendance": 92 }
+  ]
+}

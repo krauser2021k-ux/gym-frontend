@@ -1,0 +1,37 @@
+{
+  "activeStudents": 34,
+  "totalRoutines": 12,
+  "totalExercises": 87,
+  "monthlyRevenue": 485000,
+  "activeSubscriptions": 28,
+  "studentGrowth": [
+    { "month": "Mayo", "count": 22 },
+    { "month": "Junio", "count": 26 },
+    { "month": "Julio", "count": 29 },
+    { "month": "Agosto", "count": 31 },
+    { "month": "Septiembre", "count": 33 },
+    { "month": "Octubre", "count": 34 }
+  ],
+  "revenueByMonth": [
+    { "month": "Mayo", "amount": 330000 },
+    { "month": "Junio", "amount": 390000 },
+    { "month": "Julio", "amount": 435000 },
+    { "month": "Agosto", "amount": 465000 },
+    { "month": "Septiembre", "amount": 495000 },
+    { "month": "Octubre", "amount": 485000 }
+  ],
+  "topExercises": [
+    { "name": "Sentadilla", "usage": 145 },
+    { "name": "Press de Banca", "usage": 132 },
+    { "name": "Peso Muerto", "usage": 98 },
+    { "name": "Dominadas", "usage": 87 },
+    { "name": "Press Militar", "usage": 76 }
+  ],
+  "subscriptionsByPack": [
+    { "pack": "Básico", "count": 12 },
+    { "pack": "Premium", "count": 14 },
+    { "pack": "Elite", "count": 2 }
+  ],
+  "completionRate": 78,
+  "averageSessionsPerWeek": 3.5
+}

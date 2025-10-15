@@ -1,0 +1,48 @@
+[
+  {
+    "id": "comment-1",
+    "exerciseId": "ex-1",
+    "studentId": "student-1",
+    "routineId": "routine-3",
+    "comment": "Me costó mucho la última serie, creo que necesito bajar el peso",
+    "completed": true,
+    "createdAt": "2025-10-14T18:30:00Z",
+    "replies": [
+      {
+        "id": "reply-1",
+        "userId": "trainer-1",
+        "userName": "Carlos Trainer",
+        "comment": "Perfecto Juan, bajá 5kg y enfocate en la técnica. Lo importante es la ejecución correcta.",
+        "createdAt": "2025-10-14T19:00:00Z"
+      }
+    ]
+  },
+  {
+    "id": "comment-2",
+    "exerciseId": "ex-2",
+    "studentId": "student-2",
+    "routineId": "routine-4",
+    "comment": "¡Logré completar todas las series! Me siento muy bien",
+    "completed": true,
+    "createdAt": "2025-10-14T17:00:00Z",
+    "replies": [
+      {
+        "id": "reply-2",
+        "userId": "trainer-1",
+        "userName": "Carlos Trainer",
+        "comment": "Excelente María! La próxima semana aumentamos la intensidad.",
+        "createdAt": "2025-10-14T20:00:00Z"
+      }
+    ]
+  },
+  {
+    "id": "comment-3",
+    "exerciseId": "ex-4",
+    "studentId": "student-1",
+    "routineId": "routine-3",
+    "comment": "¿Puedo usar bandas elásticas en lugar de la barra?",
+    "completed": false,
+    "createdAt": "2025-10-15T09:00:00Z",
+    "replies": []
+  }
+]

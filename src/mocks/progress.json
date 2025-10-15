@@ -1,0 +1,71 @@
+{
+  "studentId": "student-1",
+  "weightHistory": [
+    { "date": "2025-05-01", "value": 85.5 },
+    { "date": "2025-06-01", "value": 84.2 },
+    { "date": "2025-07-01", "value": 83.8 },
+    { "date": "2025-08-01", "value": 82.9 },
+    { "date": "2025-09-01", "value": 82.1 },
+    { "date": "2025-10-01", "value": 82.5 }
+  ],
+  "strengthHistory": [
+    { "exercise": "Press de Banca", "data": [
+      { "date": "2025-05-01", "value": 55 },
+      { "date": "2025-06-01", "value": 57.5 },
+      { "date": "2025-07-01", "value": 60 },
+      { "date": "2025-08-01", "value": 62.5 },
+      { "date": "2025-09-01", "value": 62.5 },
+      { "date": "2025-10-01", "value": 65 }
+    ]},
+    { "exercise": "Sentadilla", "data": [
+      { "date": "2025-05-01", "value": 70 },
+      { "date": "2025-06-01", "value": 75 },
+      { "date": "2025-07-01", "value": 80 },
+      { "date": "2025-08-01", "value": 85 },
+      { "date": "2025-09-01", "value": 87.5 },
+      { "date": "2025-10-01", "value": 90 }
+    ]}
+  ],
+  "attendanceHistory": [
+    { "week": "2025-W35", "sessions": 3 },
+    { "week": "2025-W36", "sessions": 4 },
+    { "week": "2025-W37", "sessions": 3 },
+    { "week": "2025-W38", "sessions": 4 },
+    { "week": "2025-W39", "sessions": 3 },
+    { "week": "2025-W40", "sessions": 4 },
+    { "week": "2025-W41", "sessions": 5 },
+    { "week": "2025-W42", "sessions": 4 }
+  ],
+  "goals": [
+    {
+      "id": "goal-1",
+      "title": "Perder 5kg",
+      "type": "weight",
+      "target": 80,
+      "current": 82.5,
+      "startDate": "2025-05-01",
+      "targetDate": "2025-12-31",
+      "progress": 60
+    },
+    {
+      "id": "goal-2",
+      "title": "Press de Banca 70kg",
+      "type": "strength",
+      "target": 70,
+      "current": 65,
+      "startDate": "2025-05-01",
+      "targetDate": "2025-12-31",
+      "progress": 67
+    },
+    {
+      "id": "goal-3",
+      "title": "4 sesiones por semana",
+      "type": "attendance",
+      "target": 4,
+      "current": 3.5,
+      "startDate": "2025-09-01",
+      "targetDate": "2025-12-31",
+      "progress": 88
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "notif-1",
+    "type": "routine_assigned",
+    "title": "Nueva rutina asignada",
+    "message": "Tu entrenador te ha asignado una nueva rutina: 'Fuerza Avanzada'",
+    "timestamp": "2025-10-15T10:30:00Z",
+    "read": false,
+    "icon": "pi-calendar-plus",
+    "color": "primary"
+  },
+  {
+    "id": "notif-2",
+    "type": "comment_received",
+    "title": "Nuevo comentario",
+    "message": "Carlos Trainer respondió a tu comentario en 'Press de Banca'",
+    "timestamp": "2025-10-15T09:15:00Z",
+    "read": false,
+    "icon": "pi-comment",
+    "color": "blue"
+  },
+  {
+    "id": "notif-3",
+    "type": "payment_confirmed",
+    "title": "Pago confirmado",
+    "message": "Tu pago de $25,000 ha sido procesado exitosamente",
+    "timestamp": "2025-10-14T16:45:00Z",
+    "read": true,
+    "icon": "pi-check-circle",
+    "color": "green"
+  },
+  {
+    "id": "notif-4",
+    "type": "goal_achieved",
+    "title": "¡Meta alcanzada!",
+    "message": "Completaste tu meta de 4 sesiones esta semana",
+    "timestamp": "2025-10-13T20:00:00Z",
+    "read": true,
+    "icon": "pi-trophy",
+    "color": "yellow"
+  },
+  {
+    "id": "notif-5",
+    "type": "reminder",
+    "title": "Recordatorio de sesión",
+    "message": "Tienes una sesión programada para mañana a las 18:00",
+    "timestamp": "2025-10-12T18:00:00Z",
+    "read": true,
+    "icon": "pi-clock",
+    "color": "purple"
+  }
+]
