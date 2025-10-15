@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Routine, Block, DayRoutine } from '../shared/models/routine.model';
-import { Observable, from, map } from 'rxjs';
+import { Observable, of, delay } from 'rxjs';
 
 interface CreateRoutinePayload {
   name: string;
@@ -17,388 +17,191 @@ interface CreateRoutinePayload {
   providedIn: 'root'
 })
 export class RoutineService {
-  private supabase: SupabaseClient;
+  private mockRoutines: Routine[] = [
+    {
+      id: '1',
+      name: 'Rutina de Fuerza',
+      description: 'Rutina enfocada en desarrollo de fuerza',
+      type: 'default',
+      createdBy: 'trainer-1',
+      gymId: 'gym-1',
+      createdAt: '2025-01-15T10:00:00Z',
+      updatedAt: '2025-01-15T10:00:00Z',
+      weeklyPlan: [
+        {
+          day: 1,
+          blocks: [
+            {
+              id: 'block-1',
+              name: 'Calentamiento',
+              description: 'Ejercicios de movilidad',
+              order: 1,
+              exercises: [
+                {
+                  exerciseId: 'ex-1',
+                  sets: 3,
+                  notes: 'Sin peso',
+                  order: 1
+                }
+              ]
+            },
+            {
+              id: 'block-2',
+              name: 'Pecho',
+              description: 'Ejercicios de pecho',
+              order: 2,
+              exercises: [
+                {
+                  exerciseId: 'ex-2',
+                  sets: 4,
+                  notes: 'Press de banca',
+                  order: 1
+                },
+                {
+                  exerciseId: 'ex-3',
+                  sets: 3,
+                  notes: 'Aperturas con mancuernas',
+                  order: 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          day: 3,
+          blocks: [
+            {
+              id: 'block-3',
+              name: 'Piernas',
+              description: 'Ejercicios de piernas',
+              order: 1,
+              exercises: [
+                {
+                  exerciseId: 'ex-4',
+                  sets: 4,
+                  notes: 'Sentadillas',
+                  order: 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      assignedTo: ['student-1', 'student-2']
+    },
+    {
+      id: '2',
+      name: 'Rutina de Hipertrofia',
+      description: 'Rutina para ganancia muscular',
+      type: 'personalized',
+      createdBy: 'trainer-1',
+      gymId: 'gym-1',
+      createdAt: '2025-01-20T10:00:00Z',
+      updatedAt: '2025-01-20T10:00:00Z',
+      weeklyPlan: [
+        {
+          day: 2,
+          blocks: [
+            {
+              id: 'block-4',
+              name: 'Espalda',
+              description: 'Ejercicios de espalda',
+              order: 1,
+              exercises: [
+                {
+                  exerciseId: 'ex-5',
+                  sets: 4,
+                  notes: 'Dominadas',
+                  order: 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      assignedTo: ['student-3']
+    }
+  ];
 
   constructor() {
 
   }
 
   getRoutines(gymId: string): Observable<Routine[]> {
-    return from(
-      this.supabase
-        .from('routines')
-        .select(`
-          id,
-          name,
-          description,
-          type,
-          created_by,
-          gym_id,
-          created_at,
-          updated_at
-        `)
-        .eq('gym_id', gymId)
-        .order('created_at', { ascending: false })
-    ).pipe(
-      map(response => {
-        if (response.error) throw response.error;
-        return (response.data || []).map(item => ({
-          id: item.id,
-          name: item.name,
-          description: item.description,
-          type: item.type,
-          createdBy: item.created_by,
-          gymId: item.gym_id,
-          createdAt: item.created_at,
-          updatedAt: item.updated_at,
-          weeklyPlan: []
-        })) as Routine[];
-      })
-    );
+    const filteredRoutines = this.mockRoutines
+      .filter(r => r.gymId === gymId)
+      .map(r => ({
+        ...r,
+        weeklyPlan: [] // Return without weekly plan for list view
+      }));
+    return of(filteredRoutines).pipe(delay(300));
   }
 
   getRoutineById(routineId: string): Observable<Routine> {
-    return from(
-      this.supabase
-        .from('routines')
-        .select(`
-          id,
-          name,
-          description,
-          type,
-          created_by,
-          gym_id,
-          created_at,
-          updated_at,
-          day_routines (
-            id,
-            day,
-            order,
-            blocks (
-              id,
-              name,
-              description,
-              order,
-              block_exercises (
-                id,
-                exercise_id,
-                sets,
-                reps,
-                rest,
-                weight,
-                notes,
-                order
-              )
-            )
-          ),
-          routine_assignments (
-            student_id
-          )
-        `)
-        .eq('id', routineId)
-        .maybeSingle()
-    ).pipe(
-      map(response => {
-        if (response.error) throw response.error;
-        if (!response.data) throw new Error('Routine not found');
-
-        const data = response.data as any;
-
-        const weeklyPlan: DayRoutine[] = (data.day_routines || []).map((dr: any) => ({
-          day: dr.day,
-          blocks: (dr.blocks || []).map((b: any) => ({
-            id: b.id,
-            name: b.name,
-            description: b.description,
-            order: b.order,
-            exercises: (b.block_exercises || []).map((be: any) => ({
-              exerciseId: be.exercise_id,
-              sets: be.sets,
-              reps: be.reps,
-              rest: be.rest,
-              weight: be.weight,
-              notes: be.notes,
-              order: be.order
-            }))
-          }))
-        }));
-
-        const routine: Routine = {
-          id: data.id,
-          name: data.name,
-          description: data.description,
-          type: data.type,
-          createdBy: data.created_by,
-          gymId: data.gym_id,
-          createdAt: data.created_at,
-          updatedAt: data.updated_at,
-          weeklyPlan,
-          assignedTo: (data.routine_assignments || []).map((ra: any) => ra.student_id)
-        };
-
-        return routine;
-      })
-    );
+    const routine = this.mockRoutines.find(r => r.id === routineId);
+    if (!routine) {
+      throw new Error('Routine not found');
+    }
+    return of(routine).pipe(delay(300));
   }
 
   createRoutine(payload: CreateRoutinePayload): Observable<Routine> {
-    return from(
-      (async () => {
-        const { data: routine, error: routineError } = await this.supabase
-          .from('routines')
-          .insert({
-            name: payload.name,
-            description: payload.description,
-            type: payload.type,
-            created_by: payload.createdBy,
-            gym_id: payload.gymId
-          })
-          .select()
-          .single();
-
-        if (routineError) throw routineError;
-
-        for (const dayPlan of payload.weeklyPlan) {
-          const { data: dayRoutine, error: dayError } = await this.supabase
-            .from('day_routines')
-            .insert({
-              routine_id: routine.id,
-              day: dayPlan.day,
-              order: 0
-            })
-            .select()
-            .single();
-
-          if (dayError) throw dayError;
-
-          for (const block of dayPlan.blocks) {
-            const { data: blockData, error: blockError } = await this.supabase
-              .from('blocks')
-              .insert({
-                day_routine_id: dayRoutine.id,
-                name: block.name,
-                description: block.description,
-                order: block.order
-              })
-              .select()
-              .single();
-
-            if (blockError) throw blockError;
-
-            if (block.exercises && block.exercises.length > 0) {
-              const blockExercises = block.exercises.map(ex => ({
-                block_id: blockData.id,
-                exercise_id: ex.exerciseId,
-                sets: ex.sets,
-                reps: ex.reps,
-                rest: ex.rest,
-                weight: ex.weight,
-                notes: ex.notes,
-                order: ex.order
-              }));
-
-              const { error: exercisesError } = await this.supabase
-                .from('block_exercises')
-                .insert(blockExercises);
-
-              if (exercisesError) throw exercisesError;
-            }
-          }
-        }
-
-        if (payload.assignedTo && payload.assignedTo.length > 0) {
-          const assignments = payload.assignedTo.map(studentId => ({
-            routine_id: routine.id,
-            student_id: studentId,
-            assigned_by: payload.createdBy
-          }));
-
-          const { error: assignmentsError } = await this.supabase
-            .from('routine_assignments')
-            .insert(assignments);
-
-          if (assignmentsError) throw assignmentsError;
-        }
-
-        return this.getRoutineById(routine.id).toPromise();
-      })()
-    ).pipe(
-      map(routine => {
-        if (!routine) throw new Error('Failed to create routine');
-        return routine;
-      })
-    );
+    const newRoutine: Routine = {
+      id: `routine-${Date.now()}`,
+      name: payload.name,
+      description: payload.description,
+      type: payload.type,
+      createdBy: payload.createdBy,
+      gymId: payload.gymId,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      weeklyPlan: payload.weeklyPlan,
+      assignedTo: payload.assignedTo || []
+    };
+    this.mockRoutines.push(newRoutine);
+    return of(newRoutine).pipe(delay(300));
   }
 
   updateRoutine(routineId: string, payload: Partial<CreateRoutinePayload>): Observable<Routine> {
-    return from(
-      (async () => {
-        const { error: routineError } = await this.supabase
-          .from('routines')
-          .update({
-            name: payload.name,
-            description: payload.description,
-            type: payload.type
-          })
-          .eq('id', routineId);
-
-        if (routineError) throw routineError;
-
-        if (payload.weeklyPlan) {
-          const { error: deleteDaysError } = await this.supabase
-            .from('day_routines')
-            .delete()
-            .eq('routine_id', routineId);
-
-          if (deleteDaysError) throw deleteDaysError;
-
-          for (const dayPlan of payload.weeklyPlan) {
-            const { data: dayRoutine, error: dayError } = await this.supabase
-              .from('day_routines')
-              .insert({
-                routine_id: routineId,
-                day: dayPlan.day,
-                order: 0
-              })
-              .select()
-              .single();
-
-            if (dayError) throw dayError;
-
-            for (const block of dayPlan.blocks) {
-              const { data: blockData, error: blockError } = await this.supabase
-                .from('blocks')
-                .insert({
-                  day_routine_id: dayRoutine.id,
-                  name: block.name,
-                  description: block.description,
-                  order: block.order
-                })
-                .select()
-                .single();
-
-              if (blockError) throw blockError;
-
-              if (block.exercises && block.exercises.length > 0) {
-                const blockExercises = block.exercises.map(ex => ({
-                  block_id: blockData.id,
-                  exercise_id: ex.exerciseId,
-                  sets: ex.sets,
-                  reps: ex.reps,
-                  rest: ex.rest,
-                  weight: ex.weight,
-                  notes: ex.notes,
-                  order: ex.order
-                }));
-
-                const { error: exercisesError } = await this.supabase
-                  .from('block_exercises')
-                  .insert(blockExercises);
-
-                if (exercisesError) throw exercisesError;
-              }
-            }
-          }
-        }
-
-        if (payload.assignedTo !== undefined) {
-          const { error: deleteAssignmentsError } = await this.supabase
-            .from('routine_assignments')
-            .delete()
-            .eq('routine_id', routineId);
-
-          if (deleteAssignmentsError) throw deleteAssignmentsError;
-
-          if (payload.assignedTo.length > 0 && payload.createdBy) {
-            const assignments = payload.assignedTo.map(studentId => ({
-              routine_id: routineId,
-              student_id: studentId,
-              assigned_by: payload.createdBy
-            }));
-
-            const { error: assignmentsError } = await this.supabase
-              .from('routine_assignments')
-              .insert(assignments);
-
-            if (assignmentsError) throw assignmentsError;
-          }
-        }
-
-        return this.getRoutineById(routineId).toPromise();
-      })()
-    ).pipe(
-      map(routine => {
-        if (!routine) throw new Error('Failed to update routine');
-        return routine;
-      })
-    );
+    const index = this.mockRoutines.findIndex(r => r.id === routineId);
+    if (index === -1) {
+      throw new Error('Routine not found');
+    }
+    
+    const updatedRoutine: Routine = {
+      ...this.mockRoutines[index],
+      name: payload.name ?? this.mockRoutines[index].name,
+      description: payload.description ?? this.mockRoutines[index].description,
+      type: payload.type ?? this.mockRoutines[index].type,
+      weeklyPlan: payload.weeklyPlan ?? this.mockRoutines[index].weeklyPlan,
+      assignedTo: payload.assignedTo ?? this.mockRoutines[index].assignedTo,
+      updatedAt: new Date().toISOString()
+    };
+    
+    this.mockRoutines[index] = updatedRoutine;
+    return of(updatedRoutine).pipe(delay(300));
   }
 
   deleteRoutine(routineId: string): Observable<void> {
-    return from(
-      this.supabase
-        .from('routines')
-        .delete()
-        .eq('id', routineId)
-    ).pipe(
-      map(response => {
-        if (response.error) throw response.error;
-      })
-    );
+    const index = this.mockRoutines.findIndex(r => r.id === routineId);
+    if (index !== -1) {
+      this.mockRoutines.splice(index, 1);
+    }
+    return of(undefined).pipe(delay(300));
   }
 
   assignRoutineToStudents(routineId: string, studentIds: string[], assignedBy: string): Observable<void> {
-    return from(
-      (async () => {
-        const { error: deleteError } = await this.supabase
-          .from('routine_assignments')
-          .delete()
-          .eq('routine_id', routineId);
-
-        if (deleteError) throw deleteError;
-
-        if (studentIds.length > 0) {
-          const assignments = studentIds.map(studentId => ({
-            routine_id: routineId,
-            student_id: studentId,
-            assigned_by: assignedBy
-          }));
-
-          const { error: insertError } = await this.supabase
-            .from('routine_assignments')
-            .insert(assignments);
-
-          if (insertError) throw insertError;
-        }
-      })()
-    ).pipe(
-      map(() => undefined)
-    );
+    const routine = this.mockRoutines.find(r => r.id === routineId);
+    if (routine) {
+      routine.assignedTo = studentIds;
+    }
+    return of(undefined).pipe(delay(300));
   }
 
   getStudentRoutines(studentId: string): Observable<Routine[]> {
-    return from(
-      this.supabase
-        .from('routine_assignments')
-        .select(`
-          routine:routines (
-            id,
-            name,
-            description,
-            type,
-            created_by,
-            gym_id,
-            created_at,
-            updated_at
-          )
-        `)
-        .eq('student_id', studentId)
-        .eq('is_active', true)
-    ).pipe(
-      map(response => {
-        if (response.error) throw response.error;
-        return (response.data || []).map((item: any) => item.routine) as Routine[];
-      })
+    const studentRoutines = this.mockRoutines.filter(r => 
+      r.assignedTo && r.assignedTo.includes(studentId)
     );
+    return of(studentRoutines).pipe(delay(300));
   }
 }
