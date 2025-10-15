@@ -3,12 +3,25 @@ export interface Exercise {
   name: string;
   description: string;
   category: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
   muscleGroups: string[];
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
   equipment: string[];
+  videoUrl: string;
   videoUrls: string[];
   thumbnailUrl?: string;
+  exerciseType?: 'strength' | 'hypertrophy' | 'endurance' | 'cardio' | 'mobility' | 'functional';
+  suggestedSets?: string;
+  suggestedReps?: string;
+  suggestedRest?: string;
+  tempo?: string;
+  keyInstructions?: string[];
+  contraindications?: string;
+  easierVariations?: string;
+  harderVariations?: string;
+  isPublic?: boolean;
+  tags?: string[];
   createdBy: string;
+  gymId: string;
   createdAt?: string;
   updatedAt?: string;
 }

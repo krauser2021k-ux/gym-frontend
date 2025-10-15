@@ -2,13 +2,22 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/api.service';
 import { Exercise } from '../../shared/models';
+import { ExerciseFormComponent } from './exercise-form.component';
 
 @Component({
   selector: 'app-exercises-library',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ExerciseFormComponent],
   template: `
     <div class="space-y-6">
+      @if (showForm()) {
+        <app-exercise-form
+          [exercise]="selectedExercise"
+          (saved)="onExerciseSaved($event)"
+          (cancelled)="onFormCancelled()">
+        </app-exercise-form>
+      }
+
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
         <button (click)="openCreateDialog()"
@@ -87,6 +96,8 @@ import { Exercise } from '../../shared/models';
 export class ExercisesLibraryComponent implements OnInit {
   exercises = signal<Exercise[]>([]);
   loading = signal(true);
+  showForm = signal(false);
+  selectedExercise = signal<Exercise | null>(null);
 
   constructor(private apiService: ApiService) {}
 
@@ -108,7 +119,36 @@ export class ExercisesLibraryComponent implements OnInit {
   }
 
   openCreateDialog() {
-    console.log('Open create dialog');
+    this.selectedExercise.set(null);
+    this.showForm.set(true);
+  }
+
+  onExerciseSaved(exercise: Exercise) {
+    const endpoint = exercise.id ? `/exercises/${exercise.id}` : '/exercises';
+    const method = exercise.id ? 'put' : 'post';
+
+    this.apiService[method]<Exercise>(endpoint, exercise).subscribe({
+      next: (savedExercise) => {
+        if (exercise.id) {
+          const updated = this.exercises().map(e =>
+            e.id === savedExercise.id ? savedExercise : e
+          );
+          this.exercises.set(updated);
+        } else {
+          this.exercises.set([...this.exercises(), savedExercise]);
+        }
+        this.showForm.set(false);
+        this.selectedExercise.set(null);
+      },
+      error: (err) => {
+        console.error('Error saving exercise:', err);
+      }
+    });
+  }
+
+  onFormCancelled() {
+    this.showForm.set(false);
+    this.selectedExercise.set(null);
   }
 
   getDifficultyClass(difficulty: string): string {
