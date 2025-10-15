@@ -30,7 +30,7 @@ interface Metrics {
         </div>
       } @else if (metrics()) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(22, 163, 74, 0.3);">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,7 +46,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(34, 197, 94, 0.3);">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,7 +62,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(59, 130, 246, 0.3);">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,7 +78,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(245, 158, 11, 0.3);">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,7 +96,7 @@ interface Metrics {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-4">Crecimiento de Alumnos</h3>
             <div class="space-y-3">
               @for (item of metrics()!.studentGrowth; track item.month) {
@@ -114,7 +114,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-4">Ejercicios Más Utilizados</h3>
             <div class="space-y-3">
               @for (exercise of metrics()!.topExercises; track exercise.name) {
@@ -132,7 +132,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-4">Ingresos por Mes</h3>
             <div class="space-y-3">
               @for (item of metrics()!.revenueByMonth; track item.month) {
@@ -144,7 +144,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-4">Suscripciones por Pack</h3>
             <div class="space-y-4">
               @for (sub of metrics()!.subscriptionsByPack; track sub.pack) {
@@ -166,7 +166,7 @@ interface Metrics {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-2">Tasa de Completación</h3>
             <div class="flex items-center justify-center py-8">
               <div class="relative inline-flex items-center justify-center w-32 h-32">
@@ -182,7 +182,7 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <h3 class="text-lg font-semibold text-white mb-2">Promedio de Sesiones por Semana</h3>
             <div class="flex items-center justify-center py-8">
               <div class="text-center">

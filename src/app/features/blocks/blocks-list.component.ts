@@ -25,7 +25,7 @@ import { Block } from '../../shared/models';
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (block of blocks(); track block.id) {
-            <div class="glass dark:glass-dark rounded-lg hover:bg-white/25 dark:hover:bg-white/10 transition-all duration-200 p-6">
+            <div class="glass rounded-lg hover:bg-white/25 transition-all duration-200 p-6">
               <div class="flex justify-between items-start mb-4">
                 <div>
                   <h3 class="text-lg font-semibold text-white">{{ block.name }}</h3>

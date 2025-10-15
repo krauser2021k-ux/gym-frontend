@@ -18,7 +18,7 @@ import { User } from '../../shared/models';
         </div>
       } @else if (user()) {
         <form (ngSubmit)="saveProfile()" class="space-y-6">
-          <div class="glass dark:glass-dark rounded-lg p-6">
+          <div class="glass rounded-lg p-6">
             <div class="flex items-center space-x-6 mb-6">
               @if (user()!.photoUrl) {
                 <img [src]="user()!.photoUrl" alt="Foto de perfil"

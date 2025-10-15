@@ -9,7 +9,7 @@ import {KeycloakService} from './core/keycloak.service';
     imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
     template: `
         <div [class.dark]="darkMode()" class="min-h-screen transition-colors duration-200">
-            <nav class="glass dark:glass-dark shadow-lg backdrop-blur-md">
+            <nav class="glass shadow-lg">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
@@ -119,6 +119,7 @@ export class AppShellComponent {
     constructor(private keycloakService: KeycloakService) {
         const savedTheme = localStorage.getItem('theme');
         this.darkMode.set(savedTheme === 'dark');
+        this.applyThemeToBody();
         const authenticated = this.keycloakService.isAuthenticated();
         this.isAuthenticated.set(authenticated);
         if (authenticated) {
@@ -133,6 +134,15 @@ export class AppShellComponent {
     toggleTheme() {
         this.darkMode.update(v => !v);
         localStorage.setItem('theme', this.darkMode() ? 'dark' : 'light');
+        this.applyThemeToBody();
+    }
+
+    private applyThemeToBody() {
+        if (this.darkMode()) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
     }
 
     logout() {

@@ -38,7 +38,7 @@ import { Exercise } from '../../shared/models';
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (exercise of exercises(); track exercise.id) {
-            <div class="glass dark:glass-dark rounded-lg hover:bg-white/25 dark:hover:bg-white/10 transition-all duration-200 overflow-hidden">
+            <div class="glass rounded-lg hover:bg-white/25 transition-all duration-200 overflow-hidden">
               @if (exercise.thumbnailUrl) {
                 <img [src]="exercise.thumbnailUrl" [alt]="exercise.name"
                      class="w-full h-48 object-cover">
