@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiService } from '../../core/api.service';
+import { StudentService } from '../../core/student.service';
 import { Student } from '../../shared/models';
 
 @Component({
@@ -86,14 +86,23 @@ export class StudentsListComponent implements OnInit {
   students = signal<Student[]>([]);
   loading = signal(true);
 
-  constructor(private apiService: ApiService) {}
+  constructor(private studentService: StudentService) {}
 
   ngOnInit() {
     this.loadStudents();
+    this.subscribeToStudents();
+  }
+
+  subscribeToStudents() {
+    this.studentService.students$.subscribe({
+      next: (students) => {
+        this.students.set(students);
+      }
+    });
   }
 
   loadStudents() {
-    this.apiService.get<Student[]>('/students').subscribe({
+    this.studentService.getStudents().subscribe({
       next: (data) => {
         this.students.set(data);
         this.loading.set(false);
