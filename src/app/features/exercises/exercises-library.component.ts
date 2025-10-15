@@ -10,17 +10,17 @@ import { Exercise } from '../../shared/models';
   template: `
     <div class="space-y-6">
       <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Biblioteca de Ejercicios</h1>
+        <h1 class="text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
         <button (click)="openCreateDialog()"
-                class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200">
+                class="px-6 py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
           Crear Ejercicio
         </button>
       </div>
 
       <div class="flex space-x-4">
         <input type="text" placeholder="Buscar ejercicios..."
-               class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-        <select class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+               class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70">
+        <select class="px-4 py-2 border border-white/30 rounded-lg text-white glass">
           <option value="">Todas las categorías</option>
           <option value="Pecho">Pecho</option>
           <option value="Espalda">Espalda</option>
@@ -33,12 +33,12 @@ import { Exercise } from '../../shared/models';
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (exercise of exercises(); track exercise.id) {
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
+            <div class="glass dark:glass-dark rounded-lg hover:bg-white/25 dark:hover:bg-white/10 transition-all duration-200 overflow-hidden">
               @if (exercise.thumbnailUrl) {
                 <img [src]="exercise.thumbnailUrl" [alt]="exercise.name"
                      class="w-full h-48 object-cover">
@@ -51,23 +51,23 @@ import { Exercise } from '../../shared/models';
               }
               <div class="p-6">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ exercise.name }}</h3>
+                  <h3 class="text-lg font-semibold text-white">{{ exercise.name }}</h3>
                   <span [class]="getDifficultyClass(exercise.difficulty)"
                         class="px-2 py-1 text-xs font-medium rounded-full">
                     {{ getDifficultyLabel(exercise.difficulty) }}
                   </span>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{{ exercise.description }}</p>
+                <p class="text-sm text-white/80 mb-4 line-clamp-2">{{ exercise.description }}</p>
                 <div class="space-y-2">
                   <div class="flex flex-wrap gap-1">
                     @for (muscle of exercise.muscleGroups; track muscle) {
-                      <span class="px-2 py-1 bg-primary-50 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs rounded-full">
+                      <span class="px-2 py-1 text-white text-xs rounded-full" style="background: rgba(34, 197, 94, 0.3);">
                         {{ muscle }}
                       </span>
                     }
                   </div>
                   @if (exercise.videoUrls.length > 0) {
-                    <div class="flex items-center text-sm text-primary-600 dark:text-primary-400">
+                    <div class="flex items-center text-sm text-white">
                       <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
                       </svg>

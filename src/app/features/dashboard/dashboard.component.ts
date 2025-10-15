@@ -22,73 +22,73 @@ interface Metrics {
   imports: [CommonModule],
   template: `
     <div class="space-y-6">
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+      <h1 class="text-3xl font-bold text-white">Dashboard</h1>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
       } @else if (metrics()) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div class="glass dark:glass-dark rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 bg-primary-100 dark:bg-primary-900 rounded-md p-3">
-                <svg class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(22, 163, 74, 0.3);">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Alumnos Activos</dt>
-                  <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ metrics()!.activeStudents }}</dd>
+                  <dt class="text-sm font-medium text-white/70 truncate">Alumnos Activos</dt>
+                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.activeStudents }}</dd>
                 </dl>
               </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div class="glass dark:glass-dark rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-md p-3">
-                <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(34, 197, 94, 0.3);">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Rutinas Creadas</dt>
-                  <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ metrics()!.totalRoutines }}</dd>
+                  <dt class="text-sm font-medium text-white/70 truncate">Rutinas Creadas</dt>
+                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.totalRoutines }}</dd>
                 </dl>
               </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div class="glass dark:glass-dark rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-md p-3">
-                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(59, 130, 246, 0.3);">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Ejercicios Totales</dt>
-                  <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ metrics()!.totalExercises }}</dd>
+                  <dt class="text-sm font-medium text-white/70 truncate">Ejercicios Totales</dt>
+                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.totalExercises }}</dd>
                 </dl>
               </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div class="glass dark:glass-dark rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-md p-3">
-                <svg class="h-6 w-6 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(245, 158, 11, 0.3);">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Ingresos Mensuales</dt>
-                  <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ formatCurrency(metrics()!.monthlyRevenue) }}</dd>
+                  <dt class="text-sm font-medium text-white/70 truncate">Ingresos Mensuales</dt>
+                  <dd class="text-3xl font-semibold text-white">{{ formatCurrency(metrics()!.monthlyRevenue) }}</dd>
                 </dl>
               </div>
             </div>
@@ -96,17 +96,17 @@ interface Metrics {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Crecimiento de Alumnos</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Crecimiento de Alumnos</h3>
             <div class="space-y-3">
               @for (item of metrics()!.studentGrowth; track item.month) {
                 <div>
                   <div class="flex justify-between items-center mb-1">
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ item.month }}</span>
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ item.count }}</span>
+                    <span class="text-sm font-medium text-white/80">{{ item.month }}</span>
+                    <span class="text-sm font-semibold text-white">{{ item.count }}</span>
                   </div>
-                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div class="bg-primary-600 h-2 rounded-full transition-all duration-500"
+                  <div class="w-full rounded-full h-2" style="background: rgba(255, 255, 255, 0.2);">
+                    <div class="h-2 rounded-full transition-all duration-500" style="background: rgba(34, 197, 94, 0.8);"
                          [style.width.%]="(item.count / 40) * 100"></div>
                   </div>
                 </div>
@@ -114,17 +114,17 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ejercicios Más Utilizados</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Ejercicios Más Utilizados</h3>
             <div class="space-y-3">
               @for (exercise of metrics()!.topExercises; track exercise.name) {
                 <div>
                   <div class="flex justify-between items-center mb-1">
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ exercise.name }}</span>
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ exercise.usage }}</span>
+                    <span class="text-sm font-medium text-white/80">{{ exercise.name }}</span>
+                    <span class="text-sm font-semibold text-white">{{ exercise.usage }}</span>
                   </div>
-                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                  <div class="w-full rounded-full h-2" style="background: rgba(255, 255, 255, 0.2);">
+                    <div class="h-2 rounded-full transition-all duration-500" style="background: rgba(59, 130, 246, 0.8);"
                          [style.width.%]="(exercise.usage / 150) * 100"></div>
                   </div>
                 </div>
@@ -132,20 +132,20 @@ interface Metrics {
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ingresos por Mes</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Ingresos por Mes</h3>
             <div class="space-y-3">
               @for (item of metrics()!.revenueByMonth; track item.month) {
                 <div class="flex justify-between items-center">
-                  <span class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ item.month }}</span>
-                  <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ formatCurrency(item.amount) }}</span>
+                  <span class="text-sm font-medium text-white/80">{{ item.month }}</span>
+                  <span class="text-sm font-semibold text-white">{{ formatCurrency(item.amount) }}</span>
                 </div>
               }
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Suscripciones por Pack</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-4">Suscripciones por Pack</h3>
             <div class="space-y-4">
               @for (sub of metrics()!.subscriptionsByPack; track sub.pack) {
                 <div class="flex items-center justify-between">
@@ -155,8 +155,8 @@ interface Metrics {
                       <span class="text-lg font-bold">{{ sub.count }}</span>
                     </div>
                     <div>
-                      <p class="text-sm font-medium text-gray-900 dark:text-white">Pack {{ sub.pack }}</p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">{{ getPackPercentage(sub.count) }}% del total</p>
+                      <p class="text-sm font-medium text-white">Pack {{ sub.pack }}</p>
+                      <p class="text-xs text-white/70">{{ getPackPercentage(sub.count) }}% del total</p>
                     </div>
                   </div>
                 </div>
@@ -166,28 +166,28 @@ interface Metrics {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Tasa de Completación</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-2">Tasa de Completación</h3>
             <div class="flex items-center justify-center py-8">
               <div class="relative inline-flex items-center justify-center w-32 h-32">
                 <svg class="w-32 h-32 transform -rotate-90">
                   <circle cx="64" cy="64" r="56" stroke="currentColor" stroke-width="8" fill="none"
-                          class="text-gray-200 dark:text-gray-700" />
+                          class="text-white/20" />
                   <circle cx="64" cy="64" r="56" stroke="currentColor" stroke-width="8" fill="none"
                           [attr.stroke-dasharray]="calculateCircleProgress(metrics()!.completionRate)"
-                          class="text-primary-600 transition-all duration-1000" />
+                          class="text-white transition-all duration-1000" />
                 </svg>
-                <span class="absolute text-3xl font-bold text-gray-900 dark:text-white">{{ metrics()!.completionRate }}%</span>
+                <span class="absolute text-3xl font-bold text-white">{{ metrics()!.completionRate }}%</span>
               </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Promedio de Sesiones por Semana</h3>
+          <div class="glass dark:glass-dark rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-2">Promedio de Sesiones por Semana</h3>
             <div class="flex items-center justify-center py-8">
               <div class="text-center">
-                <div class="text-5xl font-bold text-primary-600">{{ metrics()!.averageSessionsPerWeek }}</div>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">sesiones por semana</p>
+                <div class="text-5xl font-bold text-white">{{ metrics()!.averageSessionsPerWeek }}</div>
+                <p class="text-sm text-white/70 mt-2">sesiones por semana</p>
               </div>
             </div>
           </div>

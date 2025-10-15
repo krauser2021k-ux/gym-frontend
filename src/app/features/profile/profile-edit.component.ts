@@ -10,98 +10,98 @@ import { User } from '../../shared/models';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="space-y-6 max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Mi Perfil</h1>
+      <h1 class="text-3xl font-bold text-white">Mi Perfil</h1>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
       } @else if (user()) {
         <form (ngSubmit)="saveProfile()" class="space-y-6">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div class="glass dark:glass-dark rounded-lg p-6">
             <div class="flex items-center space-x-6 mb-6">
               @if (user()!.photoUrl) {
                 <img [src]="user()!.photoUrl" alt="Foto de perfil"
                      class="w-24 h-24 rounded-full object-cover">
               } @else {
-                <div class="w-24 h-24 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                  <span class="text-3xl font-bold text-primary-600 dark:text-primary-400">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center" style="background: rgba(34, 197, 94, 0.3);">
+                  <span class="text-3xl font-bold text-white">
                     {{ user()!.firstName?.charAt(0) }}{{ user()!.lastName?.charAt(0) }}
                   </span>
                 </div>
               }
               <div>
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                <h2 class="text-xl font-semibold text-white">
                   {{ user()!.firstName }} {{ user()!.lastName }}
                 </h2>
-                <p class="text-gray-600 dark:text-gray-300">{{ user()!.email }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ getRoleLabel(user()!.role) }}</p>
+                <p class="text-white/80">{{ user()!.email }}</p>
+                <p class="text-sm text-white/70">{{ getRoleLabel(user()!.role) }}</p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Nombre
                 </label>
                 <input type="text" [(ngModel)]="user()!.firstName" name="firstName"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Apellido
                 </label>
                 <input type="text" [(ngModel)]="user()!.lastName" name="lastName"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Teléfono
                 </label>
                 <input type="tel" [(ngModel)]="user()!.phone" name="phone"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Fecha de Nacimiento
                 </label>
                 <input type="date" [(ngModel)]="user()!.birthDate" name="birthDate"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Peso (kg)
                 </label>
                 <input type="number" [(ngModel)]="user()!.weight" name="weight" step="0.1"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Altura (cm)
                 </label>
                 <input type="number" [(ngModel)]="user()!.height" name="height"
-                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500">
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50">
               </div>
 
               <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Notas Médicas
                 </label>
                 <textarea [(ngModel)]="user()!.medicalNotes" name="medicalNotes" rows="3"
-                          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"></textarea>
+                          class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50"></textarea>
               </div>
 
               <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label class="block text-sm font-medium text-white/90 mb-1">
                   Observaciones
                 </label>
                 <textarea [(ngModel)]="user()!.customField" name="customField" rows="2"
-                          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"></textarea>
+                          class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass focus:ring-2 focus:ring-white/50 placeholder-white/50"></textarea>
               </div>
             </div>
 

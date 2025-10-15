@@ -8,59 +8,59 @@ import {KeycloakService} from './core/keycloak.service';
     standalone: true,
     imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
     template: `
-        <div [class.dark]="darkMode()" class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-            <nav class="bg-white dark:bg-gray-800 shadow-lg">
+        <div [class.dark]="darkMode()" class="min-h-screen transition-colors duration-200">
+            <nav class="glass dark:glass-dark shadow-lg backdrop-blur-md">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <div class="flex-shrink-0 flex items-center">
-                                <svg class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24"
+                                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
-                                <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">GymPro</span>
+                                <span class="ml-2 text-xl font-bold text-white">GymPro</span>
                             </div>
                             @if (isAuthenticated()) {
                                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                                     @if (userRole() === 'trainer' || userRole() === 'admin') {
                                         <a routerLink="/dashboard"
-                                           routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                           class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Dashboard
                                         </a>
                                     }
                                     <a routerLink="/students"
-                                       routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                       class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                       routerLinkActive="border-white text-white"
+                                       class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                         Alumnos
                                     </a>
                                     <a routerLink="/exercises"
-                                       routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                       class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                       routerLinkActive="border-white text-white"
+                                       class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                         Ejercicios
                                     </a>
                                     @if (userRole() === 'trainer' || userRole() === 'admin') {
                                         <a routerLink="/blocks"
-                                           routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                           class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Bloques
                                         </a>
                                     }
                                     <a routerLink="/routines"
-                                       routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                       class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                       routerLinkActive="border-white text-white"
+                                       class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                         Rutinas
                                     </a>
                                     @if (userRole() === 'student') {
                                         <a routerLink="/my-routine"
-                                           routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                           class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Mi Rutina
                                         </a>
                                         <a routerLink="/payments"
-                                           routerLinkActive="border-primary-500 text-gray-900 dark:text-white"
-                                           class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Pagos
                                         </a>
                                     }
@@ -69,7 +69,7 @@ import {KeycloakService} from './core/keycloak.service';
                         </div>
                         <div class="flex items-center space-x-4">
                             <button (click)="toggleTheme()"
-                                    class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                    class="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/20 transition-all duration-200">
                                 @if (darkMode()) {
                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,11 +85,11 @@ import {KeycloakService} from './core/keycloak.service';
                             @if (isAuthenticated()) {
                                 <div class="flex items-center space-x-3">
                                     <a routerLink="/profile"
-                                       class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                                       class="text-sm text-white/80 hover:text-white transition-all duration-200">
                                         {{ userName() }}
                                     </a>
                                     <button (click)="logout()"
-                                            class="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors">
+                                            class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all duration-200 glass hover:bg-white/20">
                                         Salir
                                     </button>
                                 </div>

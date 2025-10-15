@@ -11,42 +11,42 @@ import { Block } from '../../shared/models';
   template: `
     <div class="space-y-6">
       <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Bloques Preestablecidos</h1>
+        <h1 class="text-3xl font-bold text-white">Bloques Preestablecidos</h1>
         <button (click)="createBlock()"
-                class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200">
+                class="px-6 py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
           Crear Bloque
         </button>
       </div>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (block of blocks(); track block.id) {
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-6">
+            <div class="glass dark:glass-dark rounded-lg hover:bg-white/25 dark:hover:bg-white/10 transition-all duration-200 p-6">
               <div class="flex justify-between items-start mb-4">
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ block.name }}</h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{{ block.description }}</p>
+                  <h3 class="text-lg font-semibold text-white">{{ block.name }}</h3>
+                  <p class="text-sm text-white/80 mt-1">{{ block.description }}</p>
                 </div>
-                <span class="px-2 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs rounded-full">
+                <span class="px-2 py-1 text-white text-xs rounded-full" style="background: rgba(34, 197, 94, 0.3);">
                   {{ block.exercises.length }} ejercicios
                 </span>
               </div>
 
               <div class="space-y-2 mb-4">
                 @for (ex of block.exercises.slice(0, 3); track ex.order) {
-                  <div class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                    <span class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-medium mr-2">
+                  <div class="text-sm text-white/80 flex items-center">
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium mr-2 text-white" style="background: rgba(255, 255, 255, 0.2);">
                       {{ ex.order }}
                     </span>
                     <span>{{ ex.sets }} x {{ ex.reps }}</span>
                   </div>
                 }
                 @if (block.exercises.length > 3) {
-                  <div class="text-xs text-gray-500 dark:text-gray-400">
+                  <div class="text-xs text-white/60">
                     + {{ block.exercises.length - 3 }} más
                   </div>
                 }
@@ -54,15 +54,15 @@ import { Block } from '../../shared/models';
 
               <div class="flex space-x-2">
                 <button (click)="editBlock(block.id)"
-                        class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg transition-colors font-medium text-sm">
+                        class="flex-1 px-4 py-2 text-white rounded-lg transition-all duration-200 font-medium text-sm glass hover:bg-white/20">
                   Editar
                 </button>
                 <button (click)="duplicateBlock(block.id)"
-                        class="flex-1 px-4 py-2 bg-primary-50 dark:bg-primary-900 hover:bg-primary-100 dark:hover:bg-primary-800 text-primary-700 dark:text-primary-300 rounded-lg transition-colors font-medium text-sm">
+                        class="flex-1 px-4 py-2 text-white rounded-lg transition-all duration-200 font-medium text-sm glass hover:bg-white/25">
                   Duplicar
                 </button>
                 <button (click)="deleteBlock(block.id)"
-                        class="px-4 py-2 bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 text-red-700 dark:text-red-300 rounded-lg transition-colors font-medium text-sm">
+                        class="px-4 py-2 text-white rounded-lg transition-all duration-200 font-medium text-sm" style="background: rgba(220, 38, 38, 0.3);" onmouseover="this.style.background='rgba(220, 38, 38, 0.5)'" onmouseout="this.style.background='rgba(220, 38, 38, 0.3)'">
                   <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
