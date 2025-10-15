@@ -3,12 +3,8 @@ import { of, delay } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!environment.mock) {
-    return next(req);
-  }
-
   const { url, method } = req;
-
+    console.log('entro')
   if (url.includes('/me') && method === 'GET') {
     return of(new HttpResponse({
       status: 200,
@@ -45,6 +41,7 @@ export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   if (url.match(/students\/[^/]+$/) && method === 'GET') {
+      console.log('entro');
     const id = url.split('/').pop();
     const students = getMockStudents();
     const student = students.find(s => s.id === id);
