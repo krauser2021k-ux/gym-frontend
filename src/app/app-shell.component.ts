@@ -8,7 +8,7 @@ import {KeycloakService} from './core/keycloak.service';
     standalone: true,
     imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
     template: `
-        <div [class.dark]="darkMode()" class="min-h-screen transition-colors duration-200">
+        <div [class.dark]="darkMode()" class="min-h-screen transition-colors duration-200 flex flex-col">
             <nav class="glass shadow-lg">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -99,9 +99,25 @@ import {KeycloakService} from './core/keycloak.service';
                 </div>
             </nav>
 
-            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
                 <router-outlet></router-outlet>
             </main>
+
+            <footer class="py-6 border-t border-white/10 backdrop-blur-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center">
+                        <p class="text-sm text-white/60">
+                            Desarrollado por
+                            <a href="https://krauser.com.ar"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-white/80 hover:text-white transition-colors duration-200 font-medium underline decoration-white/30 hover:decoration-white/60">
+                                Krauser
+                            </a>, todos los derechos reservados.
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
     `,
     styles: [`

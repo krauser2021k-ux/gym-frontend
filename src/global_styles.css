@@ -113,4 +113,22 @@
   body.dark .btn-secondary:hover {
     background: rgba(100, 116, 139, 0.5);
   }
+
+  footer {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  body.dark footer {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  footer a {
+    @apply transition-all duration-200;
+  }
+
+  footer a:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
 }
