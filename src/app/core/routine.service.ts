@@ -20,10 +20,7 @@ export class RoutineService {
   private supabase: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseAnonKey
-    );
+
   }
 
   getRoutines(gymId: string): Observable<Routine[]> {
