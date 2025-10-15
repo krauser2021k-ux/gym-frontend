@@ -9,18 +9,18 @@ import { Exercise } from '../../shared/models';
   imports: [CommonModule],
   template: `
     <div class="space-y-6">
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h1 class="text-2xl sm:text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
         <button (click)="openCreateDialog()"
-                class="px-6 py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
+                class="px-4 sm:px-6 py-2 sm:py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
           Crear Ejercicio
         </button>
       </div>
 
-      <div class="flex space-x-4">
+      <div class="flex flex-col sm:flex-row gap-4">
         <input type="text" placeholder="Buscar ejercicios..."
                class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70">
-        <select class="px-4 py-2 border border-white/30 rounded-lg text-white glass">
+        <select class="px-4 py-2 border border-white/30 rounded-lg text-white glass w-full sm:w-auto">
           <option value="">Todas las categorías</option>
           <option value="Pecho">Pecho</option>
           <option value="Espalda">Espalda</option>

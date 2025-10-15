@@ -10,10 +10,10 @@ import { Block } from '../../shared/models';
   imports: [CommonModule],
   template: `
     <div class="space-y-6">
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-white">Bloques Preestablecidos</h1>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h1 class="text-2xl sm:text-3xl font-bold text-white">Bloques Preestablecidos</h1>
         <button (click)="createBlock()"
-                class="px-6 py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
+                class="px-4 sm:px-6 py-2 sm:py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
           Crear Bloque
         </button>
       </div>

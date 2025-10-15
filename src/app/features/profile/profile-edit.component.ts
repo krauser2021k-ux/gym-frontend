@@ -10,7 +10,7 @@ import { User } from '../../shared/models';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="space-y-6 max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold text-white">Mi Perfil</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold text-white">Mi Perfil</h1>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
@@ -19,7 +19,7 @@ import { User } from '../../shared/models';
       } @else if (user()) {
         <form (ngSubmit)="saveProfile()" class="space-y-6">
           <div class="glass rounded-lg p-6">
-            <div class="flex items-center space-x-6 mb-6">
+            <div class="flex flex-col sm:flex-row items-center sm:space-x-6 gap-4 sm:gap-0 mb-6">
               @if (user()!.photoUrl) {
                 <img [src]="user()!.photoUrl" alt="Foto de perfil"
                      class="w-24 h-24 rounded-full object-cover">
