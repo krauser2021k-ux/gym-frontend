@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiService } from '../../core/api.service';
+import { RoutineService } from '../../core/routine.service';
 import { Routine } from '../../shared/models';
 
 @Component({
@@ -12,7 +12,7 @@ import { Routine } from '../../shared/models';
     <div class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Rutinas</h1>
-        <a routerLink="/routines/builder"
+        <a routerLink="/routines/new"
            class="px-4 sm:px-6 py-2 sm:py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20 text-center">
           Crear Rutina
         </a>
@@ -98,14 +98,14 @@ export class RoutinesListComponent implements OnInit {
   loading = signal(true);
   filterType = signal<'all' | 'default' | 'personalized'>('all');
 
-  constructor(private apiService: ApiService) {}
+  constructor(private routineService: RoutineService) {}
 
   ngOnInit() {
     this.loadRoutines();
   }
 
   loadRoutines() {
-    this.apiService.get<Routine[]>('/routines').subscribe({
+    this.routineService.getRoutines('current-gym-id').subscribe({
       next: (data) => {
         this.routines.set(data);
         this.loading.set(false);
@@ -125,6 +125,31 @@ export class RoutinesListComponent implements OnInit {
   }
 
   duplicateRoutine(id: string) {
-    console.log('Duplicate routine:', id);
+    this.loading.set(true);
+    this.routineService.getRoutineById(id).subscribe({
+      next: (routine) => {
+        const duplicatedRoutine = {
+          ...routine,
+          name: `${routine.name} (Copia)`,
+          createdBy: 'current-user-id',
+          gymId: 'current-gym-id',
+          assignedTo: []
+        };
+
+        this.routineService.createRoutine(duplicatedRoutine).subscribe({
+          next: () => {
+            this.loadRoutines();
+          },
+          error: (err) => {
+            console.error('Error duplicating routine:', err);
+            this.loading.set(false);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Error loading routine:', err);
+        this.loading.set(false);
+      }
+    });
   }
 }

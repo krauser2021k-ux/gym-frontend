@@ -33,6 +33,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'routines/new',
+    loadComponent: () => import('./features/routines/routine-form.component').then(m => m.RoutineFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'my-routine',
     loadComponent: () => import('./features/routines/my-routine.component').then(m => m.MyRoutineComponent),
     canActivate: [authGuard]
