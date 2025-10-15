@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Routine, Block, DayRoutine } from '../shared/models/routine.model';
 import { Observable, from, map } from 'rxjs';
