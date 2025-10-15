@@ -52,7 +52,7 @@ import { Routine } from '../../shared/models';
                   <h3 class="text-xl font-semibold text-white">{{ routine.name }}</h3>
                   <p class="text-sm text-white/80 mt-1">{{ routine.description }}</p>
                 </div>
-                <span [class]="routine.type === 'default' ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'"
+                <span [class]="routine.type === 'default' ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300'"
                       class="px-3 py-1 text-xs font-medium rounded-full">
                   {{ routine.type === 'default' ? 'Por Defecto' : 'Personalizada' }}
                 </span>

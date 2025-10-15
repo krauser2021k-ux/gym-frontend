@@ -70,8 +70,8 @@ interface DashboardData {
 
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-md p-3">
-                <svg class="h-8 w-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex-shrink-0 bg-sky-100 dark:bg-sky-900 rounded-md p-3">
+                <svg class="h-8 w-8 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>

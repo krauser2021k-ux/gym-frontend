@@ -227,8 +227,8 @@ export class DashboardComponent implements OnInit {
   getPackColorClass(pack: string): string {
     const classes: Record<string, string> = {
       'Básico': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300',
-      'Premium': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300',
-      'Elite': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300'
+      'Premium': 'bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300',
+      'Elite': 'bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300'
     };
     return classes[pack] || 'bg-gray-100 dark:bg-gray-700';
   }
