@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { Exercise } from '../../shared/models';
 
 @Component({
   selector: 'app-exercise-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   template: `
     <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" (click)="onBackdropClick($event)">
       <div class="glass rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
@@ -178,11 +178,39 @@ import { Exercise } from '../../shared/models';
 
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-white mb-2">
-                Videos Adicionales (una URL por línea)
+                Videos Adicionales
               </label>
-              <textarea formControlName="videoUrlsInput" rows="3"
-                        class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                        placeholder="https://youtube.com/video1&#10;https://youtube.com/video2"></textarea>
+              <div class="space-y-3">
+                <div class="flex gap-2">
+                  <input type="url"
+                         [(ngModel)]="newVideoUrl"
+                         [ngModelOptions]="{standalone: true}"
+                         (keydown.enter)="addVideoUrl($event)"
+                         class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                         placeholder="https://youtube.com/video...">
+                  <button type="button"
+                          (click)="addVideoUrl()"
+                          class="px-4 py-2 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
+                    Agregar
+                  </button>
+                </div>
+                @if (videoUrls().length > 0) {
+                  <div class="flex flex-wrap gap-2">
+                    @for (url of videoUrls(); track $index) {
+                      <div class="flex items-center gap-2 px-3 py-2 glass rounded-lg border border-white/20">
+                        <span class="text-white text-sm truncate max-w-xs">{{ url }}</span>
+                        <button type="button"
+                                (click)="removeVideoUrl($index)"
+                                class="text-red-400 hover:text-red-300 transition-colors">
+                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
             </div>
 
           </div>
@@ -210,6 +238,8 @@ export class ExerciseFormComponent implements OnInit {
 
   form!: FormGroup;
   submitting = signal(false);
+  videoUrls = signal<string[]>([]);
+  newVideoUrl = '';
 
   constructor(private fb: FormBuilder) {}
 
@@ -253,9 +283,11 @@ export class ExerciseFormComponent implements OnInit {
       suggestedSets: exercise.suggestedSets || '',
       suggestedReps: exercise.suggestedReps || '',
       suggestedRest: exercise.suggestedRest || '',
-      tempo: exercise.tempo || '',
-      videoUrlsInput: exercise.videoUrls?.join('\n') || ''
+      tempo: exercise.tempo || ''
     });
+    if (exercise.videoUrls && exercise.videoUrls.length > 0) {
+      this.videoUrls.set([...exercise.videoUrls]);
+    }
   }
 
   onSubmit() {
@@ -277,7 +309,7 @@ export class ExerciseFormComponent implements OnInit {
       suggestedReps: formValue.suggestedReps || undefined,
       suggestedRest: formValue.suggestedRest || undefined,
       tempo: formValue.tempo || undefined,
-      videoUrls: this.parseLineSeparated(formValue.videoUrlsInput)
+      videoUrls: this.videoUrls()
     };
 
     if (this.exercise()) {
@@ -301,5 +333,34 @@ export class ExerciseFormComponent implements OnInit {
 
   private parseLineSeparated(value: string): string[] {
     return value ? value.split('\n').map(v => v.trim()).filter(v => v) : [];
+  }
+
+  addVideoUrl(event?: Event | KeyboardEvent): void {
+    if (event) {
+      event.preventDefault();
+    }
+
+    const url = this.newVideoUrl.trim();
+    if (url && this.isValidUrl(url)) {
+      const currentUrls = this.videoUrls();
+      if (!currentUrls.includes(url)) {
+        this.videoUrls.set([...currentUrls, url]);
+        this.newVideoUrl = '';
+      }
+    }
+  }
+
+  removeVideoUrl(index: number): void {
+    const currentUrls = this.videoUrls();
+    this.videoUrls.set(currentUrls.filter((_, i) => i !== index));
+  }
+
+  private isValidUrl(url: string): boolean {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
