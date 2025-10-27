@@ -53,6 +53,16 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'blocks/new',
+    loadComponent: () => import('./features/blocks/block-form.component').then(m => m.BlockFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'blocks/edit/:id',
+    loadComponent: () => import('./features/blocks/block-form.component').then(m => m.BlockFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'payments',
     loadComponent: () => import('./features/payments/payments-checkout.component').then(m => m.PaymentsCheckoutComponent),
     canActivate: [authGuard]

@@ -4,3 +4,4 @@ export * from './exercise.model';
 export * from './routine.model';
 export * from './payment.model';
 export * from './user.model';
+export * from './block.model';

@@ -103,11 +103,11 @@ export class BlocksListComponent implements OnInit {
   }
 
   createBlock() {
-    console.log('Create block');
+    this.router.navigate(['/blocks/new']);
   }
 
   editBlock(id: string) {
-    console.log('Edit block:', id);
+    this.router.navigate(['/blocks/edit', id]);
   }
 
   duplicateBlock(id: string) {
