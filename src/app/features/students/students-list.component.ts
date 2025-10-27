@@ -68,9 +68,9 @@ import { Student } from '../../shared/models';
                      class="flex-1 text-center px-4 py-2 text-sm sm:text-base text-white rounded-lg transition-all duration-200 font-medium glass hover:bg-white/20">
                     Ver Detalle
                   </a>
-                  <a [routerLink]="['/routines/assign', student.id]"
+                  <a [routerLink]="['/students', student.id, 'routines']"
                      class="flex-1 text-center px-4 py-2 text-sm sm:text-base text-white rounded-lg transition-all duration-200 font-medium glass hover:bg-white/25">
-                    Asignar Rutina
+                    Rutinas
                   </a>
                 </div>
               </div>

@@ -23,6 +23,16 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'students/:studentId/routines',
+    loadComponent: () => import('./features/students/student-routines.component').then(m => m.StudentRoutinesComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'students/:studentId',
+    loadComponent: () => import('./features/students/student-form.component').then(m => m.StudentFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'exercises',
     loadComponent: () => import('./features/exercises/exercises-library.component').then(m => m.ExercisesLibraryComponent),
     canActivate: [authGuard]
@@ -35,6 +45,11 @@ export const routes: Routes = [
   {
     path: 'routines/new',
     loadComponent: () => import('./features/routines/routine-form.component').then(m => m.RoutineFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'routines/assign/:studentId',
+    loadComponent: () => import('./features/routines/routine-assign.component').then(m => m.RoutineAssignComponent),
     canActivate: [authGuard]
   },
   {

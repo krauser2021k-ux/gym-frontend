@@ -198,10 +198,38 @@ export class RoutineService {
     return of(undefined).pipe(delay(300));
   }
 
+  assignRoutinesToStudent(studentId: string, routineIds: string[], assignedBy: string): Observable<void> {
+    routineIds.forEach(routineId => {
+      const routine = this.mockRoutines.find(r => r.id === routineId);
+      if (routine) {
+        if (!routine.assignedTo) {
+          routine.assignedTo = [];
+        }
+        if (!routine.assignedTo.includes(studentId)) {
+          routine.assignedTo.push(studentId);
+        }
+      }
+    });
+    return of(undefined).pipe(delay(500));
+  }
+
+  unassignRoutineFromStudent(studentId: string, routineId: string): Observable<void> {
+    const routine = this.mockRoutines.find(r => r.id === routineId);
+    if (routine && routine.assignedTo) {
+      routine.assignedTo = routine.assignedTo.filter(id => id !== studentId);
+    }
+    return of(undefined).pipe(delay(300));
+  }
+
   getStudentRoutines(studentId: string): Observable<Routine[]> {
-    const studentRoutines = this.mockRoutines.filter(r => 
+    const studentRoutines = this.mockRoutines.filter(r =>
       r.assignedTo && r.assignedTo.includes(studentId)
     );
     return of(studentRoutines).pipe(delay(300));
+  }
+
+  isRoutineAssignedToStudent(routineId: string, studentId: string): boolean {
+    const routine = this.mockRoutines.find(r => r.id === routineId);
+    return routine?.assignedTo?.includes(studentId) || false;
   }
 }
