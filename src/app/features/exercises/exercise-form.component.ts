@@ -184,32 +184,6 @@ import { Exercise } from '../../shared/models';
                         placeholder="Mantener espalda recta, No bloquear rodillas, Respirar correctamente"></textarea>
             </div>
 
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-white mb-2">
-                Contraindicaciones
-              </label>
-              <textarea formControlName="contraindications" rows="2"
-                        class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                        placeholder="Evitar con lesión de hombro, No recomendado para hipertensión..."></textarea>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-white mb-2">
-                Variaciones Más Fáciles
-              </label>
-              <textarea formControlName="easierVariations" rows="2"
-                        class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                        placeholder="Press en máquina, Flexiones en rodillas..."></textarea>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-white mb-2">
-                Variaciones Más Difíciles
-              </label>
-              <textarea formControlName="harderVariations" rows="2"
-                        class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                        placeholder="Press inclinado, Press con pausa..."></textarea>
-            </div>
 
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-white mb-2">
@@ -220,22 +194,6 @@ import { Exercise } from '../../shared/models';
                         placeholder="https://youtube.com/video1&#10;https://youtube.com/video2"></textarea>
             </div>
 
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-white mb-2">
-                Tags Personalizados (separado por comas)
-              </label>
-              <input type="text" formControlName="tagsInput"
-                     class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                     placeholder="powerlifting, rehabilitación, básico">
-            </div>
-
-            <div class="md:col-span-2">
-              <label class="flex items-center space-x-2">
-                <input type="checkbox" formControlName="isPublic"
-                       class="w-4 h-4 rounded border-white/30">
-                <span class="text-sm font-medium text-white">Compartir con otros gimnasios</span>
-              </label>
-            </div>
           </div>
 
           <div class="flex justify-end gap-4 pt-4 border-t border-white/20">
@@ -287,12 +245,7 @@ export class ExerciseFormComponent implements OnInit {
       suggestedRest: [''],
       tempo: [''],
       keyInstructionsInput: [''],
-      contraindications: [''],
-      easierVariations: [''],
-      harderVariations: [''],
-      videoUrlsInput: [''],
-      tagsInput: [''],
-      isPublic: [false]
+      videoUrlsInput: ['']
     });
   }
 
@@ -312,12 +265,7 @@ export class ExerciseFormComponent implements OnInit {
       suggestedRest: exercise.suggestedRest || '',
       tempo: exercise.tempo || '',
       keyInstructionsInput: exercise.keyInstructions?.join(', ') || '',
-      contraindications: exercise.contraindications || '',
-      easierVariations: exercise.easierVariations || '',
-      harderVariations: exercise.harderVariations || '',
-      videoUrlsInput: exercise.videoUrls?.join('\n') || '',
-      tagsInput: exercise.tags?.join(', ') || '',
-      isPublic: exercise.isPublic || false
+      videoUrlsInput: exercise.videoUrls?.join('\n') || ''
     });
   }
 
@@ -341,12 +289,7 @@ export class ExerciseFormComponent implements OnInit {
       suggestedRest: formValue.suggestedRest || undefined,
       tempo: formValue.tempo || undefined,
       keyInstructions: this.parseCommaSeparated(formValue.keyInstructionsInput),
-      contraindications: formValue.contraindications || undefined,
-      easierVariations: formValue.easierVariations || undefined,
-      harderVariations: formValue.harderVariations || undefined,
-      videoUrls: this.parseLineSeparated(formValue.videoUrlsInput),
-      tags: this.parseCommaSeparated(formValue.tagsInput),
-      isPublic: formValue.isPublic
+      videoUrls: this.parseLineSeparated(formValue.videoUrlsInput)
     };
 
     if (this.exercise()) {
