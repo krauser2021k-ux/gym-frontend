@@ -84,7 +84,7 @@ import { Student } from '../../shared/models';
 })
 export class StudentsListComponent implements OnInit {
   students = signal<Student[]>([]);
-  loading = signal(true);
+  loading = signal(false);
 
   constructor(private studentService: StudentService) {}
 
