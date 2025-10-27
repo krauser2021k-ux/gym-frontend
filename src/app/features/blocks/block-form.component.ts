@@ -388,10 +388,20 @@ export class BlockFormComponent implements OnInit {
   }
 
   selectExercise(exercise: Exercise): void {
-    this.selectedExercise.set(exercise);
-    this.exerciseDetailsForm.reset();
-    this.showExerciseModal.set(false);
-    this.showExerciseDetailsModal.set(true);
+    const currentList = this.exercisesList();
+    const exerciseData: ExerciseFormData = {
+      exerciseId: exercise.id,
+      exerciseName: exercise.name,
+      sets: exercise.suggestedSets ? parseInt(exercise.suggestedSets) : undefined,
+      reps: exercise.suggestedReps,
+      rest: exercise.suggestedRest,
+      weight: undefined,
+      notes: undefined,
+      order: currentList.length + 1
+    };
+
+    this.exercisesList.set([...currentList, exerciseData]);
+    this.closeExerciseModal();
   }
 
   closeExerciseDetailsModal(): void {
