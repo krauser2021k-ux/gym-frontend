@@ -70,7 +70,7 @@ import { Exercise } from '../../shared/models';
 
             <div>
               <label class="block text-sm font-medium text-white mb-2">
-                Nivel de Dificultad <span class="text-red-400">*</span>
+                Nivel de Dificultad
               </label>
               <select formControlName="difficulty"
                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass">
@@ -79,9 +79,6 @@ import { Exercise } from '../../shared/models';
                 <option value="intermediate">Intermedio</option>
                 <option value="advanced">Avanzado</option>
               </select>
-              @if (form.get('difficulty')?.invalid && form.get('difficulty')?.touched) {
-                <p class="mt-1 text-sm text-red-400">El nivel de dificultad es obligatorio</p>
-              }
             </div>
 
             <div>
@@ -107,7 +104,7 @@ import { Exercise } from '../../shared/models';
 
             <div>
               <label class="block text-sm font-medium text-white mb-2">
-                Tipo de Ejercicio
+                Tipo de Ejercicio <span class="text-red-400">*</span>
               </label>
               <select formControlName="exerciseType"
                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass">
@@ -119,6 +116,9 @@ import { Exercise } from '../../shared/models';
                 <option value="mobility">Movilidad</option>
                 <option value="functional">Funcional</option>
               </select>
+              @if (form.get('exerciseType')?.invalid && form.get('exerciseType')?.touched) {
+                <p class="mt-1 text-sm text-red-400">El tipo de ejercicio es obligatorio</p>
+              }
             </div>
 
             <div>
@@ -255,10 +255,10 @@ export class ExerciseFormComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      difficulty: ['', Validators.required],
+      difficulty: [''],
       videoUrl: ['', Validators.required],
       thumbnailUrl: [''],
-      exerciseType: [''],
+      exerciseType: ['', Validators.required],
       equipmentInput: [''],
       muscleGroupsInput: [''],
       suggestedSets: [''],
