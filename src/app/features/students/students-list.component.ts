@@ -1,13 +1,14 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { StudentService } from '../../core/student.service';
 import { Student } from '../../shared/models';
 
 @Component({
   selector: 'app-students-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   template: `
     <div class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -18,13 +19,67 @@ import { Student } from '../../shared/models';
         </a>
       </div>
 
+      <div class="glass rounded-lg p-4">
+        <div class="relative">
+          <input type="text"
+                 [(ngModel)]="searchTerm"
+                 (input)="onSearchChange()"
+                 placeholder="Buscar por nombre o apellido..."
+                 class="w-full px-4 py-3 pl-11 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          @if (searchTerm) {
+            <button (click)="clearSearch()"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          }
+        </div>
+        @if (filteredStudents().length !== students().length) {
+          <p class="mt-2 text-sm text-white/60">
+            Mostrando {{ filteredStudents().length }} de {{ students().length }} alumno(s)
+          </p>
+        }
+      </div>
+
       @if (loading()) {
         <div class="flex justify-center items-center py-12">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
+      } @else if (filteredStudents().length === 0) {
+        <div class="glass rounded-lg p-12">
+          <div class="text-center">
+            <svg class="mx-auto h-16 w-16 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <h3 class="mt-4 text-xl font-medium text-white">
+              @if (searchTerm) {
+                No se encontraron alumnos
+              } @else {
+                No hay alumnos registrados
+              }
+            </h3>
+            <p class="mt-2 text-white/60">
+              @if (searchTerm) {
+                No hay alumnos que coincidan con "{{ searchTerm }}"
+              } @else {
+                Comienza agregando tu primer alumno
+              }
+            </p>
+            @if (!searchTerm) {
+              <a routerLink="/students/new"
+                 class="inline-block mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-200 font-medium">
+                Agregar Primer Alumno
+              </a>
+            }
+          </div>
+        </div>
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          @for (student of students(); track student.id) {
+          @for (student of filteredStudents(); track student.id) {
             <div class="glass rounded-lg hover:bg-white/25 transition-all duration-200 overflow-hidden">
               <div class="p-6">
                 <div class="flex items-center space-x-4">
@@ -85,6 +140,24 @@ import { Student } from '../../shared/models';
 export class StudentsListComponent implements OnInit {
   students = signal<Student[]>([]);
   loading = signal(false);
+  searchTerm = '';
+
+  filteredStudents = computed(() => {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      return this.students();
+    }
+
+    return this.students().filter(student => {
+      const firstName = student.firstName.toLowerCase();
+      const lastName = student.lastName.toLowerCase();
+      const fullName = `${firstName} ${lastName}`;
+
+      return firstName.includes(term) ||
+             lastName.includes(term) ||
+             fullName.includes(term);
+    });
+  });
 
   constructor(private studentService: StudentService) {}
 
@@ -112,5 +185,12 @@ export class StudentsListComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  onSearchChange() {
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
   }
 }
