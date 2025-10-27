@@ -175,15 +175,6 @@ import { Exercise } from '../../shared/models';
                      placeholder="3-1-1-0">
             </div>
 
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-white mb-2">
-                Instrucciones Clave (separado por comas)
-              </label>
-              <textarea formControlName="keyInstructionsInput" rows="3"
-                        class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
-                        placeholder="Mantener espalda recta, No bloquear rodillas, Respirar correctamente"></textarea>
-            </div>
-
 
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-white mb-2">
@@ -244,7 +235,6 @@ export class ExerciseFormComponent implements OnInit {
       suggestedReps: [''],
       suggestedRest: [''],
       tempo: [''],
-      keyInstructionsInput: [''],
       videoUrlsInput: ['']
     });
   }
@@ -264,7 +254,6 @@ export class ExerciseFormComponent implements OnInit {
       suggestedReps: exercise.suggestedReps || '',
       suggestedRest: exercise.suggestedRest || '',
       tempo: exercise.tempo || '',
-      keyInstructionsInput: exercise.keyInstructions?.join(', ') || '',
       videoUrlsInput: exercise.videoUrls?.join('\n') || ''
     });
   }
@@ -288,7 +277,6 @@ export class ExerciseFormComponent implements OnInit {
       suggestedReps: formValue.suggestedReps || undefined,
       suggestedRest: formValue.suggestedRest || undefined,
       tempo: formValue.tempo || undefined,
-      keyInstructions: this.parseCommaSeparated(formValue.keyInstructionsInput),
       videoUrls: this.parseLineSeparated(formValue.videoUrlsInput)
     };
 
