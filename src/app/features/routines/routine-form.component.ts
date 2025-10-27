@@ -179,11 +179,30 @@ interface DayFormData {
                         <div class="mt-3 space-y-2">
                           @for (exercise of getExercisesForBlock($index, blockIdx); track exIdx; let exIdx = $index) {
                             <div class="flex items-center justify-between bg-white/5 rounded p-2">
-                              <span class="text-white text-sm">{{ exercise.exerciseName }}</span>
-                              <span class="text-white/70 text-xs">
-                                @if (exercise.sets) { {{ exercise.sets }} series }
-                                @if (exercise.reps) { × {{ exercise.reps }} }
-                              </span>
+                              <div class="flex-1">
+                                <span class="text-white text-sm">{{ exercise.exerciseName }}</span>
+                                <div class="text-white/70 text-xs mt-1">
+                                  @if (exercise.sets) { {{ exercise.sets }} series }
+                                  @if (exercise.reps) { × {{ exercise.reps }} }
+                                  @if (exercise.rest) { • {{ exercise.rest }} descanso }
+                                </div>
+                              </div>
+                              <div class="flex gap-2">
+                                <button type="button"
+                                        (click)="editExercise($index, blockIdx, exIdx)"
+                                        class="text-blue-400 hover:text-blue-300 transition-colors">
+                                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                  </svg>
+                                </button>
+                                <button type="button"
+                                        (click)="removeExercise($index, blockIdx, exIdx)"
+                                        class="text-red-400 hover:text-red-300 transition-colors">
+                                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>
                           }
                         </div>
@@ -278,7 +297,12 @@ interface DayFormData {
            (click)="closeExerciseDetailsModal()">
         <div class="glass rounded-lg p-6 max-w-2xl w-full"
              (click)="$event.stopPropagation()">
-          <h3 class="text-xl font-semibold text-white mb-4">Detalles del Ejercicio</h3>
+          <h3 class="text-xl font-semibold text-white mb-4">
+            {{ isEditingExercise ? 'Editar Ejercicio' : 'Detalles del Ejercicio' }}
+          </h3>
+          @if (selectedExercise) {
+            <p class="text-white/70 text-sm mb-4">{{ selectedExercise.name }}</p>
+          }
 
           <form [formGroup]="exerciseDetailsForm" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
@@ -328,7 +352,7 @@ interface DayFormData {
               <button type="button"
                       (click)="confirmExerciseDetails()"
                       class="flex-1 px-6 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition-all duration-200">
-                Agregar Ejercicio
+                {{ isEditingExercise ? 'Guardar Cambios' : 'Agregar Ejercicio' }}
               </button>
               <button type="button"
                       (click)="closeExerciseDetailsModal()"
@@ -413,6 +437,8 @@ export class RoutineFormComponent implements OnInit {
   currentDayIndex = 0;
   currentBlockIndex = 0;
   selectedExercise: Exercise | null = null;
+  editingExerciseIndex: number = -1;
+  isEditingExercise = false;
 
   constructor(
     private fb: FormBuilder,
@@ -572,15 +598,29 @@ export class RoutineFormComponent implements OnInit {
   }
 
   selectExercise(exercise: Exercise): void {
-    this.selectedExercise = exercise;
-    this.exerciseDetailsForm.reset();
-    this.showExerciseModal.set(false);
-    this.showExerciseDetailsModal.set(true);
+    const blockForm = this.getBlocksArray(this.currentDayIndex).at(this.currentBlockIndex);
+    const exercisesArray = blockForm.get('exercises') as FormArray;
+
+    const exerciseData = {
+      exerciseId: exercise.id,
+      exerciseName: exercise.name,
+      sets: exercise.suggestedSets ? parseInt(exercise.suggestedSets) : undefined,
+      reps: exercise.suggestedReps || undefined,
+      rest: exercise.suggestedRest || undefined,
+      weight: undefined,
+      notes: undefined,
+      order: exercisesArray.length
+    };
+
+    exercisesArray.push(this.fb.control(exerciseData));
+    this.closeExerciseModal();
   }
 
   closeExerciseDetailsModal(): void {
     this.showExerciseDetailsModal.set(false);
     this.selectedExercise = null;
+    this.isEditingExercise = false;
+    this.editingExerciseIndex = -1;
   }
 
   confirmExerciseDetails(): void {
@@ -589,14 +629,25 @@ export class RoutineFormComponent implements OnInit {
     const blockForm = this.getBlocksArray(this.currentDayIndex).at(this.currentBlockIndex);
     const exercisesArray = blockForm.get('exercises') as FormArray;
 
-    const exerciseData = {
-      exerciseId: this.selectedExercise.id,
-      exerciseName: this.selectedExercise.name,
-      ...this.exerciseDetailsForm.value,
-      order: exercisesArray.length
-    };
+    if (this.isEditingExercise && this.editingExerciseIndex >= 0) {
+      const currentExercise = exercisesArray.at(this.editingExerciseIndex).value;
+      const updatedExerciseData = {
+        exerciseId: currentExercise.exerciseId,
+        exerciseName: currentExercise.exerciseName,
+        ...this.exerciseDetailsForm.value,
+        order: currentExercise.order
+      };
+      exercisesArray.at(this.editingExerciseIndex).setValue(updatedExerciseData);
+    } else {
+      const exerciseData = {
+        exerciseId: this.selectedExercise.id,
+        exerciseName: this.selectedExercise.name,
+        ...this.exerciseDetailsForm.value,
+        order: exercisesArray.length
+      };
+      exercisesArray.push(this.fb.control(exerciseData));
+    }
 
-    exercisesArray.push(this.fb.control(exerciseData));
     this.closeExerciseDetailsModal();
   }
 
@@ -672,6 +723,36 @@ export class RoutineFormComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  editExercise(dayIndex: number, blockIndex: number, exerciseIndex: number): void {
+    this.currentDayIndex = dayIndex;
+    this.currentBlockIndex = blockIndex;
+    this.editingExerciseIndex = exerciseIndex;
+    this.isEditingExercise = true;
+
+    const blockForm = this.getBlocksArray(dayIndex).at(blockIndex);
+    const exercisesArray = blockForm.get('exercises') as FormArray;
+    const exerciseData = exercisesArray.at(exerciseIndex).value;
+
+    const exercise = this.availableExercises().find(ex => ex.id === exerciseData.exerciseId);
+    this.selectedExercise = exercise || null;
+
+    this.exerciseDetailsForm.patchValue({
+      sets: exerciseData.sets || null,
+      reps: exerciseData.reps || '',
+      rest: exerciseData.rest || '',
+      weight: exerciseData.weight || '',
+      notes: exerciseData.notes || ''
+    });
+
+    this.showExerciseDetailsModal.set(true);
+  }
+
+  removeExercise(dayIndex: number, blockIndex: number, exerciseIndex: number): void {
+    const blockForm = this.getBlocksArray(dayIndex).at(blockIndex);
+    const exercisesArray = blockForm.get('exercises') as FormArray;
+    exercisesArray.removeAt(exerciseIndex);
   }
 
   goBack(): void {
