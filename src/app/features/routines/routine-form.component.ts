@@ -109,7 +109,7 @@ interface DayFormData {
               <div class="glass rounded-lg p-4">
                 <div class="flex items-center justify-between mb-4">
                   <h3 class="text-lg font-semibold text-white">
-                    {{ getDayName(dayControl.get('day')?.value) }}
+                    Día {{ dayControl.get('day')?.value }}
                   </h3>
                   <button type="button"
                           (click)="removeDay($index)"
@@ -126,13 +126,13 @@ interface DayFormData {
                   </label>
                   <select [formControl]="getDayControl(dayControl)"
                           class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all">
-                    <option [value]="1" class="bg-gray-800">Lunes</option>
-                    <option [value]="2" class="bg-gray-800">Martes</option>
-                    <option [value]="3" class="bg-gray-800">Miércoles</option>
-                    <option [value]="4" class="bg-gray-800">Jueves</option>
-                    <option [value]="5" class="bg-gray-800">Viernes</option>
-                    <option [value]="6" class="bg-gray-800">Sábado</option>
-                    <option [value]="7" class="bg-gray-800">Domingo</option>
+                    <option [value]="1" class="bg-gray-800">Día 1</option>
+                    <option [value]="2" class="bg-gray-800">Día 2</option>
+                    <option [value]="3" class="bg-gray-800">Día 3</option>
+                    <option [value]="4" class="bg-gray-800">Día 4</option>
+                    <option [value]="5" class="bg-gray-800">Día 5</option>
+                    <option [value]="6" class="bg-gray-800">Día 6</option>
+                    <option [value]="7" class="bg-gray-800">Día 7</option>
                   </select>
                 </div>
 
