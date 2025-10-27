@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RoutineService } from '../../core/routine.service';
 import { Exercise } from '../../shared/models/exercise.model';
 import { ApiService } from '../../core/api.service';
+import { BlockService } from '../../core/block.service';
+import { BlockPreset } from '../../shared/models';
 
 interface ExerciseFormData {
   exerciseId: string;
@@ -137,11 +139,18 @@ interface DayFormData {
                 <div class="space-y-3">
                   <div class="flex items-center justify-between">
                     <h4 class="text-md font-medium text-white/90">Bloques</h4>
-                    <button type="button"
-                            (click)="addBlock($index)"
-                            class="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-200">
-                      + Agregar Bloque
-                    </button>
+                    <div class="flex gap-2">
+                      <button type="button"
+                              (click)="openBlockSelectionModal($index)"
+                              class="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-200">
+                        + Usar Preestablecido
+                      </button>
+                      <button type="button"
+                              (click)="addBlock($index)"
+                              class="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-200">
+                        + Crear Nuevo
+                      </button>
+                    </div>
                   </div>
 
                   @for (blockControl of getBlocksArray($index).controls; track blockIdx; let blockIdx = $index) {
@@ -331,6 +340,59 @@ interface DayFormData {
         </div>
       </div>
     }
+
+    @if (showBlockSelectionModal()) {
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+           (click)="closeBlockSelectionModal()">
+        <div class="glass rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto"
+             (click)="$event.stopPropagation()">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-semibold text-white">Seleccionar Bloque Preestablecido</h3>
+            <button (click)="closeBlockSelectionModal()"
+                    class="text-white/80 hover:text-white transition-colors">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="mb-4">
+            <input type="text"
+                   [(ngModel)]="blockSearchTerm"
+                   [ngModelOptions]="{standalone: true}"
+                   (input)="filterBlocks()"
+                   placeholder="Buscar bloques..."
+                   class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all">
+          </div>
+
+          <div class="space-y-3 max-h-96 overflow-y-auto">
+            @for (block of filteredBlocks(); track block.id) {
+              <div class="glass rounded-lg p-4 cursor-pointer hover:bg-white/10 transition-all"
+                   (click)="selectPresetBlock(block)">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">{{ block.name }}</h4>
+                    @if (block.description) {
+                      <p class="text-white/70 text-sm mt-1">{{ block.description }}</p>
+                    }
+                    <div class="flex items-center gap-2 mt-2">
+                      <span class="px-2 py-1 text-xs rounded bg-white/10 text-white/80">
+                        {{ block.exercises.length }} ejercicio{{ block.exercises.length !== 1 ? 's' : '' }}
+                      </span>
+                    </div>
+                  </div>
+                  <svg class="h-5 w-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            } @empty {
+              <p class="text-center text-white/50 py-8">No se encontraron bloques preestablecidos</p>
+            }
+          </div>
+        </div>
+      </div>
+    }
   `,
   styles: []
 })
@@ -341,9 +403,13 @@ export class RoutineFormComponent implements OnInit {
   errorMessage = signal<string | null>(null);
   showExerciseModal = signal(false);
   showExerciseDetailsModal = signal(false);
+  showBlockSelectionModal = signal(false);
   availableExercises = signal<Exercise[]>([]);
   filteredExercises = signal<Exercise[]>([]);
+  availableBlocks = signal<BlockPreset[]>([]);
+  filteredBlocks = signal<BlockPreset[]>([]);
   exerciseSearchTerm = '';
+  blockSearchTerm = '';
   currentDayIndex = 0;
   currentBlockIndex = 0;
   selectedExercise: Exercise | null = null;
@@ -352,11 +418,13 @@ export class RoutineFormComponent implements OnInit {
     private fb: FormBuilder,
     private routineService: RoutineService,
     private apiService: ApiService,
+    private blockService: BlockService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.initForms();
+    this.loadBlocks();
     this.loadExercises();
   }
 
@@ -395,6 +463,65 @@ export class RoutineFormComponent implements OnInit {
         console.error('Error loading exercises:', error);
       }
     });
+  }
+
+  private loadBlocks(): void {
+    this.blockService.getBlocks().subscribe({
+      next: (blocks) => {
+        this.availableBlocks.set(blocks);
+        this.filteredBlocks.set(blocks);
+      },
+      error: (error) => {
+        console.error('Error loading blocks:', error);
+      }
+    });
+  }
+
+  openBlockSelectionModal(dayIndex: number): void {
+    this.currentDayIndex = dayIndex;
+    this.showBlockSelectionModal.set(true);
+  }
+
+  closeBlockSelectionModal(): void {
+    this.showBlockSelectionModal.set(false);
+    this.blockSearchTerm = '';
+    this.filteredBlocks.set(this.availableBlocks());
+  }
+
+  filterBlocks(): void {
+    const term = this.blockSearchTerm.toLowerCase();
+    const filtered = this.availableBlocks().filter(block =>
+      block.name.toLowerCase().includes(term) ||
+      (block.description && block.description.toLowerCase().includes(term))
+    );
+    this.filteredBlocks.set(filtered);
+  }
+
+  selectPresetBlock(block: BlockPreset): void {
+    const exercises = this.availableExercises();
+    const exercisesWithNames = block.exercises.map(ex => {
+      const exercise = exercises.find(e => e.id === ex.exerciseId);
+      return {
+        exerciseId: ex.exerciseId,
+        exerciseName: exercise?.name || 'Ejercicio desconocido',
+        sets: ex.sets,
+        reps: ex.reps,
+        rest: ex.rest,
+        weight: ex.weight,
+        notes: ex.notes,
+        order: ex.order
+      };
+    });
+
+    const blockForm = this.fb.group({
+      name: [block.name, [Validators.required]],
+      description: [block.description || ''],
+      order: [this.getBlocksArray(this.currentDayIndex).length],
+      exercises: this.fb.array(exercisesWithNames.map(ex => this.fb.control(ex)))
+    });
+
+    this.getBlocksArray(this.currentDayIndex).push(blockForm);
+    this.closeBlockSelectionModal();
   }
 
   addDay(): void {
