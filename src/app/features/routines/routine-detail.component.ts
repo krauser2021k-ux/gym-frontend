@@ -2,7 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoutineService } from '../../core/routine.service';
-import { Routine } from '../../shared/models';
+import { ApiService } from '../../core/api.service';
+import { Routine, Exercise } from '../../shared/models';
 
 @Component({
   selector: 'app-routine-detail',
@@ -102,51 +103,71 @@ import { Routine } from '../../shared/models';
                       @if (block.exercises && block.exercises.length > 0) {
                         <div class="space-y-3">
                           @for (exercise of block.exercises; track exercise.exerciseId) {
-                            <div class="bg-white/10 rounded-lg p-4 border border-white/10">
-                              <div class="flex justify-between items-start mb-3">
-                                <h5 class="text-base font-semibold text-white">
-                                  Ejercicio {{ exercise.order }}
-                                </h5>
-                              </div>
+                            @if (getExerciseDetails(exercise.exerciseId); as exerciseDetail) {
+                              <div class="bg-white/10 rounded-lg overflow-hidden border border-white/10">
+                                @if (exerciseDetail.thumbnailUrl) {
+                                  <img [src]="exerciseDetail.thumbnailUrl" [alt]="exerciseDetail.name"
+                                       class="w-full h-40 object-cover">
+                                }
+                                <div class="p-4">
+                                  <div class="mb-3">
+                                    <h5 class="text-lg font-bold text-white mb-1">
+                                      {{ exerciseDetail.name }}
+                                    </h5>
+                                    @if (exerciseDetail.description) {
+                                      <p class="text-sm text-white/60 line-clamp-2">{{ exerciseDetail.description }}</p>
+                                    }
+                                    @if (exerciseDetail.muscleGroups && exerciseDetail.muscleGroups.length > 0) {
+                                      <div class="flex flex-wrap gap-1 mt-2">
+                                        @for (muscle of exerciseDetail.muscleGroups; track muscle) {
+                                          <span class="px-2 py-1 text-white/80 text-xs rounded-full bg-green-500/20">
+                                            {{ muscle }}
+                                          </span>
+                                        }
+                                      </div>
+                                    }
+                                  </div>
 
-                              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                @if (exercise.sets) {
-                                  <div class="bg-white/5 rounded-lg p-3 text-center">
-                                    <div class="text-xs text-white/60 mb-1">Series</div>
-                                    <div class="text-xl font-bold text-blue-400">{{ exercise.sets }}</div>
+                                  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    @if (exercise.sets) {
+                                      <div class="bg-white/5 rounded-lg p-3 text-center">
+                                        <div class="text-xs text-white/60 mb-1">Series</div>
+                                        <div class="text-xl font-bold text-blue-400">{{ exercise.sets }}</div>
+                                      </div>
+                                    }
+                                    @if (exercise.reps) {
+                                      <div class="bg-white/5 rounded-lg p-3 text-center">
+                                        <div class="text-xs text-white/60 mb-1">Repeticiones</div>
+                                        <div class="text-xl font-bold text-purple-400">{{ exercise.reps }}</div>
+                                      </div>
+                                    }
+                                    @if (exercise.weight) {
+                                      <div class="bg-white/5 rounded-lg p-3 text-center">
+                                        <div class="text-xs text-white/60 mb-1">Peso</div>
+                                        <div class="text-xl font-bold text-blue-400">{{ exercise.weight }}</div>
+                                      </div>
+                                    }
+                                    @if (exercise.rest) {
+                                      <div class="bg-white/5 rounded-lg p-3 text-center">
+                                        <div class="text-xs text-white/60 mb-1">Descanso</div>
+                                        <div class="text-xl font-bold text-purple-400">{{ exercise.rest }}</div>
+                                      </div>
+                                    }
                                   </div>
-                                }
-                                @if (exercise.reps) {
-                                  <div class="bg-white/5 rounded-lg p-3 text-center">
-                                    <div class="text-xs text-white/60 mb-1">Repeticiones</div>
-                                    <div class="text-xl font-bold text-purple-400">{{ exercise.reps }}</div>
-                                  </div>
-                                }
-                                @if (exercise.weight) {
-                                  <div class="bg-white/5 rounded-lg p-3 text-center">
-                                    <div class="text-xs text-white/60 mb-1">Peso</div>
-                                    <div class="text-xl font-bold text-blue-400">{{ exercise.weight }}</div>
-                                  </div>
-                                }
-                                @if (exercise.rest) {
-                                  <div class="bg-white/5 rounded-lg p-3 text-center">
-                                    <div class="text-xs text-white/60 mb-1">Descanso</div>
-                                    <div class="text-xl font-bold text-purple-400">{{ exercise.rest }}</div>
-                                  </div>
-                                }
-                              </div>
 
-                              @if (exercise.notes) {
-                                <div class="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                                  <div class="flex items-start">
-                                    <svg class="w-4 h-4 text-blue-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p class="text-sm text-blue-300">{{ exercise.notes }}</p>
-                                  </div>
+                                  @if (exercise.notes) {
+                                    <div class="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                                      <div class="flex items-start">
+                                        <svg class="w-4 h-4 text-blue-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                        </svg>
+                                        <p class="text-sm text-blue-300">{{ exercise.notes }}</p>
+                                      </div>
+                                    </div>
+                                  }
                                 </div>
-                              }
-                            </div>
+                              </div>
+                            }
                           }
                         </div>
                       } @else {
@@ -189,19 +210,32 @@ import { Routine } from '../../shared/models';
 export class RoutineDetailComponent implements OnInit {
   routine = signal<Routine | undefined>(undefined);
   loading = signal(true);
+  exercisesMap = signal<Map<string, Exercise>>(new Map());
 
   private routineId: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private routineService: RoutineService
+    private routineService: RoutineService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
     this.routineId = this.route.snapshot.paramMap.get('routineId') || '';
     if (this.routineId) {
-      this.loadRoutine();
+      this.apiService.get<Exercise[]>('/exercises').subscribe({
+        next: (exercises) => {
+          const map = new Map<string, Exercise>();
+          exercises.forEach(ex => map.set(ex.id, ex));
+          this.exercisesMap.set(map);
+          this.loadRoutine();
+        },
+        error: (err) => {
+          console.error('Error loading exercises:', err);
+          this.loadRoutine();
+        }
+      });
     }
   }
 
@@ -216,6 +250,10 @@ export class RoutineDetailComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  getExerciseDetails(exerciseId: string): Exercise | undefined {
+    return this.exercisesMap().get(exerciseId);
   }
 
   getDayName(day: number): string {

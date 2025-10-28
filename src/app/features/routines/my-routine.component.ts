@@ -69,26 +69,56 @@ interface DayCompletion {
                   }
                   <div class="space-y-4">
                     @for (ex of block.exercises; track ex.exerciseId) {
-                      <div class="bg-white/10 rounded-xl p-5 border border-white/10 hover:border-white/30 transition-all duration-200"
-                           [class.ring-2]="isExerciseCompleted(ex.exerciseId)"
-                           [class.ring-green-400]="isExerciseCompleted(ex.exerciseId)">
-                        <div class="flex justify-between items-start mb-4">
-                          <h4 class="text-xl font-bold text-white">Ejercicio {{ ex.order }}</h4>
-                          <button (click)="toggleExerciseCompletion(ex.exerciseId)"
-                                  [ngClass]="{
-                                    'bg-green-500 scale-110': isExerciseCompleted(ex.exerciseId),
-                                    'bg-white/20 hover:bg-white/30': !isExerciseCompleted(ex.exerciseId)
-                                  }"
-                                  class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg">
-                            @if (isExerciseCompleted(ex.exerciseId)) {
-                              <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                              </svg>
-                            } @else {
-                              <div class="w-6 h-6 rounded-full border-3 border-white/50"></div>
-                            }
-                          </button>
-                        </div>
+                      @if (getExerciseDetails(ex.exerciseId); as exercise) {
+                        <div class="bg-white/10 rounded-xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-200"
+                             [class.ring-2]="isExerciseCompleted(ex.exerciseId)"
+                             [class.ring-green-400]="isExerciseCompleted(ex.exerciseId)">
+                          @if (exercise.thumbnailUrl) {
+                            <div class="relative h-48 w-full">
+                              <img [src]="exercise.thumbnailUrl" [alt]="exercise.name"
+                                   class="w-full h-full object-cover">
+                              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                              @if (isExerciseCompleted(ex.exerciseId)) {
+                                <div class="absolute top-3 right-3 bg-green-500 rounded-full p-2">
+                                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                  </svg>
+                                </div>
+                              }
+                            </div>
+                          }
+                          <div class="p-5">
+                            <div class="flex justify-between items-start mb-4">
+                              <div class="flex-1">
+                                <h4 class="text-xl font-bold text-white mb-1">{{ exercise.name }}</h4>
+                                @if (exercise.description) {
+                                  <p class="text-sm text-white/60 line-clamp-2">{{ exercise.description }}</p>
+                                }
+                                @if (exercise.muscleGroups && exercise.muscleGroups.length > 0) {
+                                  <div class="flex flex-wrap gap-1 mt-2">
+                                    @for (muscle of exercise.muscleGroups; track muscle) {
+                                      <span class="px-2 py-1 text-white/80 text-xs rounded-full bg-green-500/20">
+                                        {{ muscle }}
+                                      </span>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                              <button (click)="toggleExerciseCompletion(ex.exerciseId)"
+                                      [ngClass]="{
+                                        'bg-green-500 scale-110': isExerciseCompleted(ex.exerciseId),
+                                        'bg-white/20 hover:bg-white/30': !isExerciseCompleted(ex.exerciseId)
+                                      }"
+                                      class="ml-4 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg flex-shrink-0">
+                                @if (isExerciseCompleted(ex.exerciseId)) {
+                                  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                  </svg>
+                                } @else {
+                                  <div class="w-6 h-6 rounded-full border-3 border-white/50"></div>
+                                }
+                              </button>
+                            </div>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                           @if (ex.sets) {
                             <div class="bg-white/5 rounded-lg p-3 text-center">
@@ -137,7 +167,9 @@ interface DayCompletion {
                             <p class="flex-1 text-sm text-white/80 italic">{{ getExerciseProgress(ex.exerciseId)?.comment }}</p>
                           }
                         </div>
-                      </div>
+                          </div>
+                        </div>
+                      }
                     }
                   </div>
                 </div>
@@ -206,6 +238,7 @@ export class MyRoutineComponent implements OnInit {
   exerciseProgress: Record<string, ExerciseProgress> = {};
   completedDays: Set<number> = new Set();
   showSuccessMessage = signal(false);
+  exercisesMap = signal<Map<string, Exercise>>(new Map());
 
   currentDayOfWeek = computed(() => {
     const today = new Date().getDay();
@@ -215,6 +248,21 @@ export class MyRoutineComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    this.apiService.get<Exercise[]>('/exercises').subscribe({
+      next: (exercises) => {
+        const map = new Map<string, Exercise>();
+        exercises.forEach(ex => map.set(ex.id, ex));
+        this.exercisesMap.set(map);
+        this.loadRoutine();
+      },
+      error: (err) => {
+        console.error('Error loading exercises:', err);
+        this.loadRoutine();
+      }
+    });
+  }
+
+  loadRoutine() {
     this.apiService.get<Routine[]>('/routines').subscribe({
       next: (routines) => {
         const myRoutine = routines.find(r => r.assignedTo && r.assignedTo.includes('student-1'));
@@ -228,6 +276,10 @@ export class MyRoutineComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  getExerciseDetails(exerciseId: string): Exercise | undefined {
+    return this.exercisesMap().get(exerciseId);
   }
 
   initializeExerciseProgress() {
