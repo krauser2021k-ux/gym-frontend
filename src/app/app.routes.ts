@@ -53,6 +53,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'routines/:routineId',
+    loadComponent: () => import('./features/routines/routine-detail.component').then(m => m.RoutineDetailComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'my-routine',
     loadComponent: () => import('./features/routines/my-routine.component').then(m => m.MyRoutineComponent),
     canActivate: [authGuard]
