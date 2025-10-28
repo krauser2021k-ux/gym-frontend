@@ -126,13 +126,13 @@ interface DayFormData {
                   </label>
                   <select [formControl]="getDayControl(dayControl)"
                           class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all">
-                    <option [value]="1" class="bg-gray-800">Día 1</option>
-                    <option [value]="2" class="bg-gray-800">Día 2</option>
-                    <option [value]="3" class="bg-gray-800">Día 3</option>
-                    <option [value]="4" class="bg-gray-800">Día 4</option>
-                    <option [value]="5" class="bg-gray-800">Día 5</option>
-                    <option [value]="6" class="bg-gray-800">Día 6</option>
-                    <option [value]="7" class="bg-gray-800">Día 7</option>
+                    <option [value]="1" [disabled]="isDaySelected(1) && getDayControl(dayControl).value !== 1" class="bg-gray-800">Día 1</option>
+                    <option [value]="2" [disabled]="isDaySelected(2) && getDayControl(dayControl).value !== 2" class="bg-gray-800">Día 2</option>
+                    <option [value]="3" [disabled]="isDaySelected(3) && getDayControl(dayControl).value !== 3" class="bg-gray-800">Día 3</option>
+                    <option [value]="4" [disabled]="isDaySelected(4) && getDayControl(dayControl).value !== 4" class="bg-gray-800">Día 4</option>
+                    <option [value]="5" [disabled]="isDaySelected(5) && getDayControl(dayControl).value !== 5" class="bg-gray-800">Día 5</option>
+                    <option [value]="6" [disabled]="isDaySelected(6) && getDayControl(dayControl).value !== 6" class="bg-gray-800">Día 6</option>
+                    <option [value]="7" [disabled]="isDaySelected(7) && getDayControl(dayControl).value !== 7" class="bg-gray-800">Día 7</option>
                   </select>
                 </div>
 
@@ -551,11 +551,30 @@ export class RoutineFormComponent implements OnInit {
   }
 
   addDay(): void {
+    const nextDayNumber = this.getNextAvailableDayNumber();
     const dayForm = this.fb.group({
-      day: [1, [Validators.required]],
+      day: [nextDayNumber, [Validators.required]],
       blocks: this.fb.array([])
     });
     this.weeklyPlanArray.push(dayForm);
+  }
+
+  private getNextAvailableDayNumber(): number {
+    if (this.weeklyPlanArray.length === 0) {
+      return 1;
+    }
+
+    const existingDays = this.weeklyPlanArray.controls.map(control =>
+      control.get('day')?.value || 0
+    );
+    const maxDay = Math.max(...existingDays);
+    return maxDay + 1;
+  }
+
+  isDaySelected(dayNumber: number): boolean {
+    return this.weeklyPlanArray.controls.some(control =>
+      control.get('day')?.value === dayNumber
+    );
   }
 
   removeDay(dayIndex: number): void {
