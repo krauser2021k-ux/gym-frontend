@@ -6,7 +6,6 @@ import { Observable, of, delay } from 'rxjs';
 interface CreateRoutinePayload {
   name: string;
   description?: string;
-  type: 'default' | 'personalized';
   createdBy: string;
   gymId: string;
   weeklyPlan: DayRoutine[];
@@ -150,7 +149,7 @@ export class RoutineService {
       id: `routine-${Date.now()}`,
       name: payload.name,
       description: payload.description,
-      type: payload.type,
+      type: 'default',
       createdBy: payload.createdBy,
       gymId: payload.gymId,
       createdAt: new Date().toISOString(),
@@ -167,17 +166,16 @@ export class RoutineService {
     if (index === -1) {
       throw new Error('Routine not found');
     }
-    
+
     const updatedRoutine: Routine = {
       ...this.mockRoutines[index],
       name: payload.name ?? this.mockRoutines[index].name,
       description: payload.description ?? this.mockRoutines[index].description,
-      type: payload.type ?? this.mockRoutines[index].type,
       weeklyPlan: payload.weeklyPlan ?? this.mockRoutines[index].weeklyPlan,
       assignedTo: payload.assignedTo ?? this.mockRoutines[index].assignedTo,
       updatedAt: new Date().toISOString()
     };
-    
+
     this.mockRoutines[index] = updatedRoutine;
     return of(updatedRoutine).pipe(delay(300));
   }

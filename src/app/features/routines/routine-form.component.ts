@@ -80,17 +80,6 @@ interface DayFormData {
                         class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all resize-none"
                         placeholder="Describe los objetivos y características de esta rutina"></textarea>
             </div>
-
-            <div>
-              <label class="block text-sm font-medium text-white/90 mb-2">
-                Tipo de Rutina *
-              </label>
-              <select formControlName="type"
-                      class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all">
-                <option value="default" class="bg-gray-800">Rutina por Defecto</option>
-                <option value="personalized" class="bg-gray-800">Rutina Personalizada</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -458,7 +447,6 @@ export class RoutineFormComponent implements OnInit {
     this.routineForm = this.fb.group({
       name: ['', [Validators.required]],
       description: [''],
-      type: ['default', [Validators.required]],
       weeklyPlan: this.fb.array([])
     });
 
@@ -726,7 +714,6 @@ export class RoutineFormComponent implements OnInit {
     const payload = {
       name: formValue.name,
       description: formValue.description,
-      type: formValue.type,
       createdBy: 'current-user-id',
       gymId: 'current-gym-id',
       weeklyPlan
