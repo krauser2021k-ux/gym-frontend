@@ -53,14 +53,44 @@ export class RoutineService {
                 {
                   exerciseId: 'ex-2',
                   sets: 4,
-                  notes: 'Press de banca',
+                  reps: '8-10',
+                  weight: '60kg',
+                  rest: '90s',
+                  notes: 'Press de banca - Controla el descenso y explota en la subida',
                   order: 1
                 },
                 {
                   exerciseId: 'ex-3',
                   sets: 3,
-                  notes: 'Aperturas con mancuernas',
+                  reps: '12-15',
+                  weight: '20kg c/u',
+                  rest: '60s',
+                  notes: 'Aperturas con mancuernas - Mantén tensión en el pecho',
                   order: 2
+                },
+                {
+                  exerciseId: 'ex-1',
+                  sets: 3,
+                  reps: '10-12',
+                  rest: '75s',
+                  notes: 'Press inclinado - Enfócate en la parte superior del pecho',
+                  order: 3
+                },
+                {
+                  exerciseId: 'ex-4',
+                  sets: 4,
+                  reps: '12',
+                  rest: '60s',
+                  notes: 'Fondos en paralelas - Inclínate hacia adelante',
+                  order: 4
+                },
+                {
+                  exerciseId: 'ex-5',
+                  sets: 2,
+                  reps: '15-20',
+                  rest: '45s',
+                  notes: 'Flexiones diamante - Finalizar el entrenamiento',
+                  order: 5
                 }
               ]
             }
