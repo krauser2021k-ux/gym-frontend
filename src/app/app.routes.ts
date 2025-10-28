@@ -88,6 +88,16 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'trainer/payments',
+    loadComponent: () => import('./features/payments/trainer-payments-list.component').then(m => m.TrainerPaymentsListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payments/new',
+    loadComponent: () => import('./features/payments/trainer-payment-form.component').then(m => m.TrainerPaymentFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'profile',
     loadComponent: () => import('./features/profile/profile-edit.component').then(m => m.ProfileEditComponent),
     canActivate: [authGuard]

@@ -224,6 +224,59 @@ export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
     })).pipe(delay(300));
   }
 
+  if (url.includes('/trainer/payments') && method === 'GET' && !url.match(/trainer\/payments\/[^/]+$/)) {
+    const trainerId = 'user-1';
+    const allPayments = getMockTrainerPayments();
+    let filteredPayments = allPayments.filter(p => p.trainerId === trainerId);
+
+    const urlObj = new URL('http://dummy' + url);
+    const studentId = urlObj.searchParams.get('studentId');
+    const status = urlObj.searchParams.get('status');
+    const dateFrom = urlObj.searchParams.get('dateFrom');
+    const dateTo = urlObj.searchParams.get('dateTo');
+
+    if (studentId) {
+      filteredPayments = filteredPayments.filter(p => p.studentId === studentId);
+    }
+    if (status) {
+      filteredPayments = filteredPayments.filter(p => p.status === status);
+    }
+    if (dateFrom) {
+      filteredPayments = filteredPayments.filter(p => new Date(p.paymentDate) >= new Date(dateFrom));
+    }
+    if (dateTo) {
+      filteredPayments = filteredPayments.filter(p => new Date(p.paymentDate) <= new Date(dateTo));
+    }
+
+    return of(new HttpResponse({
+      status: 200,
+      body: filteredPayments
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/trainer\/payments\/[^/]+$/) && method === 'GET') {
+    const id = url.split('/').pop();
+    const payments = getMockTrainerPayments();
+    const payment = payments.find(p => p.id === id);
+    return of(new HttpResponse({
+      status: payment ? 200 : 404,
+      body: payment || { error: 'Not found' }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/payments') && method === 'POST') {
+    const newPayment = {
+      ...(req.body as any),
+      id: 'payment-' + Date.now(),
+      trainerId: 'user-1',
+      createdAt: new Date().toISOString()
+    };
+    return of(new HttpResponse({
+      status: 201,
+      body: newPayment
+    })).pipe(delay(300));
+  }
+
   if (url.includes('/metrics/dashboard') && method === 'GET') {
     return of(new HttpResponse({
       status: 200,
@@ -966,4 +1019,219 @@ function getMockMetrics() {
     completionRate: 78,
     averageSessionsPerWeek: 3.5
   };
+}
+
+function getMockTrainerPayments() {
+  return [
+    {
+      id: 'payment-1',
+      studentId: 'student-1',
+      studentName: 'Juan Pérez',
+      trainerId: 'user-1',
+      packId: 'pack-2',
+      packName: 'Pack Premium',
+      amount: 25000,
+      currency: 'ARS',
+      paymentDate: '2025-09-15',
+      paymentMethod: 'mercadopago',
+      status: 'approved',
+      description: 'Pago mensual septiembre'
+    },
+    {
+      id: 'payment-2',
+      studentId: 'student-2',
+      studentName: 'María González',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-09-20',
+      paymentMethod: 'transfer',
+      status: 'approved',
+      description: 'Pago mensual septiembre'
+    },
+    {
+      id: 'payment-3',
+      studentId: 'student-1',
+      studentName: 'Juan Pérez',
+      trainerId: 'user-1',
+      packId: 'pack-2',
+      packName: 'Pack Premium',
+      amount: 25000,
+      currency: 'ARS',
+      paymentDate: '2025-10-15',
+      paymentMethod: 'mercadopago',
+      status: 'pending',
+      description: 'Pago mensual octubre'
+    },
+    {
+      id: 'payment-4',
+      studentId: 'student-3',
+      studentName: 'Pedro Rodríguez',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-10-01',
+      paymentMethod: 'cash',
+      status: 'approved',
+      description: 'Pago en efectivo octubre'
+    },
+    {
+      id: 'payment-5',
+      studentId: 'student-4',
+      studentName: 'Ana Martínez',
+      trainerId: 'user-1',
+      packId: 'pack-3',
+      packName: 'Pack Elite',
+      amount: 45000,
+      currency: 'ARS',
+      paymentDate: '2025-10-05',
+      paymentMethod: 'card',
+      status: 'approved',
+      description: 'Pago mensual octubre'
+    },
+    {
+      id: 'payment-6',
+      studentId: 'student-2',
+      studentName: 'María González',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-10-20',
+      paymentMethod: 'transfer',
+      status: 'pending',
+      description: 'Pago mensual octubre'
+    },
+    {
+      id: 'payment-7',
+      studentId: 'student-1',
+      studentName: 'Juan Pérez',
+      trainerId: 'user-1',
+      packId: null,
+      packName: 'Clase particular',
+      amount: 8000,
+      currency: 'ARS',
+      paymentDate: '2025-10-12',
+      paymentMethod: 'cash',
+      status: 'approved',
+      description: 'Sesión individual de entrenamiento'
+    },
+    {
+      id: 'payment-8',
+      studentId: 'student-3',
+      studentName: 'Pedro Rodríguez',
+      trainerId: 'user-1',
+      packId: null,
+      packName: 'Evaluación física',
+      amount: 5000,
+      currency: 'ARS',
+      paymentDate: '2025-09-28',
+      paymentMethod: 'transfer',
+      status: 'approved',
+      description: 'Evaluación inicial y mediciones'
+    },
+    {
+      id: 'payment-9',
+      studentId: 'student-4',
+      studentName: 'Ana Martínez',
+      trainerId: 'user-1',
+      packId: 'pack-3',
+      packName: 'Pack Elite',
+      amount: 45000,
+      currency: 'ARS',
+      paymentDate: '2025-09-05',
+      paymentMethod: 'card',
+      status: 'approved',
+      description: 'Pago mensual septiembre'
+    },
+    {
+      id: 'payment-10',
+      studentId: 'student-2',
+      studentName: 'María González',
+      trainerId: 'user-1',
+      packId: 'pack-2',
+      packName: 'Pack Premium',
+      amount: 25000,
+      currency: 'ARS',
+      paymentDate: '2025-08-20',
+      paymentMethod: 'mercadopago',
+      status: 'approved',
+      description: 'Pago mensual agosto'
+    },
+    {
+      id: 'payment-11',
+      studentId: 'student-1',
+      studentName: 'Juan Pérez',
+      trainerId: 'user-1',
+      packId: 'pack-2',
+      packName: 'Pack Premium',
+      amount: 25000,
+      currency: 'ARS',
+      paymentDate: '2025-08-15',
+      paymentMethod: 'transfer',
+      status: 'approved',
+      description: 'Pago mensual agosto'
+    },
+    {
+      id: 'payment-12',
+      studentId: 'student-3',
+      studentName: 'Pedro Rodríguez',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-09-01',
+      paymentMethod: 'cash',
+      status: 'approved',
+      description: 'Pago mensual septiembre'
+    },
+    {
+      id: 'payment-13',
+      studentId: 'student-4',
+      studentName: 'Ana Martínez',
+      trainerId: 'user-1',
+      packId: null,
+      packName: 'Plan nutricional',
+      amount: 12000,
+      currency: 'ARS',
+      paymentDate: '2025-10-18',
+      paymentMethod: 'mercadopago',
+      status: 'approved',
+      description: 'Plan alimenticio personalizado'
+    },
+    {
+      id: 'payment-14',
+      studentId: 'student-2',
+      studentName: 'María González',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-08-20',
+      paymentMethod: 'transfer',
+      status: 'approved',
+      description: 'Pago mensual agosto'
+    },
+    {
+      id: 'payment-15',
+      studentId: 'student-3',
+      studentName: 'Pedro Rodríguez',
+      trainerId: 'user-1',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      amount: 15000,
+      currency: 'ARS',
+      paymentDate: '2025-08-01',
+      paymentMethod: 'cash',
+      status: 'approved',
+      description: 'Pago mensual agosto'
+    }
+  ];
 }
