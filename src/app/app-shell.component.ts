@@ -239,7 +239,7 @@ export class AppShellComponent {
 
     constructor(private keycloakService: KeycloakService) {
         const savedTheme = localStorage.getItem('theme');
-        this.darkMode.set(savedTheme === 'dark');
+        this.darkMode.set(savedTheme ? savedTheme === 'dark' : true);
         this.applyThemeToBody();
         const authenticated = this.keycloakService.isAuthenticated();
         this.isAuthenticated.set(authenticated);
