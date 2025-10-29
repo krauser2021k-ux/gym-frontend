@@ -61,3 +61,72 @@ export interface PaymentStats {
   pendingPayments: number;
   approvedPayments: number;
 }
+
+export interface StudentSubscription {
+  id: string;
+  studentId: string;
+  packId: string;
+  packName: string;
+  status: 'active' | 'cancelled' | 'expired';
+  startDate: string;
+  nextPaymentDate: string;
+  autoRenew: boolean;
+  price: number;
+  currency: string;
+}
+
+export interface SavedPaymentMethod {
+  id: string;
+  studentId: string;
+  type: 'card' | 'transfer' | 'cash' | 'mercadopago';
+  label: string;
+  lastFourDigits?: string;
+  cardBrand?: string;
+  expiryMonth?: string;
+  expiryYear?: string;
+  bankName?: string;
+  accountNumber?: string;
+  isDefault: boolean;
+  createdAt: string;
+}
+
+export interface PaymentNotification {
+  id: string;
+  studentId: string;
+  type: 'payment_reminder' | 'payment_confirmed' | 'payment_failed' | 'subscription_renewed';
+  title: string;
+  message: string;
+  dueDate?: string;
+  isRead: boolean;
+  createdAt: string;
+  priority: 'low' | 'medium' | 'high';
+}
+
+export interface StudentPaymentHistory extends TrainerPayment {
+  receiptUrl?: string;
+  notes?: string;
+}
+
+export interface StudentPaymentSummary {
+  currentBalance: number;
+  nextPaymentAmount: number;
+  nextPaymentDate: string;
+  totalSpent: number;
+  totalPayments: number;
+  pendingAmount: number;
+  accountStatus: 'up_to_date' | 'pending' | 'overdue';
+  activeSince: string;
+}
+
+export interface PaymentCheckoutRequest {
+  packId: string;
+  amount: number;
+  paymentMethodId?: string;
+  autoRenew?: boolean;
+}
+
+export interface PaymentCheckoutResponse {
+  id: string;
+  checkoutUrl: string;
+  status: PaymentStatus;
+}

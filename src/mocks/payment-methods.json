@@ -1,0 +1,36 @@
+[
+  {
+    "id": "pm-1",
+    "studentId": "student-1",
+    "type": "card",
+    "label": "Tarjeta **** 4242",
+    "lastFourDigits": "4242",
+    "cardBrand": "Visa",
+    "expiryMonth": "12",
+    "expiryYear": "2026",
+    "isDefault": true,
+    "createdAt": "2025-08-15T10:00:00Z"
+  },
+  {
+    "id": "pm-2",
+    "studentId": "student-2",
+    "type": "transfer",
+    "label": "Transferencia Bancaria",
+    "bankName": "Banco Nación",
+    "accountNumber": "****5678",
+    "isDefault": true,
+    "createdAt": "2025-08-20T10:00:00Z"
+  },
+  {
+    "id": "pm-3",
+    "studentId": "student-4",
+    "type": "card",
+    "label": "Tarjeta **** 9876",
+    "lastFourDigits": "9876",
+    "cardBrand": "Mastercard",
+    "expiryMonth": "08",
+    "expiryYear": "2027",
+    "isDefault": true,
+    "createdAt": "2025-09-05T10:00:00Z"
+  }
+]

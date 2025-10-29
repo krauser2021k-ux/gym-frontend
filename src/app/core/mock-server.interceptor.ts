@@ -367,6 +367,148 @@ export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
     })).pipe(delay(300));
   }
 
+  if (url.includes('/student/payment-packs') && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockPaymentPacks()
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/subscription') && method === 'GET') {
+    const studentId = 'student-1';
+    const subscriptions = getMockSubscriptions();
+    const subscription = subscriptions.find(s => s.studentId === studentId && s.status === 'active');
+    return of(new HttpResponse({
+      status: 200,
+      body: subscription || null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/subscription') && method === 'PUT') {
+    const subscription = getMockSubscriptions().find(s => s.studentId === 'student-1');
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...subscription, ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/subscription') && method === 'DELETE') {
+    return of(new HttpResponse({
+      status: 204,
+      body: null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payments') && method === 'GET' && !url.match(/student\/payments\/[^/]+/)) {
+    const studentId = 'student-1';
+    const allPayments = getMockTrainerPayments();
+    let filteredPayments = allPayments.filter(p => p.studentId === studentId);
+
+    const urlObj = new URL('http://dummy' + url);
+    const status = urlObj.searchParams.get('status');
+    const dateFrom = urlObj.searchParams.get('dateFrom');
+    const dateTo = urlObj.searchParams.get('dateTo');
+
+    if (status) {
+      filteredPayments = filteredPayments.filter(p => p.status === status);
+    }
+    if (dateFrom) {
+      filteredPayments = filteredPayments.filter(p => new Date(p.paymentDate) >= new Date(dateFrom));
+    }
+    if (dateTo) {
+      filteredPayments = filteredPayments.filter(p => new Date(p.paymentDate) <= new Date(dateTo));
+    }
+
+    return of(new HttpResponse({
+      status: 200,
+      body: filteredPayments
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/student\/payments\/[^/]+\/receipt$/) && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: new Blob(['Mock PDF Receipt'], { type: 'application/pdf' })
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-summary') && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockStudentPaymentSummary()
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-methods') && method === 'GET') {
+    const studentId = 'student-1';
+    const methods = getMockPaymentMethods();
+    return of(new HttpResponse({
+      status: 200,
+      body: methods.filter(m => m.studentId === studentId)
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-methods') && method === 'POST') {
+    return of(new HttpResponse({
+      status: 201,
+      body: { ...(req.body as any), id: 'pm-' + Date.now(), createdAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/student\/payment-methods\/[^/]+$/) && method === 'DELETE') {
+    return of(new HttpResponse({
+      status: 204,
+      body: null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-methods') && url.includes('/set-default') && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { success: true }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-notifications') && method === 'GET') {
+    const studentId = 'student-1';
+    const notifications = getMockPaymentNotifications();
+    return of(new HttpResponse({
+      status: 200,
+      body: notifications.filter(n => n.studentId === studentId)
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/payment-notifications') && url.includes('/mark-read') && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { success: true }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student/checkout') && method === 'POST') {
+    const success = Math.random() > 0.2;
+    return of(new HttpResponse({
+      status: 200,
+      body: {
+        id: 'checkout-' + Date.now(),
+        checkoutUrl: 'https://www.mercadopago.com.ar/checkout/mock?preference-id=pref-' + Date.now(),
+        status: success ? 'approved' : 'pending'
+      }
+    })).pipe(delay(1000));
+  }
+
+  if (url.includes('/student/calculate-proration') && method === 'POST') {
+    const body = req.body as any;
+    const amount = Math.floor(Math.random() * 10000) + 5000;
+    return of(new HttpResponse({
+      status: 200,
+      body: {
+        amount,
+        description: `Diferencia prorrateada entre planes`
+      }
+    })).pipe(delay(300));
+  }
+
   return next(req);
 };
 
@@ -1234,4 +1376,166 @@ function getMockTrainerPayments() {
       description: 'Pago mensual agosto'
     }
   ];
+}
+
+function getMockSubscriptions() {
+  return [
+    {
+      id: 'sub-1',
+      studentId: 'student-1',
+      packId: 'pack-2',
+      packName: 'Pack Premium',
+      status: 'active',
+      startDate: '2025-08-15',
+      nextPaymentDate: '2025-11-15',
+      autoRenew: true,
+      price: 25000,
+      currency: 'ARS'
+    },
+    {
+      id: 'sub-2',
+      studentId: 'student-2',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      status: 'active',
+      startDate: '2025-08-20',
+      nextPaymentDate: '2025-11-20',
+      autoRenew: true,
+      price: 15000,
+      currency: 'ARS'
+    },
+    {
+      id: 'sub-3',
+      studentId: 'student-3',
+      packId: 'pack-1',
+      packName: 'Pack Básico',
+      status: 'active',
+      startDate: '2025-08-01',
+      nextPaymentDate: '2025-11-01',
+      autoRenew: false,
+      price: 15000,
+      currency: 'ARS'
+    },
+    {
+      id: 'sub-4',
+      studentId: 'student-4',
+      packId: 'pack-3',
+      packName: 'Pack Elite',
+      status: 'active',
+      startDate: '2025-09-05',
+      nextPaymentDate: '2025-11-05',
+      autoRenew: true,
+      price: 45000,
+      currency: 'ARS'
+    }
+  ];
+}
+
+function getMockPaymentMethods() {
+  return [
+    {
+      id: 'pm-1',
+      studentId: 'student-1',
+      type: 'card',
+      label: 'Tarjeta **** 4242',
+      lastFourDigits: '4242',
+      cardBrand: 'Visa',
+      expiryMonth: '12',
+      expiryYear: '2026',
+      isDefault: true,
+      createdAt: '2025-08-15T10:00:00Z'
+    },
+    {
+      id: 'pm-2',
+      studentId: 'student-2',
+      type: 'transfer',
+      label: 'Transferencia Bancaria',
+      bankName: 'Banco Nación',
+      accountNumber: '****5678',
+      isDefault: true,
+      createdAt: '2025-08-20T10:00:00Z'
+    },
+    {
+      id: 'pm-3',
+      studentId: 'student-4',
+      type: 'card',
+      label: 'Tarjeta **** 9876',
+      lastFourDigits: '9876',
+      cardBrand: 'Mastercard',
+      expiryMonth: '08',
+      expiryYear: '2027',
+      isDefault: true,
+      createdAt: '2025-09-05T10:00:00Z'
+    }
+  ];
+}
+
+function getMockPaymentNotifications() {
+  return [
+    {
+      id: 'notif-1',
+      studentId: 'student-1',
+      type: 'payment_reminder',
+      title: 'Próximo pago programado',
+      message: 'Tu próximo pago de $25,000 vence el 15 de noviembre',
+      dueDate: '2025-11-15',
+      isRead: false,
+      createdAt: '2025-10-22T08:00:00Z',
+      priority: 'medium'
+    },
+    {
+      id: 'notif-2',
+      studentId: 'student-2',
+      type: 'payment_reminder',
+      title: 'Próximo pago programado',
+      message: 'Tu próximo pago de $15,000 vence el 20 de noviembre',
+      dueDate: '2025-11-20',
+      isRead: false,
+      createdAt: '2025-10-22T08:00:00Z',
+      priority: 'medium'
+    },
+    {
+      id: 'notif-3',
+      studentId: 'student-1',
+      type: 'payment_confirmed',
+      title: 'Pago confirmado',
+      message: 'Tu pago de $25,000 fue procesado exitosamente',
+      isRead: true,
+      createdAt: '2025-10-15T10:05:00Z',
+      priority: 'low'
+    },
+    {
+      id: 'notif-4',
+      studentId: 'student-3',
+      type: 'payment_reminder',
+      title: 'Pago próximo a vencer',
+      message: 'Tu próximo pago de $15,000 vence el 1 de noviembre. No olvides renovar tu suscripción manual',
+      dueDate: '2025-11-01',
+      isRead: false,
+      createdAt: '2025-10-25T08:00:00Z',
+      priority: 'high'
+    }
+  ];
+}
+
+function getMockStudentPaymentSummary() {
+  const payments = getMockTrainerPayments().filter(p => p.studentId === 'student-1');
+  const approvedPayments = payments.filter(p => p.status === 'approved');
+  const pendingPayments = payments.filter(p => p.status === 'pending');
+
+  const totalSpent = approvedPayments.reduce((sum, p) => sum + p.amount, 0);
+  const pendingAmount = pendingPayments.reduce((sum, p) => sum + p.amount, 0);
+
+  const subscription = getMockSubscriptions().find(s => s.studentId === 'student-1' && s.status === 'active');
+
+  return {
+    currentBalance: 0,
+    nextPaymentAmount: subscription?.price || 0,
+    nextPaymentDate: subscription?.nextPaymentDate || '',
+    totalSpent,
+    totalPayments: approvedPayments.length,
+    pendingAmount,
+    accountStatus: pendingAmount > 0 ? 'pending' : 'up_to_date',
+    activeSince: subscription?.startDate || '2025-08-15'
+  };
 }

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "notif-1",
+    "studentId": "student-1",
+    "type": "payment_reminder",
+    "title": "Próximo pago programado",
+    "message": "Tu próximo pago de $25,000 vence el 15 de noviembre",
+    "dueDate": "2025-11-15",
+    "isRead": false,
+    "createdAt": "2025-10-22T08:00:00Z",
+    "priority": "medium"
+  },
+  {
+    "id": "notif-2",
+    "studentId": "student-2",
+    "type": "payment_reminder",
+    "title": "Próximo pago programado",
+    "message": "Tu próximo pago de $15,000 vence el 20 de noviembre",
+    "dueDate": "2025-11-20",
+    "isRead": false,
+    "createdAt": "2025-10-22T08:00:00Z",
+    "priority": "medium"
+  },
+  {
+    "id": "notif-3",
+    "studentId": "student-1",
+    "type": "payment_confirmed",
+    "title": "Pago confirmado",
+    "message": "Tu pago de $25,000 fue procesado exitosamente",
+    "isRead": true,
+    "createdAt": "2025-10-15T10:05:00Z",
+    "priority": "low"
+  },
+  {
+    "id": "notif-4",
+    "studentId": "student-3",
+    "type": "payment_reminder",
+    "title": "Pago próximo a vencer",
+    "message": "Tu próximo pago de $15,000 vence el 1 de noviembre. No olvides renovar tu suscripción manual",
+    "dueDate": "2025-11-01",
+    "isRead": false,
+    "createdAt": "2025-10-25T08:00:00Z",
+    "priority": "high"
+  }
+]

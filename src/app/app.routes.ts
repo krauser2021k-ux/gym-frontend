@@ -84,7 +84,17 @@ export const routes: Routes = [
   },
   {
     path: 'payments',
-    loadComponent: () => import('./features/payments/payments-checkout.component').then(m => m.PaymentsCheckoutComponent),
+    redirectTo: '/student/payments/plans',
+    pathMatch: 'full'
+  },
+  {
+    path: 'student/payments/plans',
+    loadComponent: () => import('./features/payments/student-payment-plans.component').then(m => m.StudentPaymentPlansComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'student/payments/history',
+    loadComponent: () => import('./features/payments/student-payment-history.component').then(m => m.StudentPaymentHistoryComponent),
     canActivate: [authGuard]
   },
   {

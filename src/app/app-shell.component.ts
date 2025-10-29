@@ -65,10 +65,15 @@ import {KeycloakService} from './core/keycloak.service';
                                            class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Mi Rutina
                                         </a>
-                                        <a routerLink="/payments"
+                                        <a routerLink="/student/payments/plans"
                                            routerLinkActive="border-white text-white"
                                            class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
-                                            Pagos
+                                            Planes
+                                        </a>
+                                        <a routerLink="/student/payments/history"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Mis Pagos
                                         </a>
                                     }
                                 </div>
@@ -170,11 +175,17 @@ import {KeycloakService} from './core/keycloak.service';
                                    class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
                                     Mi Rutina
                                 </a>
-                                <a routerLink="/payments"
+                                <a routerLink="/student/payments/plans"
                                    (click)="closeMobileMenu()"
                                    routerLinkActive="bg-white/20 text-white"
                                    class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
-                                    Pagos
+                                    Planes
+                                </a>
+                                <a routerLink="/student/payments/history"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Mis Pagos
                                 </a>
                             }
                         </div>
