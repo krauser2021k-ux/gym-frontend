@@ -136,7 +136,7 @@ import { TrainerPayment, PaymentFilters, PaymentStats } from '../../shared/model
                 </tr>
               </thead>
               <tbody>
-                @for (payment of filteredPayments(); track payment.id) {
+                @for (payment of paginatedPayments(); track payment.id) {
                   <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                     <td class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300">
                       {{ formatDate(payment.paymentDate) }}
@@ -175,7 +175,7 @@ import { TrainerPayment, PaymentFilters, PaymentStats } from '../../shared/model
           </div>
 
           <div class="lg:hidden space-y-4">
-            @for (payment of filteredPayments(); track payment.id) {
+            @for (payment of paginatedPayments(); track payment.id) {
               <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
                 <div class="flex items-center justify-between">
                   <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ payment.studentName }}</span>
@@ -207,6 +207,50 @@ import { TrainerPayment, PaymentFilters, PaymentStats } from '../../shared/model
               </p>
             }
           </div>
+
+          @if (totalPages() > 1) {
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div class="text-sm text-gray-600 dark:text-gray-300">
+                Mostrando {{ (currentPage() - 1) * pageSize() + 1 }} - {{ Math.min(currentPage() * pageSize(), filteredPayments().length) }} de {{ filteredPayments().length }} pagos
+              </div>
+              <div class="flex items-center gap-2">
+                <button (click)="goToPage(currentPage() - 1)"
+                        [disabled]="currentPage() === 1"
+                        [class.opacity-50]="currentPage() === 1"
+                        [class.cursor-not-allowed]="currentPage() === 1"
+                        class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:hover:bg-white dark:disabled:hover:bg-gray-700">
+                  Anterior
+                </button>
+                @for (page of pages(); track page) {
+                  @if (page === -1) {
+                    <span class="px-3 py-2 text-gray-500">...</span>
+                  } @else {
+                    <button (click)="goToPage(page)"
+                            [class.bg-blue-600]="currentPage() === page"
+                            [class.text-white]="currentPage() === page"
+                            [class.hover:bg-blue-700]="currentPage() === page"
+                            [class.dark:bg-blue-500]="currentPage() === page"
+                            [class.bg-white]="currentPage() !== page"
+                            [class.dark:bg-gray-700]="currentPage() !== page"
+                            [class.text-gray-700]="currentPage() !== page"
+                            [class.dark:text-gray-300]="currentPage() !== page"
+                            [class.hover:bg-gray-50]="currentPage() !== page"
+                            [class.dark:hover:bg-gray-600]="currentPage() !== page"
+                            class="px-3 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg transition-colors">
+                      {{ page }}
+                    </button>
+                  }
+                }
+                <button (click)="goToPage(currentPage() + 1)"
+                        [disabled]="currentPage() === totalPages()"
+                        [class.opacity-50]="currentPage() === totalPages()"
+                        [class.cursor-not-allowed]="currentPage() === totalPages()"
+                        class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:hover:bg-white dark:disabled:hover:bg-gray-700">
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          }
         </div>
       }
     </div>
@@ -214,10 +258,13 @@ import { TrainerPayment, PaymentFilters, PaymentStats } from '../../shared/model
   styles: []
 })
 export class TrainerPaymentsListComponent implements OnInit {
+  Math = Math;
   payments = signal<TrainerPayment[]>([]);
   loading = signal(true);
   searchTerm = '';
   filters = signal<PaymentFilters>({});
+  currentPage = signal(1);
+  pageSize = signal(10);
 
   filteredPayments = computed(() => {
     let result = this.payments();
@@ -234,6 +281,39 @@ export class TrainerPaymentsListComponent implements OnInit {
     return result.sort((a, b) =>
       new Date(b.paymentDate).getTime() - new Date(a.paymentDate).getTime()
     );
+  });
+
+  paginatedPayments = computed(() => {
+    const filtered = this.filteredPayments();
+    const start = (this.currentPage() - 1) * this.pageSize();
+    const end = start + this.pageSize();
+    return filtered.slice(start, end);
+  });
+
+  totalPages = computed(() => {
+    return Math.ceil(this.filteredPayments().length / this.pageSize());
+  });
+
+  pages = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: number[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (current <= 3) {
+        pages.push(1, 2, 3, 4, -1, total);
+      } else if (current >= total - 2) {
+        pages.push(1, -1, total - 3, total - 2, total - 1, total);
+      } else {
+        pages.push(1, -1, current - 1, current, current + 1, -1, total);
+      }
+    }
+
+    return pages;
   });
 
   stats = computed(() => {
@@ -279,13 +359,22 @@ export class TrainerPaymentsListComponent implements OnInit {
   }
 
   applyFilters() {
+    this.currentPage.set(1);
     this.loadPayments();
   }
 
   clearFilters() {
     this.filters.set({});
     this.searchTerm = '';
+    this.currentPage.set(1);
     this.loadPayments();
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   openPaymentForm() {
