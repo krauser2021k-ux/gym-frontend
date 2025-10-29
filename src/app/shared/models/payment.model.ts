@@ -130,3 +130,76 @@ export interface PaymentCheckoutResponse {
   checkoutUrl: string;
   status: PaymentStatus;
 }
+
+export type PaymentPlanType = 'general' | 'semi_custom' | 'custom';
+
+export type RecurrenceType = 'mensual' | 'bimestral' | 'trimestral' | 'semestral' | 'anual' | 'unico';
+
+export type ItemCategory = 'acceso' | 'clases' | 'seguimiento' | 'nutricion' | 'extras';
+
+export interface PaymentPlanItem {
+  id: string;
+  description: string;
+  included: boolean;
+  category: ItemCategory;
+  order?: number;
+}
+
+export interface PlanSurcharge {
+  id: string;
+  reason: string;
+  percentage: number;
+}
+
+export interface PaymentPlan {
+  id: string;
+  trainerId: string;
+  name: string;
+  description: string;
+  type: PaymentPlanType;
+  basePrice: number;
+  currency: string;
+  recurrence: RecurrenceType;
+  durationDays: number;
+  items: PaymentPlanItem[];
+  isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface StudentPaymentPlanAssignment {
+  id: string;
+  studentId: string;
+  studentName: string;
+  planId: string;
+  planName: string;
+  planType: PaymentPlanType;
+  basePrice: number;
+  surcharges: PlanSurcharge[];
+  finalPrice: number;
+  currency: string;
+  recurrence: RecurrenceType;
+  items: PaymentPlanItem[];
+  startDate: string;
+  nextPaymentDate: string;
+  status: 'active' | 'paused' | 'cancelled' | 'expired';
+  notes?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface PaymentPlanStats {
+  totalPlans: number;
+  activeAssignments: number;
+  totalRevenue: number;
+  plansByType: Record<PaymentPlanType, number>;
+}
+
+export interface AssignPlanRequest {
+  studentId: string;
+  planId: string;
+  startDate: string;
+  customItems?: PaymentPlanItem[];
+  surcharges?: PlanSurcharge[];
+  notes?: string;
+}

@@ -131,5 +131,30 @@ export const routes: Routes = [
     path: 'preferences',
     loadComponent: () => import('./features/preferences/preferences.component').then(m => m.PreferencesComponent),
     canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans',
+    loadComponent: () => import('./features/payment-plans/trainer-payment-plans-list.component').then(m => m.TrainerPaymentPlansListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/new',
+    loadComponent: () => import('./features/payment-plans/payment-plan-form.component').then(m => m.PaymentPlanFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/edit/:id',
+    loadComponent: () => import('./features/payment-plans/payment-plan-form.component').then(m => m.PaymentPlanFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/assign',
+    loadComponent: () => import('./features/payment-plans/assign-plan-to-student.component').then(m => m.AssignPlanToStudentComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/students/plans-overview',
+    loadComponent: () => import('./features/payment-plans/student-plans-overview.component').then(m => m.StudentPlansOverviewComponent),
+    canActivate: [authGuard]
   }
 ];

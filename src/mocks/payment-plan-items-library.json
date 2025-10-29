@@ -1,0 +1,78 @@
+[
+  {
+    "category": "acceso",
+    "items": [
+      "Acceso ilimitado al gimnasio",
+      "Acceso en horarios específicos",
+      "Acceso a instalaciones premium",
+      "Acceso a zona de cardio",
+      "Acceso a zona de pesas",
+      "Acceso a piscina",
+      "Acceso a sauna",
+      "Acceso prioritario en horarios pico"
+    ]
+  },
+  {
+    "category": "clases",
+    "items": [
+      "Clases grupales ilimitadas",
+      "2 clases grupales por semana",
+      "4 clases grupales por semana",
+      "Clases de yoga",
+      "Clases de spinning",
+      "Clases de funcional",
+      "Sesiones personalizadas 1x semana",
+      "Sesiones personalizadas 2x semana",
+      "Sesiones personalizadas 3x semana",
+      "Clases especializadas (CrossFit, HIIT, etc.)"
+    ]
+  },
+  {
+    "category": "seguimiento",
+    "items": [
+      "Rutina personalizada",
+      "Rutina personalizada avanzada",
+      "Actualización de rutina mensual",
+      "Actualización de rutina quincenal",
+      "Seguimiento mensual",
+      "Seguimiento semanal",
+      "Seguimiento quincenal",
+      "Evaluación inicial y final",
+      "Videos de feedback semanales",
+      "Análisis de composición corporal mensual",
+      "Análisis corporal quincenal",
+      "Mediciones y fotos de progreso",
+      "Planificación de objetivos"
+    ]
+  },
+  {
+    "category": "nutricion",
+    "items": [
+      "Plan nutricional básico",
+      "Plan nutricional completo",
+      "Consultas nutricionales mensuales",
+      "Consultas nutricionales quincenales",
+      "Seguimiento alimenticio",
+      "Recetas y menús semanales",
+      "Asesoramiento en suplementación",
+      "Guía de alimentación pre y post entrenamiento"
+    ]
+  },
+  {
+    "category": "extras",
+    "items": [
+      "Soporte vía email",
+      "Soporte vía WhatsApp",
+      "Soporte prioritario",
+      "Soporte 24/7",
+      "Acceso a material exclusivo",
+      "Videos educativos",
+      "Guías de entrenamiento",
+      "Descuentos en productos",
+      "Invitaciones a eventos especiales",
+      "Estacionamiento incluido",
+      "Casillero personal",
+      "Toalla de gimnasio"
+    ]
+  }
+]

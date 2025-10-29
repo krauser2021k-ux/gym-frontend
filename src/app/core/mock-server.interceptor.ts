@@ -344,6 +344,138 @@ export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
     })).pipe(delay(300));
   }
 
+  if (url.includes('/trainer/payment-plans') && method === 'GET' && !url.match(/payment-plans\/[^/]+/) && !url.includes('/assign')) {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockPaymentPlanTemplates()
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/trainer\/payment-plans\/[^/]+$/) && method === 'GET' && !url.includes('/duplicate')) {
+    const id = url.split('/').pop();
+    const plans = getMockPaymentPlanTemplates();
+    const plan = plans.find((p: any) => p.id === id);
+    return of(new HttpResponse({
+      status: plan ? 200 : 404,
+      body: plan || { error: 'Not found' }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/payment-plans') && method === 'POST' && !url.includes('/assign') && !url.includes('/duplicate')) {
+    return of(new HttpResponse({
+      status: 201,
+      body: { ...(req.body as any), id: 'plan-template-' + Date.now(), trainerId: 'user-1', createdAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/trainer\/payment-plans\/[^/]+$/) && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/trainer\/payment-plans\/[^/]+$/) && method === 'DELETE') {
+    return of(new HttpResponse({
+      status: 204,
+      body: null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/payment-plans') && url.includes('/duplicate') && method === 'POST') {
+    const id = url.split('/')[url.split('/').indexOf('payment-plans') + 1];
+    const plans = getMockPaymentPlanTemplates();
+    const original = plans.find((p: any) => p.id === id);
+    if (original) {
+      return of(new HttpResponse({
+        status: 201,
+        body: { ...original, id: 'plan-template-' + Date.now(), name: original.name + ' (Copia)' }
+      })).pipe(delay(300));
+    }
+  }
+
+  if (url.includes('/trainer/student-plan-assignments') && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockStudentPaymentPlanAssignments()
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/students') && url.includes('/payment-plan') && method === 'GET') {
+    const studentId = url.split('/')[url.split('/').indexOf('students') + 1];
+    const assignments = getMockStudentPaymentPlanAssignments();
+    const assignment = assignments.find((a: any) => a.studentId === studentId && a.status === 'active');
+    return of(new HttpResponse({
+      status: 200,
+      body: assignment || null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/payment-plans/assign') && method === 'POST') {
+    const body = req.body as any;
+    const plan = getMockPaymentPlanTemplates().find((p: any) => p.id === body.planId);
+    const student = getMockStudents().find((s: any) => s.id === body.studentId);
+
+    if (plan && student) {
+      const basePrice = plan.basePrice;
+      let finalPrice = basePrice;
+
+      if (body.surcharges && body.surcharges.length > 0) {
+        body.surcharges.forEach((s: any) => {
+          finalPrice += (basePrice * s.percentage) / 100;
+        });
+      }
+
+      const nextPaymentDate = calculateNextPaymentDate(body.startDate, plan.recurrence);
+
+      return of(new HttpResponse({
+        status: 201,
+        body: {
+          id: 'assignment-' + Date.now(),
+          studentId: body.studentId,
+          studentName: `${student.firstName} ${student.lastName}`,
+          planId: body.planId,
+          planName: plan.name,
+          planType: plan.type,
+          basePrice: plan.basePrice,
+          surcharges: body.surcharges || [],
+          finalPrice: Math.round(finalPrice),
+          currency: 'ARS',
+          recurrence: plan.recurrence,
+          items: body.customItems || plan.items,
+          startDate: body.startDate,
+          nextPaymentDate,
+          status: 'active',
+          notes: body.notes || '',
+          createdAt: new Date().toISOString()
+        }
+      })).pipe(delay(300));
+    }
+    return of(new HttpResponse({ status: 404, body: { error: 'Plan or student not found' } })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/student-plan-assignments') && url.includes('/status') && method === 'PUT') {
+    const body = req.body as any;
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/trainer/student-plan-assignments') && url.includes('/items') && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/payment-plan-items/library') && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockPaymentPlanItemsLibrary()
+    })).pipe(delay(300));
+  }
+
   if (url.includes('/comments/exercise') && method === 'GET') {
     const exerciseId = new URL('http://dummy' + url).searchParams.get('exerciseId');
     return of(new HttpResponse({
@@ -1538,4 +1670,178 @@ function getMockStudentPaymentSummary() {
     accountStatus: pendingAmount > 0 ? 'pending' : 'up_to_date',
     activeSince: subscription?.startDate || '2025-08-15'
   };
+}
+
+function getMockPaymentPlanTemplates() {
+  return JSON.parse(`[
+    {
+      "id": "plan-template-1",
+      "trainerId": "user-1",
+      "name": "Plan Mensual Básico",
+      "description": "Plan ideal para comenzar tu entrenamiento con acceso completo al gimnasio",
+      "type": "general",
+      "basePrice": 15000,
+      "currency": "ARS",
+      "recurrence": "mensual",
+      "durationDays": 30,
+      "isActive": true,
+      "items": [
+        { "id": "item-1", "description": "Acceso ilimitado al gimnasio", "included": true, "category": "acceso", "order": 1 },
+        { "id": "item-2", "description": "Rutina personalizada", "included": true, "category": "seguimiento", "order": 2 },
+        { "id": "item-3", "description": "Seguimiento mensual", "included": true, "category": "seguimiento", "order": 3 },
+        { "id": "item-4", "description": "Soporte vía email", "included": true, "category": "extras", "order": 4 }
+      ],
+      "createdAt": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": "plan-template-2",
+      "trainerId": "user-1",
+      "name": "Plan Premium",
+      "description": "Todo incluido con clases grupales y seguimiento nutricional",
+      "type": "general",
+      "basePrice": 25000,
+      "currency": "ARS",
+      "recurrence": "mensual",
+      "durationDays": 30,
+      "isActive": true,
+      "items": [
+        { "id": "item-5", "description": "Acceso ilimitado al gimnasio", "included": true, "category": "acceso", "order": 1 },
+        { "id": "item-6", "description": "Rutina personalizada avanzada", "included": true, "category": "seguimiento", "order": 2 },
+        { "id": "item-7", "description": "Clases grupales ilimitadas", "included": true, "category": "clases", "order": 3 },
+        { "id": "item-8", "description": "Análisis de composición corporal mensual", "included": true, "category": "seguimiento", "order": 4 },
+        { "id": "item-9", "description": "Consultas nutricionales", "included": true, "category": "nutricion", "order": 5 },
+        { "id": "item-10", "description": "Seguimiento semanal de progreso", "included": true, "category": "seguimiento", "order": 6 },
+        { "id": "item-11", "description": "Soporte prioritario", "included": true, "category": "extras", "order": 7 }
+      ],
+      "createdAt": "2025-01-15T10:30:00Z"
+    },
+    {
+      "id": "plan-template-3",
+      "trainerId": "user-1",
+      "name": "Plan Elite",
+      "description": "Entrenamiento personalizado 1 a 1 con seguimiento integral",
+      "type": "general",
+      "basePrice": 45000,
+      "currency": "ARS",
+      "recurrence": "mensual",
+      "durationDays": 30,
+      "isActive": true,
+      "items": [
+        { "id": "item-12", "description": "Acceso ilimitado premium", "included": true, "category": "acceso", "order": 1 },
+        { "id": "item-13", "description": "Sesiones personalizadas 3x semana", "included": true, "category": "clases", "order": 2 },
+        { "id": "item-14", "description": "Plan nutricional completo", "included": true, "category": "nutricion", "order": 3 },
+        { "id": "item-15", "description": "Videos de feedback semanales", "included": true, "category": "seguimiento", "order": 4 },
+        { "id": "item-16", "description": "Análisis corporal quincenal", "included": true, "category": "seguimiento", "order": 5 },
+        { "id": "item-17", "description": "Acceso a material exclusivo", "included": true, "category": "extras", "order": 6 },
+        { "id": "item-18", "description": "Soporte 24/7", "included": true, "category": "extras", "order": 7 }
+      ],
+      "createdAt": "2025-01-15T11:00:00Z"
+    }
+  ]`);
+}
+
+function getMockStudentPaymentPlanAssignments() {
+  return JSON.parse(`[
+    {
+      "id": "assignment-1",
+      "studentId": "student-1",
+      "studentName": "Juan Pérez",
+      "planId": "plan-template-2",
+      "planName": "Plan Premium",
+      "planType": "general",
+      "basePrice": 25000,
+      "surcharges": [],
+      "finalPrice": 25000,
+      "currency": "ARS",
+      "recurrence": "mensual",
+      "items": [
+        { "id": "item-5", "description": "Acceso ilimitado al gimnasio", "included": true, "category": "acceso", "order": 1 },
+        { "id": "item-6", "description": "Rutina personalizada avanzada", "included": true, "category": "seguimiento", "order": 2 },
+        { "id": "item-7", "description": "Clases grupales ilimitadas", "included": true, "category": "clases", "order": 3 },
+        { "id": "item-8", "description": "Análisis de composición corporal mensual", "included": true, "category": "seguimiento", "order": 4 },
+        { "id": "item-9", "description": "Consultas nutricionales", "included": true, "category": "nutricion", "order": 5 },
+        { "id": "item-10", "description": "Seguimiento semanal de progreso", "included": true, "category": "seguimiento", "order": 6 },
+        { "id": "item-11", "description": "Soporte prioritario", "included": true, "category": "extras", "order": 7 }
+      ],
+      "startDate": "2025-08-15",
+      "nextPaymentDate": "2025-11-15",
+      "status": "active",
+      "createdAt": "2025-08-15T10:00:00Z"
+    },
+    {
+      "id": "assignment-2",
+      "studentId": "student-2",
+      "studentName": "María González",
+      "planId": "plan-template-1",
+      "planName": "Plan Mensual Básico",
+      "planType": "general",
+      "basePrice": 15000,
+      "surcharges": [],
+      "finalPrice": 15000,
+      "currency": "ARS",
+      "recurrence": "mensual",
+      "items": [
+        { "id": "item-1", "description": "Acceso ilimitado al gimnasio", "included": true, "category": "acceso", "order": 1 },
+        { "id": "item-2", "description": "Rutina personalizada", "included": true, "category": "seguimiento", "order": 2 },
+        { "id": "item-3", "description": "Seguimiento mensual", "included": true, "category": "seguimiento", "order": 3 },
+        { "id": "item-4", "description": "Soporte vía email", "included": true, "category": "extras", "order": 4 }
+      ],
+      "startDate": "2025-08-20",
+      "nextPaymentDate": "2025-11-20",
+      "status": "active",
+      "createdAt": "2025-08-20T14:30:00Z"
+    }
+  ]`);
+}
+
+function getMockPaymentPlanItemsLibrary() {
+  return JSON.parse(`[
+    {
+      "category": "acceso",
+      "items": ["Acceso ilimitado al gimnasio", "Acceso en horarios específicos", "Acceso a instalaciones premium", "Acceso a zona de cardio", "Acceso a zona de pesas"]
+    },
+    {
+      "category": "clases",
+      "items": ["Clases grupales ilimitadas", "2 clases grupales por semana", "4 clases grupales por semana", "Sesiones personalizadas 1x semana", "Sesiones personalizadas 2x semana", "Sesiones personalizadas 3x semana"]
+    },
+    {
+      "category": "seguimiento",
+      "items": ["Rutina personalizada", "Rutina personalizada avanzada", "Actualización de rutina mensual", "Seguimiento mensual", "Seguimiento semanal", "Videos de feedback semanales", "Análisis de composición corporal mensual"]
+    },
+    {
+      "category": "nutricion",
+      "items": ["Plan nutricional básico", "Plan nutricional completo", "Consultas nutricionales mensuales", "Seguimiento alimenticio"]
+    },
+    {
+      "category": "extras",
+      "items": ["Soporte vía email", "Soporte vía WhatsApp", "Soporte prioritario", "Soporte 24/7", "Acceso a material exclusivo"]
+    }
+  ]`);
+}
+
+function calculateNextPaymentDate(startDate: string, recurrence: string): string {
+  const date = new Date(startDate);
+
+  switch (recurrence) {
+    case 'mensual':
+      date.setMonth(date.getMonth() + 1);
+      break;
+    case 'bimestral':
+      date.setMonth(date.getMonth() + 2);
+      break;
+    case 'trimestral':
+      date.setMonth(date.getMonth() + 3);
+      break;
+    case 'semestral':
+      date.setMonth(date.getMonth() + 6);
+      break;
+    case 'anual':
+      date.setFullYear(date.getFullYear() + 1);
+      break;
+    case 'unico':
+      date.setFullYear(date.getFullYear() + 10);
+      break;
+  }
+
+  return date.toISOString().split('T')[0];
 }

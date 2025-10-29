@@ -53,6 +53,11 @@ import {KeycloakService} from './core/keycloak.service';
                                         Rutinas
                                     </a>
                                     @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                        <a routerLink="/trainer/payment-plans"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Planes
+                                        </a>
                                         <a routerLink="/trainer/payments"
                                            routerLinkActive="border-white text-white"
                                            class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
@@ -161,6 +166,12 @@ import {KeycloakService} from './core/keycloak.service';
                                 Rutinas
                             </a>
                             @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                <a routerLink="/trainer/payment-plans"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Planes
+                                </a>
                                 <a routerLink="/trainer/payments"
                                    (click)="closeMobileMenu()"
                                    routerLinkActive="bg-white/20 text-white"
