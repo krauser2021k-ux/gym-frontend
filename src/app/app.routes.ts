@@ -38,6 +38,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'exercises/new',
+    loadComponent: () => import('./features/exercises/exercise-form.component').then(m => m.ExerciseFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'routines',
     loadComponent: () => import('./features/routines/routines-list.component').then(m => m.RoutinesListComponent),
     canActivate: [authGuard]
