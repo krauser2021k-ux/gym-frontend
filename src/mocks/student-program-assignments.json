@@ -1,0 +1,54 @@
+[
+  {
+    "id": "assignment-prog-1",
+    "programId": "program-1",
+    "programName": "Programa Fuerza 8 Semanas",
+    "studentId": "student-1",
+    "studentName": "Juan Pérez",
+    "startDate": "2025-10-01",
+    "currentWeek": 4,
+    "status": "active",
+    "autoProgressionEnabled": true,
+    "createdAt": "2025-10-01T09:00:00Z",
+    "updatedAt": "2025-10-22T00:00:00Z"
+  },
+  {
+    "id": "assignment-prog-2",
+    "programId": "program-2",
+    "programName": "Programa Hipertrofia 12 Semanas",
+    "studentId": "student-2",
+    "studentName": "María González",
+    "startDate": "2025-09-15",
+    "currentWeek": 6,
+    "status": "active",
+    "autoProgressionEnabled": true,
+    "createdAt": "2025-09-15T09:00:00Z",
+    "updatedAt": "2025-10-27T00:00:00Z"
+  },
+  {
+    "id": "assignment-prog-3",
+    "programId": "program-3",
+    "programName": "Programa Principiantes 4 Semanas",
+    "studentId": "student-3",
+    "studentName": "Pedro Rodríguez",
+    "startDate": "2025-10-15",
+    "currentWeek": 2,
+    "status": "active",
+    "autoProgressionEnabled": false,
+    "createdAt": "2025-10-15T09:00:00Z",
+    "updatedAt": "2025-10-22T00:00:00Z"
+  },
+  {
+    "id": "assignment-prog-4",
+    "programId": "program-1",
+    "programName": "Programa Fuerza 8 Semanas",
+    "studentId": "student-4",
+    "studentName": "Ana Martínez",
+    "startDate": "2025-08-01",
+    "currentWeek": 8,
+    "status": "completed",
+    "autoProgressionEnabled": true,
+    "createdAt": "2025-08-01T09:00:00Z",
+    "updatedAt": "2025-09-26T00:00:00Z"
+  }
+]

@@ -166,5 +166,40 @@ export const routes: Routes = [
     path: 'trainer/students/plans-overview',
     loadComponent: () => import('./features/payment-plans/student-plans-overview.component').then(m => m.StudentPlansOverviewComponent),
     canActivate: [authGuard]
+  },
+  {
+    path: 'programs',
+    loadComponent: () => import('./features/programs/programs-list.component').then(m => m.ProgramsListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/new',
+    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/edit/:id',
+    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/assign/:programId',
+    loadComponent: () => import('./features/programs/program-assign.component').then(m => m.ProgramAssignComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/:id',
+    loadComponent: () => import('./features/programs/program-detail.component').then(m => m.ProgramDetailComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'my-program',
+    loadComponent: () => import('./features/programs/my-program.component').then(m => m.MyProgramComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/student-programs',
+    loadComponent: () => import('./features/programs/student-program-progress.component').then(m => m.StudentProgramProgressComponent),
+    canActivate: [authGuard]
   }
 ];

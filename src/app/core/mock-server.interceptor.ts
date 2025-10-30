@@ -641,6 +641,111 @@ export const mockServerInterceptor: HttpInterceptorFn = (req, next) => {
     })).pipe(delay(300));
   }
 
+  if (url.includes('/programs') && method === 'GET' && !url.match(/programs\/[^/]+$/) && !url.includes('/duplicate')) {
+    const urlObj = new URL('http://dummy' + url);
+    const gymId = urlObj.searchParams.get('gymId') || 'gym-1';
+    const programs = getMockPrograms().filter(p => p.gymId === gymId);
+    return of(new HttpResponse({
+      status: 200,
+      body: programs
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/programs\/[^/]+$/) && method === 'GET' && !url.includes('/duplicate')) {
+    const id = url.split('/').pop();
+    const programs = getMockPrograms();
+    const program = programs.find(p => p.id === id);
+    return of(new HttpResponse({
+      status: program ? 200 : 404,
+      body: program || { error: 'Not found' }
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/programs') && method === 'POST' && !url.includes('/assign') && !url.includes('/duplicate')) {
+    return of(new HttpResponse({
+      status: 201,
+      body: { ...(req.body as any), id: 'program-' + Date.now(), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/programs\/[^/]+$/) && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/programs\/[^/]+$/) && method === 'DELETE') {
+    return of(new HttpResponse({
+      status: 204,
+      body: null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/programs') && url.includes('/duplicate') && method === 'POST') {
+    const id = url.split('/')[url.split('/').indexOf('programs') + 1];
+    const programs = getMockPrograms();
+    const original = programs.find(p => p.id === id);
+    if (original) {
+      return of(new HttpResponse({
+        status: 201,
+        body: { ...original, id: 'program-' + Date.now(), name: original.name + ' (Copia)' }
+      })).pipe(delay(300));
+    }
+  }
+
+  if (url.includes('/programs/assign') && method === 'POST') {
+    const body = req.body as any;
+    return of(new HttpResponse({
+      status: 201,
+      body: {
+        id: 'assignment-prog-' + Date.now(),
+        ...body,
+        currentWeek: 1,
+        status: 'active',
+        createdAt: new Date().toISOString()
+      }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/students\/[^/]+\/program$/) && method === 'GET') {
+    const studentId = url.split('/')[url.split('/').indexOf('students') + 1];
+    const assignments = getMockStudentProgramAssignments();
+    const assignment = assignments.find(a => a.studentId === studentId && a.status === 'active');
+    return of(new HttpResponse({
+      status: 200,
+      body: assignment || null
+    })).pipe(delay(300));
+  }
+
+  if (url.includes('/student-program-assignments') && method === 'GET') {
+    return of(new HttpResponse({
+      status: 200,
+      body: getMockStudentProgramAssignments()
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/student-program-assignments\/[^/]+\/progress$/) && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { ...(req.body as any), updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/student-program-assignments\/[^/]+\/pause$/) && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { status: 'paused', updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
+  if (url.match(/student-program-assignments\/[^/]+\/resume$/) && method === 'PUT') {
+    return of(new HttpResponse({
+      status: 200,
+      body: { status: 'active', updatedAt: new Date().toISOString() }
+    })).pipe(delay(300));
+  }
+
   return next(req);
 };
 
@@ -1844,4 +1949,126 @@ function calculateNextPaymentDate(startDate: string, recurrence: string): string
   }
 
   return date.toISOString().split('T')[0];
+}
+
+function getMockPrograms() {
+  return [
+    {
+      id: 'program-1',
+      name: 'Programa Fuerza 8 Semanas',
+      description: 'Programa progresivo enfocado en desarrollo de fuerza base para todos los grupos musculares',
+      durationWeeks: 8,
+      gymId: 'gym-1',
+      createdBy: 'trainer-1',
+      routines: [
+        { programId: 'program-1', routineId: 'routine-1', weekNumber: 1, notes: 'Semana de adaptación - Enfoque en técnica' },
+        { programId: 'program-1', routineId: 'routine-1', weekNumber: 2, notes: 'Mantener técnica - Aumentar cargas 5%' },
+        { programId: 'program-1', routineId: 'routine-2', weekNumber: 3, notes: 'Inicio fase de volumen - Push/Pull/Legs' },
+        { programId: 'program-1', routineId: 'routine-2', weekNumber: 4, notes: 'Mantener intensidad alta' },
+        { programId: 'program-1', routineId: 'routine-2', weekNumber: 5, notes: 'Semana de deload - Reducir volumen 30%' },
+        { programId: 'program-1', routineId: 'routine-2', weekNumber: 6, notes: 'Retomar intensidad - Nuevos PRs' },
+        { programId: 'program-1', routineId: 'routine-1', weekNumber: 7, notes: 'Última semana fuerte - Máximo esfuerzo' },
+        { programId: 'program-1', routineId: 'routine-1', weekNumber: 8, notes: 'Semana de evaluación - Test de fuerza' }
+      ],
+      createdAt: '2025-09-01T10:00:00Z',
+      updatedAt: '2025-09-01T10:00:00Z'
+    },
+    {
+      id: 'program-2',
+      name: 'Programa Hipertrofia 12 Semanas',
+      description: 'Programa avanzado de ganancia muscular con periodización ondulante',
+      durationWeeks: 12,
+      gymId: 'gym-1',
+      createdBy: 'trainer-1',
+      routines: [
+        { programId: 'program-2', routineId: 'routine-1', weekNumber: 1, notes: 'Fase de acondicionamiento - Volumen moderado' },
+        { programId: 'program-2', routineId: 'routine-1', weekNumber: 2, notes: 'Aumentar series totales' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 3, notes: 'Inicio fase hipertrófica - Alto volumen' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 4, notes: 'Máximo volumen semanal' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 5, notes: 'Semana de descarga' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 6, notes: 'Retomar alto volumen' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 7, notes: 'Peak de volumen' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 8, notes: 'Semana de descarga activa' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 9, notes: 'Fase de intensificación' },
+        { programId: 'program-2', routineId: 'routine-2', weekNumber: 10, notes: 'Máxima intensidad' },
+        { programId: 'program-2', routineId: 'routine-1', weekNumber: 11, notes: 'Semana de recomposición' },
+        { programId: 'program-2', routineId: 'routine-1', weekNumber: 12, notes: 'Evaluación final y mediciones' }
+      ],
+      createdAt: '2025-08-15T10:00:00Z',
+      updatedAt: '2025-08-15T10:00:00Z'
+    },
+    {
+      id: 'program-3',
+      name: 'Programa Principiantes 4 Semanas',
+      description: 'Introducción al entrenamiento con pesas - Ideal para personas sin experiencia previa',
+      durationWeeks: 4,
+      gymId: 'gym-1',
+      createdBy: 'trainer-1',
+      routines: [
+        { programId: 'program-3', routineId: 'routine-1', weekNumber: 1, notes: 'Aprendizaje de técnica básica - Sin cargas pesadas' },
+        { programId: 'program-3', routineId: 'routine-1', weekNumber: 2, notes: 'Consolidar técnica - Aumentar repeticiones' },
+        { programId: 'program-3', routineId: 'routine-1', weekNumber: 3, notes: 'Introducir cargas moderadas' },
+        { programId: 'program-3', routineId: 'routine-1', weekNumber: 4, notes: 'Evaluación de progreso - Preparación para nivel intermedio' }
+      ],
+      createdAt: '2025-10-01T10:00:00Z',
+      updatedAt: '2025-10-01T10:00:00Z'
+    }
+  ];
+}
+
+function getMockStudentProgramAssignments() {
+  return [
+    {
+      id: 'assignment-prog-1',
+      programId: 'program-1',
+      programName: 'Programa Fuerza 8 Semanas',
+      studentId: 'student-1',
+      studentName: 'Juan Pérez',
+      startDate: '2025-10-01',
+      currentWeek: 4,
+      status: 'active',
+      autoProgressionEnabled: true,
+      createdAt: '2025-10-01T09:00:00Z',
+      updatedAt: '2025-10-22T00:00:00Z'
+    },
+    {
+      id: 'assignment-prog-2',
+      programId: 'program-2',
+      programName: 'Programa Hipertrofia 12 Semanas',
+      studentId: 'student-2',
+      studentName: 'María González',
+      startDate: '2025-09-15',
+      currentWeek: 6,
+      status: 'active',
+      autoProgressionEnabled: true,
+      createdAt: '2025-09-15T09:00:00Z',
+      updatedAt: '2025-10-27T00:00:00Z'
+    },
+    {
+      id: 'assignment-prog-3',
+      programId: 'program-3',
+      programName: 'Programa Principiantes 4 Semanas',
+      studentId: 'student-3',
+      studentName: 'Pedro Rodríguez',
+      startDate: '2025-10-15',
+      currentWeek: 2,
+      status: 'active',
+      autoProgressionEnabled: false,
+      createdAt: '2025-10-15T09:00:00Z',
+      updatedAt: '2025-10-22T00:00:00Z'
+    },
+    {
+      id: 'assignment-prog-4',
+      programId: 'program-1',
+      programName: 'Programa Fuerza 8 Semanas',
+      studentId: 'student-4',
+      studentName: 'Ana Martínez',
+      startDate: '2025-08-01',
+      currentWeek: 8,
+      status: 'completed',
+      autoProgressionEnabled: true,
+      createdAt: '2025-08-01T09:00:00Z',
+      updatedAt: '2025-09-26T00:00:00Z'
+    }
+  ];
 }

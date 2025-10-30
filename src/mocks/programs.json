@@ -1,0 +1,182 @@
+[
+  {
+    "id": "program-1",
+    "name": "Programa Fuerza 8 Semanas",
+    "description": "Programa progresivo enfocado en desarrollo de fuerza base para todos los grupos musculares",
+    "durationWeeks": 8,
+    "gymId": "gym-1",
+    "createdBy": "trainer-1",
+    "routines": [
+      {
+        "programId": "program-1",
+        "routineId": "routine-1",
+        "weekNumber": 1,
+        "notes": "Semana de adaptación - Enfoque en técnica"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-1",
+        "weekNumber": 2,
+        "notes": "Mantener técnica - Aumentar cargas 5%"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-2",
+        "weekNumber": 3,
+        "notes": "Inicio fase de volumen - Push/Pull/Legs"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-2",
+        "weekNumber": 4,
+        "notes": "Mantener intensidad alta"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-2",
+        "weekNumber": 5,
+        "notes": "Semana de deload - Reducir volumen 30%"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-2",
+        "weekNumber": 6,
+        "notes": "Retomar intensidad - Nuevos PRs"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-1",
+        "weekNumber": 7,
+        "notes": "Última semana fuerte - Máximo esfuerzo"
+      },
+      {
+        "programId": "program-1",
+        "routineId": "routine-1",
+        "weekNumber": 8,
+        "notes": "Semana de evaluación - Test de fuerza"
+      }
+    ],
+    "createdAt": "2025-09-01T10:00:00Z",
+    "updatedAt": "2025-09-01T10:00:00Z"
+  },
+  {
+    "id": "program-2",
+    "name": "Programa Hipertrofia 12 Semanas",
+    "description": "Programa avanzado de ganancia muscular con periodización ondulante",
+    "durationWeeks": 12,
+    "gymId": "gym-1",
+    "createdBy": "trainer-1",
+    "routines": [
+      {
+        "programId": "program-2",
+        "routineId": "routine-1",
+        "weekNumber": 1,
+        "notes": "Fase de acondicionamiento - Volumen moderado"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-1",
+        "weekNumber": 2,
+        "notes": "Aumentar series totales"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 3,
+        "notes": "Inicio fase hipertrófica - Alto volumen"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 4,
+        "notes": "Máximo volumen semanal"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 5,
+        "notes": "Semana de descarga"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 6,
+        "notes": "Retomar alto volumen"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 7,
+        "notes": "Peak de volumen"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 8,
+        "notes": "Semana de descarga activa"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 9,
+        "notes": "Fase de intensificación"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-2",
+        "weekNumber": 10,
+        "notes": "Máxima intensidad"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-1",
+        "weekNumber": 11,
+        "notes": "Semana de recomposición"
+      },
+      {
+        "programId": "program-2",
+        "routineId": "routine-1",
+        "weekNumber": 12,
+        "notes": "Evaluación final y mediciones"
+      }
+    ],
+    "createdAt": "2025-08-15T10:00:00Z",
+    "updatedAt": "2025-08-15T10:00:00Z"
+  },
+  {
+    "id": "program-3",
+    "name": "Programa Principiantes 4 Semanas",
+    "description": "Introducción al entrenamiento con pesas - Ideal para personas sin experiencia previa",
+    "durationWeeks": 4,
+    "gymId": "gym-1",
+    "createdBy": "trainer-1",
+    "routines": [
+      {
+        "programId": "program-3",
+        "routineId": "routine-1",
+        "weekNumber": 1,
+        "notes": "Aprendizaje de técnica básica - Sin cargas pesadas"
+      },
+      {
+        "programId": "program-3",
+        "routineId": "routine-1",
+        "weekNumber": 2,
+        "notes": "Consolidar técnica - Aumentar repeticiones"
+      },
+      {
+        "programId": "program-3",
+        "routineId": "routine-1",
+        "weekNumber": 3,
+        "notes": "Introducir cargas moderadas"
+      },
+      {
+        "programId": "program-3",
+        "routineId": "routine-1",
+        "weekNumber": 4,
+        "notes": "Evaluación de progreso - Preparación para nivel intermedio"
+      }
+    ],
+    "createdAt": "2025-10-01T10:00:00Z",
+    "updatedAt": "2025-10-01T10:00:00Z"
+  }
+]
