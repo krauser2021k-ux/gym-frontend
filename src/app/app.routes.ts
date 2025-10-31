@@ -33,6 +33,34 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'biblioteca',
+    loadComponent: () => import('./features/biblioteca/biblioteca.component').then(m => m.BibliotecaComponent),
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'ejercicios',
+        pathMatch: 'full'
+      },
+      {
+        path: 'ejercicios',
+        loadComponent: () => import('./features/exercises/exercises-library.component').then(m => m.ExercisesLibraryComponent)
+      },
+      {
+        path: 'bloques',
+        loadComponent: () => import('./features/blocks/blocks-list.component').then(m => m.BlocksListComponent)
+      },
+      {
+        path: 'rutinas',
+        loadComponent: () => import('./features/routines/routines-list.component').then(m => m.RoutinesListComponent)
+      },
+      {
+        path: 'programas',
+        loadComponent: () => import('./features/programs/programs-list.component').then(m => m.ProgramsListComponent)
+      }
+    ]
+  },
+  {
     path: 'exercises',
     loadComponent: () => import('./features/exercises/exercises-library.component').then(m => m.ExercisesLibraryComponent),
     canActivate: [authGuard]
