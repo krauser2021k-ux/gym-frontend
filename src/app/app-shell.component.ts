@@ -295,6 +295,7 @@ import {KeycloakService} from './core/keycloak.service';
                     <div class="grid grid-cols-5 h-16">
                         @if (userRole() === 'trainer' || userRole() === 'admin') {
                             <a routerLink="/dashboard"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -304,6 +305,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Inicio</span>
                             </a>
                             <a routerLink="/students"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -313,6 +315,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Alumnos</span>
                             </a>
                             <a routerLink="/exercises"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -322,6 +325,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Ejercicios</span>
                             </a>
                             <a routerLink="/routines"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -339,6 +343,7 @@ import {KeycloakService} from './core/keycloak.service';
                         }
                         @if (userRole() === 'student') {
                             <a routerLink="/my-routine"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -348,6 +353,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Mi Rutina</span>
                             </a>
                             <a routerLink="/my-program"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -357,6 +363,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Programa</span>
                             </a>
                             <a routerLink="/exercises"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -366,6 +373,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 <span class="text-xs mt-1">Ejercicios</span>
                             </a>
                             <a routerLink="/student/payments/plans"
+                               (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
