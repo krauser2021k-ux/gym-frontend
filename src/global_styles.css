@@ -175,6 +175,44 @@
     font-weight: 600;
   }
 
+  input, textarea, select {
+    color: #1e293b;
+  }
+
+  body.dark input,
+  body.dark textarea,
+  body.dark select {
+    color: #f1f5f9;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #64748b;
+  }
+
+  body.dark input::placeholder,
+  body.dark textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  body:not(.dark) .placeholder-slate-500::placeholder {
+    color: #64748b !important;
+  }
+
+  body:not(.dark) input[type="date"],
+  body:not(.dark) input[type="time"],
+  body:not(.dark) input[type="datetime-local"] {
+    color: #1e293b;
+    color-scheme: light;
+  }
+
+  body.dark input[type="date"],
+  body.dark input[type="time"],
+  body.dark input[type="datetime-local"] {
+    color: #f1f5f9;
+    color-scheme: dark;
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
