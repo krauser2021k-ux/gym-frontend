@@ -11,10 +11,10 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f1f5f9 100%);
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: #0f172a;
+    color: #1e293b;
   }
 
   body.dark {
@@ -29,7 +29,8 @@
   }
 
   .text-adaptive {
-    color: #0f172a;
+    color: #1e293b;
+    font-weight: 500;
   }
 
   body.dark .text-adaptive {
@@ -37,7 +38,7 @@
   }
 
   .text-adaptive-secondary {
-    color: #475569;
+    color: #334155;
   }
 
   body.dark .text-adaptive-secondary {
@@ -60,12 +61,65 @@
     color: #ffffff;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+    color: #f1f5f9;
+  }
+
+  p, span, div {
+    color: inherit;
+  }
+
+  body:not(.dark) .text-white {
+    color: #1e293b !important;
+  }
+
+  body:not(.dark) .text-gray-300,
+  body:not(.dark) .text-gray-400 {
+    color: #475569 !important;
+  }
+
+  body:not(.dark) .text-gray-500 {
+    color: #334155 !important;
+  }
+
+  body:not(.dark) .text-blue-400 {
+    color: #2563eb !important;
+  }
+
+  body:not(.dark) .text-slate-600 {
+    color: #475569 !important;
+  }
+
+  body:not(.dark) .text-slate-900 {
+    color: #1e293b !important;
+  }
+
+  body:not(.dark) .bg-green-500,
+  body:not(.dark) .bg-emerald-500,
+  body:not(.dark) .bg-blue-500,
+  body:not(.dark) .bg-amber-500 {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  body.dark .text-slate-600 {
+    color: rgba(241, 245, 249, 0.7) !important;
+  }
+
+  body.dark .text-slate-900 {
+    color: #f1f5f9 !important;
+  }
+
   .glass {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(100, 116, 139, 0.25);
+    box-shadow: 0 4px 24px 0 rgba(15, 23, 42, 0.12);
   }
 
   body.dark .glass {
@@ -86,11 +140,11 @@
 
   .card {
     @apply rounded-lg p-6 transition-all duration-300;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(100, 116, 139, 0.25);
+    box-shadow: 0 4px 24px 0 rgba(15, 23, 42, 0.12);
   }
 
   body.dark .card {
@@ -101,16 +155,15 @@
 
   .btn-primary {
     @apply text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300;
-    background: rgba(59, 130, 246, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: #3b82f6;
+    border: 1px solid #2563eb;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
   }
 
   .btn-primary:hover {
-    background: rgba(37, 99, 235, 1);
+    background: #2563eb;
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
   }
 
   body.dark .btn-primary {
@@ -125,16 +178,16 @@
 
   .btn-secondary {
     @apply font-semibold py-2 px-4 rounded-lg transition-all duration-300;
-    background: rgba(148, 163, 184, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(100, 116, 139, 0.4);
-    color: rgba(15, 23, 42, 0.95);
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
   }
 
   .btn-secondary:hover {
-    background: rgba(100, 116, 139, 0.7);
+    background: #cbd5e1;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
   }
 
   body.dark .btn-secondary {
@@ -148,9 +201,10 @@
   }
 
   footer {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(100, 116, 139, 0.2);
   }
 
   body.dark footer {
@@ -182,8 +236,10 @@
   }
 
   body:not(.dark) .sidebar-link.active {
-    color: #0f172a;
-    background: rgba(148, 163, 184, 0.4);
+    color: #1e293b;
+    font-weight: 600;
+    background: rgba(59, 130, 246, 0.15);
+    border-left: 3px solid #3b82f6;
   }
 
   nav a.router-link-active,
@@ -198,8 +254,9 @@
 
   body:not(.dark) nav a.router-link-active,
   body:not(.dark) nav button.router-link-active {
-    color: #0f172a;
-    background: rgba(148, 163, 184, 0.4);
+    color: #1e293b;
+    font-weight: 600;
+    background: rgba(59, 130, 246, 0.15);
   }
 
   @media (max-width: 1023px) {
