@@ -52,16 +52,45 @@ import {KeycloakService} from './core/keycloak.service';
                                        class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                         Rutinas
                                     </a>
+                                    @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                        <a routerLink="/programs"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Programas
+                                        </a>
+                                    }
+                                    @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                        <a routerLink="/trainer/payment-plans"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Planes
+                                        </a>
+                                        <a routerLink="/trainer/payments"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Pagos
+                                        </a>
+                                    }
                                     @if (userRole() === 'student') {
                                         <a routerLink="/my-routine"
                                            routerLinkActive="border-white text-white"
                                            class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
                                             Mi Rutina
                                         </a>
-                                        <a routerLink="/payments"
+                                        <a routerLink="/my-program"
                                            routerLinkActive="border-white text-white"
                                            class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
-                                            Pagos
+                                            Mi Programa
+                                        </a>
+                                        <a routerLink="/student/payments/plans"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Planes
+                                        </a>
+                                        <a routerLink="/student/payments/history"
+                                           routerLinkActive="border-white text-white"
+                                           class="border-transparent text-white/70 hover:border-white/50 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200">
+                                            Mis Pagos
                                         </a>
                                     }
                                 </div>
@@ -148,6 +177,28 @@ import {KeycloakService} from './core/keycloak.service';
                                class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
                                 Rutinas
                             </a>
+                            @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                <a routerLink="/programs"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Programas
+                                </a>
+                            }
+                            @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                <a routerLink="/trainer/payment-plans"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Planes
+                                </a>
+                                <a routerLink="/trainer/payments"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Pagos
+                                </a>
+                            }
                             @if (userRole() === 'student') {
                                 <a routerLink="/my-routine"
                                    (click)="closeMobileMenu()"
@@ -155,11 +206,23 @@ import {KeycloakService} from './core/keycloak.service';
                                    class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
                                     Mi Rutina
                                 </a>
-                                <a routerLink="/payments"
+                                <a routerLink="/my-program"
                                    (click)="closeMobileMenu()"
                                    routerLinkActive="bg-white/20 text-white"
                                    class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
-                                    Pagos
+                                    Mi Programa
+                                </a>
+                                <a routerLink="/student/payments/plans"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Planes
+                                </a>
+                                <a routerLink="/student/payments/history"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="text-white/70 hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200">
+                                    Mis Pagos
                                 </a>
                             }
                         </div>
@@ -224,7 +287,7 @@ export class AppShellComponent {
 
     constructor(private keycloakService: KeycloakService) {
         const savedTheme = localStorage.getItem('theme');
-        this.darkMode.set(savedTheme === 'dark');
+        this.darkMode.set(savedTheme ? savedTheme === 'dark' : true);
         this.applyThemeToBody();
         const authenticated = this.keycloakService.isAuthenticated();
         this.isAuthenticated.set(authenticated);

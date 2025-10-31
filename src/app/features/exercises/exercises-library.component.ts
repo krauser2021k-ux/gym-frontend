@@ -1,27 +1,20 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { Exercise } from '../../shared/models';
-import { ExerciseFormComponent } from './exercise-form.component';
 
 @Component({
   selector: 'app-exercises-library',
   standalone: true,
-  imports: [CommonModule, ExerciseFormComponent],
+  imports: [CommonModule],
   template: `
     <div class="space-y-6">
-      @if (showForm()) {
-        <app-exercise-form
-          [exercise]="selectedExercise"
-          (saved)="onExerciseSaved($event)"
-          (cancelled)="onFormCancelled()">
-        </app-exercise-form>
-      }
-
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
-        <button (click)="openCreateDialog()"
+        <button (click)="navigateToCreate()"
                 class="px-4 sm:px-6 py-2 sm:py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
+          <i class="pi pi-plus mr-2"></i>
           Crear Ejercicio
         </button>
       </div>
@@ -47,7 +40,8 @@ import { ExerciseFormComponent } from './exercise-form.component';
       } @else {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (exercise of exercises(); track exercise.id) {
-            <div class="glass rounded-lg hover:bg-white/25 transition-all duration-200 overflow-hidden">
+            <div class="glass rounded-lg hover:bg-white/25 transition-all duration-200 overflow-hidden cursor-pointer"
+                 (click)="navigateToEdit(exercise.id)">
               @if (exercise.thumbnailUrl) {
                 <img [src]="exercise.thumbnailUrl" [alt]="exercise.name"
                      class="w-full h-48 object-cover">
@@ -85,6 +79,16 @@ import { ExerciseFormComponent } from './exercise-form.component';
                   }
                 </div>
               </div>
+              <div class="px-6 pb-4 flex justify-end gap-2" (click)="$event.stopPropagation()">
+                <button (click)="navigateToEdit(exercise.id)"
+                        class="px-3 py-1 text-white text-sm font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20">
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button (click)="deleteExercise(exercise.id)"
+                        class="px-3 py-1 text-white text-sm font-semibold rounded-lg transition-all duration-200 glass hover:bg-red-500/50">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
             </div>
           }
         </div>
@@ -96,10 +100,11 @@ import { ExerciseFormComponent } from './exercise-form.component';
 export class ExercisesLibraryComponent implements OnInit {
   exercises = signal<Exercise[]>([]);
   loading = signal(true);
-  showForm = signal(false);
-  selectedExercise = signal<Exercise | null>(null);
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadExercises();
@@ -118,37 +123,29 @@ export class ExercisesLibraryComponent implements OnInit {
     });
   }
 
-  openCreateDialog() {
-    this.selectedExercise.set(null);
-    this.showForm.set(true);
+  navigateToCreate() {
+    this.router.navigate(['/exercises/new']);
   }
 
-  onExerciseSaved(exercise: Exercise) {
-    const endpoint = exercise.id ? `/exercises/${exercise.id}` : '/exercises';
-    const method = exercise.id ? 'put' : 'post';
+  navigateToEdit(id: string) {
+    this.router.navigate(['/exercises/edit', id]);
+  }
 
-    this.apiService[method]<Exercise>(endpoint, exercise).subscribe({
-      next: (savedExercise) => {
-        if (exercise.id) {
-          const updated = this.exercises().map(e =>
-            e.id === savedExercise.id ? savedExercise : e
-          );
-          this.exercises.set(updated);
-        } else {
-          this.exercises.set([...this.exercises(), savedExercise]);
-        }
-        this.showForm.set(false);
-        this.selectedExercise.set(null);
+  deleteExercise(id: string) {
+    if (!confirm('¿Estás seguro de que deseas eliminar este ejercicio?')) {
+      return;
+    }
+
+    this.apiService.delete(`/exercises/${id}`).subscribe({
+      next: () => {
+        const updated = this.exercises().filter(e => e.id !== id);
+        this.exercises.set(updated);
       },
       error: (err) => {
-        console.error('Error saving exercise:', err);
+        console.error('Error deleting exercise:', err);
+        alert('Error al eliminar el ejercicio');
       }
     });
-  }
-
-  onFormCancelled() {
-    this.showForm.set(false);
-    this.selectedExercise.set(null);
   }
 
   getDifficultyClass(difficulty: string): string {

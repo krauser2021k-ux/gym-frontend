@@ -1,0 +1,245 @@
+[
+  {
+    "id": "plan-template-1",
+    "trainerId": "user-1",
+    "name": "Plan Mensual Básico",
+    "description": "Plan ideal para comenzar tu entrenamiento con acceso completo al gimnasio",
+    "type": "general",
+    "basePrice": 15000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "durationDays": 30,
+    "isActive": true,
+    "items": [
+      {
+        "id": "item-1",
+        "description": "Acceso ilimitado al gimnasio",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-2",
+        "description": "Rutina personalizada",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-3",
+        "description": "Seguimiento mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      },
+      {
+        "id": "item-4",
+        "description": "Soporte vía email",
+        "included": true,
+        "category": "extras",
+        "order": 4
+      }
+    ],
+    "createdAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "plan-template-2",
+    "trainerId": "user-1",
+    "name": "Plan Premium",
+    "description": "Todo incluido con clases grupales y seguimiento nutricional",
+    "type": "general",
+    "basePrice": 25000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "durationDays": 30,
+    "isActive": true,
+    "items": [
+      {
+        "id": "item-5",
+        "description": "Acceso ilimitado al gimnasio",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-6",
+        "description": "Rutina personalizada avanzada",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-7",
+        "description": "Clases grupales ilimitadas",
+        "included": true,
+        "category": "clases",
+        "order": 3
+      },
+      {
+        "id": "item-8",
+        "description": "Análisis de composición corporal mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 4
+      },
+      {
+        "id": "item-9",
+        "description": "Consultas nutricionales",
+        "included": true,
+        "category": "nutricion",
+        "order": 5
+      },
+      {
+        "id": "item-10",
+        "description": "Seguimiento semanal de progreso",
+        "included": true,
+        "category": "seguimiento",
+        "order": 6
+      },
+      {
+        "id": "item-11",
+        "description": "Soporte prioritario",
+        "included": true,
+        "category": "extras",
+        "order": 7
+      }
+    ],
+    "createdAt": "2025-01-15T10:30:00Z"
+  },
+  {
+    "id": "plan-template-3",
+    "trainerId": "user-1",
+    "name": "Plan Elite",
+    "description": "Entrenamiento personalizado 1 a 1 con seguimiento integral",
+    "type": "general",
+    "basePrice": 45000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "durationDays": 30,
+    "isActive": true,
+    "items": [
+      {
+        "id": "item-12",
+        "description": "Acceso ilimitado premium",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-13",
+        "description": "Sesiones personalizadas 3x semana",
+        "included": true,
+        "category": "clases",
+        "order": 2
+      },
+      {
+        "id": "item-14",
+        "description": "Plan nutricional completo",
+        "included": true,
+        "category": "nutricion",
+        "order": 3
+      },
+      {
+        "id": "item-15",
+        "description": "Videos de feedback semanales",
+        "included": true,
+        "category": "seguimiento",
+        "order": 4
+      },
+      {
+        "id": "item-16",
+        "description": "Análisis corporal quincenal",
+        "included": true,
+        "category": "seguimiento",
+        "order": 5
+      },
+      {
+        "id": "item-17",
+        "description": "Acceso a material exclusivo",
+        "included": true,
+        "category": "extras",
+        "order": 6
+      },
+      {
+        "id": "item-18",
+        "description": "Soporte 24/7",
+        "included": true,
+        "category": "extras",
+        "order": 7
+      }
+    ],
+    "createdAt": "2025-01-15T11:00:00Z"
+  },
+  {
+    "id": "plan-template-4",
+    "trainerId": "user-1",
+    "name": "Plan Trimestral Básico",
+    "description": "Ahorra con un plan trimestral con todos los beneficios básicos",
+    "type": "general",
+    "basePrice": 42000,
+    "currency": "ARS",
+    "recurrence": "trimestral",
+    "durationDays": 90,
+    "isActive": true,
+    "items": [
+      {
+        "id": "item-19",
+        "description": "Acceso ilimitado al gimnasio por 3 meses",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-20",
+        "description": "Rutina personalizada con actualización mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-21",
+        "description": "Seguimiento trimestral",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      }
+    ],
+    "createdAt": "2025-02-01T09:00:00Z"
+  },
+  {
+    "id": "plan-template-5",
+    "trainerId": "user-1",
+    "name": "Clases Individuales - Pack 8",
+    "description": "8 sesiones personalizadas sin compromiso mensual",
+    "type": "general",
+    "basePrice": 32000,
+    "currency": "ARS",
+    "recurrence": "unico",
+    "durationDays": 60,
+    "isActive": true,
+    "items": [
+      {
+        "id": "item-22",
+        "description": "8 sesiones individuales de 60 minutos",
+        "included": true,
+        "category": "clases",
+        "order": 1
+      },
+      {
+        "id": "item-23",
+        "description": "Evaluación inicial y final",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-24",
+        "description": "Plan de entrenamiento personalizado",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      }
+    ],
+    "createdAt": "2025-02-10T14:00:00Z"
+  }
+]

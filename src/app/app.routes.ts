@@ -38,6 +38,16 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'exercises/new',
+    loadComponent: () => import('./features/exercises/exercise-form.component').then(m => m.ExerciseFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'exercises/edit/:id',
+    loadComponent: () => import('./features/exercises/exercise-form.component').then(m => m.ExerciseFormComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'routines',
     loadComponent: () => import('./features/routines/routines-list.component').then(m => m.RoutinesListComponent),
     canActivate: [authGuard]
@@ -84,7 +94,27 @@ export const routes: Routes = [
   },
   {
     path: 'payments',
-    loadComponent: () => import('./features/payments/payments-checkout.component').then(m => m.PaymentsCheckoutComponent),
+    redirectTo: '/student/payments/plans',
+    pathMatch: 'full'
+  },
+  {
+    path: 'student/payments/plans',
+    loadComponent: () => import('./features/payments/student-payment-plans.component').then(m => m.StudentPaymentPlansComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'student/payments/history',
+    loadComponent: () => import('./features/payments/student-payment-history.component').then(m => m.StudentPaymentHistoryComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payments',
+    loadComponent: () => import('./features/payments/trainer-payments-list.component').then(m => m.TrainerPaymentsListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payments/new',
+    loadComponent: () => import('./features/payments/trainer-payment-form.component').then(m => m.TrainerPaymentFormComponent),
     canActivate: [authGuard]
   },
   {
@@ -110,6 +140,66 @@ export const routes: Routes = [
   {
     path: 'preferences',
     loadComponent: () => import('./features/preferences/preferences.component').then(m => m.PreferencesComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans',
+    loadComponent: () => import('./features/payment-plans/trainer-payment-plans-list.component').then(m => m.TrainerPaymentPlansListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/new',
+    loadComponent: () => import('./features/payment-plans/payment-plan-form.component').then(m => m.PaymentPlanFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/edit/:id',
+    loadComponent: () => import('./features/payment-plans/payment-plan-form.component').then(m => m.PaymentPlanFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/payment-plans/assign',
+    loadComponent: () => import('./features/payment-plans/assign-plan-to-student.component').then(m => m.AssignPlanToStudentComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/students/plans-overview',
+    loadComponent: () => import('./features/payment-plans/student-plans-overview.component').then(m => m.StudentPlansOverviewComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs',
+    loadComponent: () => import('./features/programs/programs-list.component').then(m => m.ProgramsListComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/new',
+    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/edit/:id',
+    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/assign/:programId',
+    loadComponent: () => import('./features/programs/program-assign.component').then(m => m.ProgramAssignComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'programs/:id',
+    loadComponent: () => import('./features/programs/program-detail.component').then(m => m.ProgramDetailComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'my-program',
+    loadComponent: () => import('./features/programs/my-program.component').then(m => m.MyProgramComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'trainer/student-programs',
+    loadComponent: () => import('./features/programs/student-program-progress.component').then(m => m.StudentProgramProgressComponent),
     canActivate: [authGuard]
   }
 ];

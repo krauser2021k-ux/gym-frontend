@@ -1,0 +1,286 @@
+[
+  {
+    "id": "assignment-1",
+    "studentId": "student-1",
+    "studentName": "Juan Pérez",
+    "planId": "plan-template-2",
+    "planName": "Plan Premium",
+    "planType": "general",
+    "basePrice": 25000,
+    "surcharges": [],
+    "finalPrice": 25000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "items": [
+      {
+        "id": "item-5",
+        "description": "Acceso ilimitado al gimnasio",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-6",
+        "description": "Rutina personalizada avanzada",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-7",
+        "description": "Clases grupales ilimitadas",
+        "included": true,
+        "category": "clases",
+        "order": 3
+      },
+      {
+        "id": "item-8",
+        "description": "Análisis de composición corporal mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 4
+      },
+      {
+        "id": "item-9",
+        "description": "Consultas nutricionales",
+        "included": true,
+        "category": "nutricion",
+        "order": 5
+      },
+      {
+        "id": "item-10",
+        "description": "Seguimiento semanal de progreso",
+        "included": true,
+        "category": "seguimiento",
+        "order": 6
+      },
+      {
+        "id": "item-11",
+        "description": "Soporte prioritario",
+        "included": true,
+        "category": "extras",
+        "order": 7
+      }
+    ],
+    "startDate": "2025-08-15",
+    "nextPaymentDate": "2025-11-15",
+    "status": "active",
+    "createdAt": "2025-08-15T10:00:00Z"
+  },
+  {
+    "id": "assignment-2",
+    "studentId": "student-2",
+    "studentName": "María González",
+    "planId": "plan-template-1",
+    "planName": "Plan Mensual Básico",
+    "planType": "general",
+    "basePrice": 15000,
+    "surcharges": [],
+    "finalPrice": 15000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "items": [
+      {
+        "id": "item-1",
+        "description": "Acceso ilimitado al gimnasio",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-2",
+        "description": "Rutina personalizada",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-3",
+        "description": "Seguimiento mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      },
+      {
+        "id": "item-4",
+        "description": "Soporte vía email",
+        "included": true,
+        "category": "extras",
+        "order": 4
+      }
+    ],
+    "startDate": "2025-08-20",
+    "nextPaymentDate": "2025-11-20",
+    "status": "active",
+    "createdAt": "2025-08-20T14:30:00Z"
+  },
+  {
+    "id": "assignment-3",
+    "studentId": "student-3",
+    "studentName": "Pedro Rodríguez",
+    "planId": "plan-template-1",
+    "planName": "Plan Mensual Básico - Horario Reducido",
+    "planType": "semi_custom",
+    "basePrice": 15000,
+    "surcharges": [
+      {
+        "id": "surcharge-1",
+        "reason": "Descuento por horario reducido (solo mañanas)",
+        "percentage": -10
+      }
+    ],
+    "finalPrice": 13500,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "items": [
+      {
+        "id": "item-1",
+        "description": "Acceso al gimnasio en horario matutino",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-2",
+        "description": "Rutina personalizada",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "item-3",
+        "description": "Seguimiento mensual",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      }
+    ],
+    "startDate": "2025-08-01",
+    "nextPaymentDate": "2025-11-01",
+    "status": "active",
+    "notes": "Cliente prefiere entrenar solo por las mañanas",
+    "createdAt": "2025-08-01T09:30:00Z"
+  },
+  {
+    "id": "assignment-4",
+    "studentId": "student-4",
+    "studentName": "Ana Martínez",
+    "planId": "plan-template-3",
+    "planName": "Plan Elite",
+    "planType": "general",
+    "basePrice": 45000,
+    "surcharges": [],
+    "finalPrice": 45000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "items": [
+      {
+        "id": "item-12",
+        "description": "Acceso ilimitado premium",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "item-13",
+        "description": "Sesiones personalizadas 3x semana",
+        "included": true,
+        "category": "clases",
+        "order": 2
+      },
+      {
+        "id": "item-14",
+        "description": "Plan nutricional completo",
+        "included": true,
+        "category": "nutricion",
+        "order": 3
+      },
+      {
+        "id": "item-15",
+        "description": "Videos de feedback semanales",
+        "included": true,
+        "category": "seguimiento",
+        "order": 4
+      },
+      {
+        "id": "item-16",
+        "description": "Análisis corporal quincenal",
+        "included": true,
+        "category": "seguimiento",
+        "order": 5
+      },
+      {
+        "id": "item-17",
+        "description": "Acceso a material exclusivo",
+        "included": true,
+        "category": "extras",
+        "order": 6
+      },
+      {
+        "id": "item-18",
+        "description": "Soporte 24/7",
+        "included": true,
+        "category": "extras",
+        "order": 7
+      }
+    ],
+    "startDate": "2025-09-05",
+    "nextPaymentDate": "2025-11-05",
+    "status": "active",
+    "createdAt": "2025-09-05T11:00:00Z"
+  },
+  {
+    "id": "assignment-5",
+    "studentId": "student-5",
+    "studentName": "Carlos López",
+    "planId": "custom-plan-1",
+    "planName": "Plan Personalizado - Recuperación Lesión",
+    "planType": "custom",
+    "basePrice": 20000,
+    "surcharges": [
+      {
+        "id": "surcharge-2",
+        "reason": "Recargo por seguimiento especializado de lesión",
+        "percentage": 15
+      }
+    ],
+    "finalPrice": 23000,
+    "currency": "ARS",
+    "recurrence": "mensual",
+    "items": [
+      {
+        "id": "custom-item-1",
+        "description": "Acceso limitado a zona de fisioterapia",
+        "included": true,
+        "category": "acceso",
+        "order": 1
+      },
+      {
+        "id": "custom-item-2",
+        "description": "Rutina específica para recuperación de rodilla",
+        "included": true,
+        "category": "seguimiento",
+        "order": 2
+      },
+      {
+        "id": "custom-item-3",
+        "description": "Seguimiento semanal de evolución",
+        "included": true,
+        "category": "seguimiento",
+        "order": 3
+      },
+      {
+        "id": "custom-item-4",
+        "description": "Consulta con fisioterapeuta asociado",
+        "included": true,
+        "category": "extras",
+        "order": 4
+      }
+    ],
+    "startDate": "2025-09-20",
+    "nextPaymentDate": "2025-11-20",
+    "status": "active",
+    "notes": "Cliente en recuperación de lesión de rodilla. Requiere seguimiento especial.",
+    "createdAt": "2025-09-20T16:00:00Z"
+  }
+]

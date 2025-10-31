@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/api.service';
+import { QuickActionsComponent } from './quick-actions.component';
 
 interface Metrics {
   activeStudents: number;
@@ -19,10 +20,12 @@ interface Metrics {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, QuickActionsComponent],
   template: `
     <div class="space-y-6">
       <h1 class="text-3xl font-bold text-white">Dashboard</h1>
+
+      <app-quick-actions></app-quick-actions>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
