@@ -21,11 +21,11 @@ import { Program, Routine, StudentProgramAssignment } from '../../shared/models'
             <p class="text-white/80 mt-2">{{ program()!.description }}</p>
           </div>
           <div class="flex space-x-2">
-            <a [routerLink]="['/programs/edit', program()!.id]"
+            <a [routerLink]="['/biblioteca/programas/edit', program()!.id]"
                class="px-4 py-2 text-white glass hover:bg-white/20 rounded-lg">
               Editar
             </a>
-            <a [routerLink]="['/programs/assign', program()!.id]"
+            <a [routerLink]="['/biblioteca/programas/assign', program()!.id]"
                class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg">
               Asignar a Alumno
             </a>

@@ -12,7 +12,7 @@ import { Program, StudentProgramAssignment } from '../../shared/models';
     <div class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h1 class="text-2xl sm:text-3xl font-bold text-white">Programas</h1>
-        <a routerLink="/programs/new"
+        <a routerLink="/biblioteca/programas/new"
            class="px-4 sm:px-6 py-2 sm:py-3 text-white font-semibold rounded-lg transition-all duration-200 glass hover:bg-white/20 text-center">
           Crear Programa
         </a>
@@ -87,7 +87,7 @@ import { Program, StudentProgramAssignment } from '../../shared/models';
               </div>
 
               <div class="flex space-x-2">
-                <a [routerLink]="['/programs', program.id]"
+                <a [routerLink]="['/biblioteca/programas', program.id]"
                    class="flex-1 text-center px-4 py-2 text-white rounded-lg transition-all duration-200 font-medium glass hover:bg-white/20">
                   Ver Detalle
                 </a>

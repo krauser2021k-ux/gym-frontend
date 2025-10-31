@@ -131,7 +131,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 }
                             </a>
 
-                            <a routerLink="/my-program"
+                            <a routerLink="/biblioteca/my-program"
                                (click)="closeSidebarMobile()"
                                routerLinkActive="bg-white/20 text-white"
                                [title]="!sidebarExpanded() ? 'Mi Programa' : ''"
@@ -309,7 +309,7 @@ import {KeycloakService} from './core/keycloak.service';
                                 </svg>
                                 <span class="text-xs mt-1">Mi Rutina</span>
                             </a>
-                            <a routerLink="/my-program"
+                            <a routerLink="/biblioteca/my-program"
                                (click)="closeMobileMenu()"
                                routerLinkActive="text-white bg-white/20"
                                class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
