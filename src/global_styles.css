@@ -114,6 +114,67 @@
     color: #f1f5f9 !important;
   }
 
+  body:not(.dark) .text-white {
+    color: #1e293b !important;
+  }
+
+  body:not(.dark) .text-white\/70 {
+    color: #475569 !important;
+  }
+
+  body:not(.dark) .text-white\/80 {
+    color: #334155 !important;
+  }
+
+  body:not(.dark) .border-white\/10 {
+    border-color: rgba(100, 116, 139, 0.2) !important;
+  }
+
+  body:not(.dark) .bg-white\/10 {
+    background-color: rgba(100, 116, 139, 0.1) !important;
+  }
+
+  body:not(.dark) .bg-white\/20 {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+  }
+
+  body:not(.dark) .hover\:bg-white\/10:hover {
+    background-color: rgba(100, 116, 139, 0.15) !important;
+  }
+
+  body:not(.dark) .hover\:text-white:hover {
+    color: #1e293b !important;
+  }
+
+  .sidebar-link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  body:not(.dark) .sidebar-link {
+    color: #475569;
+  }
+
+  .sidebar-link:hover {
+    color: white;
+  }
+
+  body:not(.dark) .sidebar-link:hover {
+    color: #1e293b;
+  }
+
+  .sidebar-link.router-link-active,
+  nav a.router-link-active,
+  nav button.router-link-active {
+    color: white;
+  }
+
+  body:not(.dark) .sidebar-link.router-link-active,
+  body:not(.dark) nav a.router-link-active,
+  body:not(.dark) nav button.router-link-active {
+    color: #1e293b;
+    font-weight: 600;
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
