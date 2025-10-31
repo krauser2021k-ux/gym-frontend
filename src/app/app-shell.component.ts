@@ -9,24 +9,10 @@ import {KeycloakService} from './core/keycloak.service';
     imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
     template: `
         <div [class.dark]="darkMode()" class="min-h-screen transition-colors duration-200">
-            @if (sidebarMobileOpen()) {
-                <div (click)="closeSidebarMobile()" class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
-            }
-
             @if (isAuthenticated()) {
-                <button (click)="toggleSidebarMobile()"
-                        class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg text-white bg-white/20 hover:bg-white/30 transition-all duration-200 backdrop-blur-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-
-                <aside [class.translate-x-0]="sidebarMobileOpen()"
-                       [class.-translate-x-full]="!sidebarMobileOpen()"
-                       [class.w-64]="sidebarExpanded()"
+                <aside [class.w-64]="sidebarExpanded()"
                        [class.w-16]="!sidebarExpanded()"
-                       class="fixed left-0 top-0 h-screen glass shadow-2xl z-50 transition-all duration-300 lg:translate-x-0 flex flex-col">
+                       class="hidden lg:flex fixed left-0 top-0 h-screen glass shadow-2xl z-50 transition-all duration-300 flex-col">
 
                     <div class="flex items-center justify-between p-4 border-b border-white/10">
                         <div class="flex items-center space-x-3 overflow-hidden">
@@ -282,11 +268,12 @@ import {KeycloakService} from './core/keycloak.service';
                  [class.lg:ml-16]="isAuthenticated() && !sidebarExpanded()"
                  class="min-h-screen flex flex-col transition-all duration-300">
                 <main class="flex-1 px-4 sm:px-6 lg:px-8 py-8 w-full"
-                      [class.pt-20]="isAuthenticated()">
+                      [class.pb-24]="isAuthenticated()">
                     <router-outlet></router-outlet>
                 </main>
 
-                <footer class="py-4 sm:py-6 border-t border-white/10 backdrop-blur-sm">
+                <footer class="py-4 sm:py-6 border-t border-white/10 backdrop-blur-sm lg:block"
+                        [class.mb-20]="isAuthenticated()">
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="text-center">
                             <p class="text-xs sm:text-sm text-white/60">
@@ -302,6 +289,202 @@ import {KeycloakService} from './core/keycloak.service';
                     </div>
                 </footer>
             </div>
+
+            @if (isAuthenticated()) {
+                <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/10">
+                    <div class="grid grid-cols-5 h-16">
+                        @if (userRole() === 'trainer' || userRole() === 'admin') {
+                            <a routerLink="/dashboard"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                <span class="text-xs mt-1">Inicio</span>
+                            </a>
+                            <a routerLink="/students"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                <span class="text-xs mt-1">Alumnos</span>
+                            </a>
+                            <a routerLink="/exercises"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+                                </svg>
+                                <span class="text-xs mt-1">Ejercicios</span>
+                            </a>
+                            <a routerLink="/routines"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                </svg>
+                                <span class="text-xs mt-1">Rutinas</span>
+                            </a>
+                            <button (click)="toggleMobileMenu()" [ngClass]="{'text-white bg-white/20': mobileMenuOpen()}" class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                <span class="text-xs mt-1">Más</span>
+                            </button>
+                        }
+                        @if (userRole() === 'student') {
+                            <a routerLink="/my-routine"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                </svg>
+                                <span class="text-xs mt-1">Mi Rutina</span>
+                            </a>
+                            <a routerLink="/my-program"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="text-xs mt-1">Programa</span>
+                            </a>
+                            <a routerLink="/exercises"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+                                </svg>
+                                <span class="text-xs mt-1">Ejercicios</span>
+                            </a>
+                            <a routerLink="/student/payments/plans"
+                               routerLinkActive="text-white bg-white/20"
+                               class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                </svg>
+                                <span class="text-xs mt-1">Planes</span>
+                            </a>
+                            <button (click)="toggleMobileMenu()" [ngClass]="{'text-white bg-white/20': mobileMenuOpen()}" class="flex flex-col items-center justify-center text-white/70 hover:text-white transition-all duration-200">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                <span class="text-xs mt-1">Más</span>
+                            </button>
+                        }
+                    </div>
+                </nav>
+
+                @if (mobileMenuOpen()) {
+                    <div (click)="closeMobileMenu()" class="lg:hidden fixed inset-0 bg-black/50 z-30"></div>
+                    <div class="lg:hidden fixed bottom-16 left-0 right-0 z-40 glass border-t border-white/10 max-h-80 overflow-y-auto">
+                        <div class="p-4 space-y-2">
+                            @if (userRole() === 'trainer' || userRole() === 'admin') {
+                                <a routerLink="/blocks"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                    </svg>
+                                    <span class="font-medium">Bloques</span>
+                                </a>
+
+                                <a routerLink="/programs"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span class="font-medium">Programas</span>
+                                </a>
+
+                                <a routerLink="/trainer/payment-plans"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                    </svg>
+                                    <span class="font-medium">Planes de Pago</span>
+                                </a>
+
+                                <a routerLink="/trainer/payments"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="font-medium">Gestión de Pagos</span>
+                                </a>
+                            }
+
+                            @if (userRole() === 'student') {
+                                <a routerLink="/student/payments/history"
+                                   (click)="closeMobileMenu()"
+                                   routerLinkActive="bg-white/20 text-white"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="font-medium">Mis Pagos</span>
+                                </a>
+                            }
+
+                            <div class="border-t border-white/10 pt-2 mt-2">
+                                <button type="button" (click)="toggleTheme(); closeMobileMenu()"
+                                        class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        @if (darkMode()) {
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        } @else {
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                        }
+                                    </svg>
+                                    <span class="font-medium">Tema {{ darkMode() ? 'Claro' : 'Oscuro' }}</span>
+                                </button>
+
+                                <a routerLink="/profile"
+                                   (click)="closeMobileMenu()"
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <span class="font-medium">{{ userName() }}</span>
+                                </a>
+
+                                <button type="button" (click)="logout()"
+                                        class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                    </svg>
+                                    <span class="font-medium">Cerrar Sesión</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     `,
     styles: [`
