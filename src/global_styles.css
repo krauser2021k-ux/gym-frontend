@@ -11,10 +11,10 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #60a5fa 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f1f5f9 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: #ffffff;
+    color: #0f172a;
   }
 
   body.dark {
@@ -28,12 +28,44 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  .text-adaptive {
+    color: #0f172a;
+  }
+
+  body.dark .text-adaptive {
+    color: #f1f5f9;
+  }
+
+  .text-adaptive-secondary {
+    color: #475569;
+  }
+
+  body.dark .text-adaptive-secondary {
+    color: rgba(241, 245, 249, 0.7);
+  }
+
+  .text-adaptive-link {
+    color: #0f172a;
+  }
+
+  body.dark .text-adaptive-link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .text-adaptive-link:hover {
+    color: #1e40af;
+  }
+
+  body.dark .text-adaptive-link:hover {
+    color: #ffffff;
+  }
+
   .glass {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
   }
 
   body.dark .glass {
@@ -54,11 +86,11 @@
 
   .card {
     @apply rounded-lg p-6 transition-all duration-300;
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
   }
 
   body.dark .card {
@@ -69,16 +101,16 @@
 
   .btn-primary {
     @apply text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300;
-    background: rgba(37, 99, 235, 0.5);
+    background: rgba(59, 130, 246, 0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.4);
   }
 
   .btn-primary:hover {
-    background: rgba(37, 99, 235, 0.7);
+    background: rgba(37, 99, 235, 1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
   }
 
   body.dark .btn-primary {
@@ -93,21 +125,22 @@
 
   .btn-secondary {
     @apply font-semibold py-2 px-4 rounded-lg transition-all duration-300;
-    background: rgba(156, 163, 175, 0.3);
+    background: rgba(148, 163, 184, 0.5);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(100, 116, 139, 0.4);
+    color: rgba(15, 23, 42, 0.95);
   }
 
   .btn-secondary:hover {
-    background: rgba(156, 163, 175, 0.5);
+    background: rgba(100, 116, 139, 0.7);
     transform: translateY(-2px);
   }
 
   body.dark .btn-secondary {
     background: rgba(100, 116, 139, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   body.dark .btn-secondary:hover {
@@ -115,7 +148,7 @@
   }
 
   footer {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
@@ -141,12 +174,32 @@
   }
 
   .sidebar-link.active {
-    @apply bg-white/20 text-white;
+    @apply bg-white/20;
+  }
+
+  body.dark .sidebar-link.active {
+    @apply text-white;
+  }
+
+  body:not(.dark) .sidebar-link.active {
+    color: #0f172a;
+    background: rgba(148, 163, 184, 0.4);
   }
 
   nav a.router-link-active,
   nav button.router-link-active {
-    @apply text-white bg-white/20;
+    @apply bg-white/20;
+  }
+
+  body.dark nav a.router-link-active,
+  body.dark nav button.router-link-active {
+    @apply text-white;
+  }
+
+  body:not(.dark) nav a.router-link-active,
+  body:not(.dark) nav button.router-link-active {
+    color: #0f172a;
+    background: rgba(148, 163, 184, 0.4);
   }
 
   @media (max-width: 1023px) {
