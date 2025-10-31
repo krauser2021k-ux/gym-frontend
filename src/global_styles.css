@@ -131,4 +131,16 @@
   footer a:hover {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   }
+
+  .sidebar-link {
+    @apply relative;
+  }
+
+  .sidebar-link:hover {
+    @apply transform transition-transform duration-200;
+  }
+
+  .sidebar-link.active {
+    @apply bg-white/20 text-white;
+  }
 }
