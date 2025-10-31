@@ -33,6 +33,54 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'biblioteca',
+    loadComponent: () => import('./features/biblioteca/biblioteca.component').then(m => m.BibliotecaComponent),
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'ejercicios',
+        pathMatch: 'full'
+      },
+      {
+        path: 'ejercicios',
+        loadComponent: () => import('./features/exercises/exercises-library.component').then(m => m.ExercisesLibraryComponent)
+      },
+      {
+        path: 'bloques',
+        loadComponent: () => import('./features/blocks/blocks-list.component').then(m => m.BlocksListComponent)
+      },
+      {
+        path: 'rutinas',
+        loadComponent: () => import('./features/routines/routines-list.component').then(m => m.RoutinesListComponent)
+      },
+      {
+        path: 'programas',
+        loadComponent: () => import('./features/programs/programs-list.component').then(m => m.ProgramsListComponent)
+      },
+      {
+        path: 'programas/new',
+        loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent)
+      },
+      {
+        path: 'programas/edit/:id',
+        loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent)
+      },
+      {
+        path: 'programas/assign/:programId',
+        loadComponent: () => import('./features/programs/program-assign.component').then(m => m.ProgramAssignComponent)
+      },
+      {
+        path: 'programas/:id',
+        loadComponent: () => import('./features/programs/program-detail.component').then(m => m.ProgramDetailComponent)
+      },
+      {
+        path: 'my-program',
+        loadComponent: () => import('./features/programs/my-program.component').then(m => m.MyProgramComponent)
+      }
+    ]
+  },
+  {
     path: 'exercises',
     loadComponent: () => import('./features/exercises/exercises-library.component').then(m => m.ExercisesLibraryComponent),
     canActivate: [authGuard]
@@ -165,36 +213,6 @@ export const routes: Routes = [
   {
     path: 'trainer/students/plans-overview',
     loadComponent: () => import('./features/payment-plans/student-plans-overview.component').then(m => m.StudentPlansOverviewComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'programs',
-    loadComponent: () => import('./features/programs/programs-list.component').then(m => m.ProgramsListComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'programs/new',
-    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'programs/edit/:id',
-    loadComponent: () => import('./features/programs/program-form.component').then(m => m.ProgramFormComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'programs/assign/:programId',
-    loadComponent: () => import('./features/programs/program-assign.component').then(m => m.ProgramAssignComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'programs/:id',
-    loadComponent: () => import('./features/programs/program-detail.component').then(m => m.ProgramDetailComponent),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'my-program',
-    loadComponent: () => import('./features/programs/my-program.component').then(m => m.MyProgramComponent),
     canActivate: [authGuard]
   },
   {

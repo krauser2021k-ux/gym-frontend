@@ -208,7 +208,7 @@ export class ProgramFormComponent implements OnInit {
 
     request.subscribe({
       next: () => {
-        this.router.navigate(['/programs']);
+        this.router.navigate(['/biblioteca/programas']);
       },
       error: (err) => {
         console.error('Error saving program:', err);
@@ -218,6 +218,6 @@ export class ProgramFormComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/programs']);
+    this.router.navigate(['/biblioteca/programas']);
   }
 }

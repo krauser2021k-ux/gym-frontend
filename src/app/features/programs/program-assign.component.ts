@@ -167,7 +167,7 @@ export class ProgramAssignComponent implements OnInit {
     );
 
     Promise.all(requests.map(req => req.toPromise())).then(() => {
-      this.router.navigate(['/programs', this.programId]);
+      this.router.navigate(['/biblioteca/programas', this.programId]);
     }).catch(err => {
       console.error('Error assigning program:', err);
       this.saving.set(false);
@@ -175,6 +175,6 @@ export class ProgramAssignComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/programs', this.programId]);
+    this.router.navigate(['/biblioteca/programas', this.programId]);
   }
 }
