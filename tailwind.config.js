@@ -19,6 +19,16 @@ module.exports = {
           800: '#1e40af',
           900: '#1e3a8a',
         },
+        'light-bg': {
+          start: '#f8fafc',
+          mid: '#e0e7ff',
+          end: '#f1f5f9',
+        },
+        'dark-bg': {
+          start: '#0f172a',
+          mid: '#1e1b4b',
+          end: '#1e293b',
+        },
       },
     },
   },

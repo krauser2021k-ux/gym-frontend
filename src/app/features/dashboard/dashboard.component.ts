@@ -23,27 +23,27 @@ interface Metrics {
   imports: [CommonModule, QuickActionsComponent],
   template: `
     <div class="space-y-6">
-      <h1 class="text-3xl font-bold text-white">Dashboard</h1>
+      <h1 class="text-3xl font-bold">Dashboard</h1>
 
       <app-quick-actions></app-quick-actions>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       } @else if (metrics()) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div class="glass rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(22, 163, 74, 0.3);">
+              <div class="flex-shrink-0 rounded-md p-3 bg-green-500">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-white/70 truncate">Alumnos Activos</dt>
-                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.activeStudents }}</dd>
+                  <dt class="text-sm font-medium text-slate-600 truncate">Alumnos Activos</dt>
+                  <dd class="text-3xl font-semibold text-slate-900">{{ metrics()!.activeStudents }}</dd>
                 </dl>
               </div>
             </div>
@@ -51,15 +51,15 @@ interface Metrics {
 
           <div class="glass rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(34, 197, 94, 0.3);">
+              <div class="flex-shrink-0 rounded-md p-3 bg-emerald-500">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-white/70 truncate">Rutinas Creadas</dt>
-                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.totalRoutines }}</dd>
+                  <dt class="text-sm font-medium text-slate-600 truncate">Rutinas Creadas</dt>
+                  <dd class="text-3xl font-semibold text-slate-900">{{ metrics()!.totalRoutines }}</dd>
                 </dl>
               </div>
             </div>
@@ -67,15 +67,15 @@ interface Metrics {
 
           <div class="glass rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(59, 130, 246, 0.3);">
+              <div class="flex-shrink-0 rounded-md p-3 bg-blue-500">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-white/70 truncate">Ejercicios Totales</dt>
-                  <dd class="text-3xl font-semibold text-white">{{ metrics()!.totalExercises }}</dd>
+                  <dt class="text-sm font-medium text-slate-600 truncate">Ejercicios Totales</dt>
+                  <dd class="text-3xl font-semibold text-slate-900">{{ metrics()!.totalExercises }}</dd>
                 </dl>
               </div>
             </div>
@@ -83,15 +83,15 @@ interface Metrics {
 
           <div class="glass rounded-lg p-6">
             <div class="flex items-center">
-              <div class="flex-shrink-0 rounded-md p-3" style="background: rgba(245, 158, 11, 0.3);">
+              <div class="flex-shrink-0 rounded-md p-3 bg-amber-500">
                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-white/70 truncate">Ingresos Mensuales</dt>
-                  <dd class="text-3xl font-semibold text-white">{{ formatCurrency(metrics()!.monthlyRevenue) }}</dd>
+                  <dt class="text-sm font-medium text-slate-600 truncate">Ingresos Mensuales</dt>
+                  <dd class="text-3xl font-semibold text-slate-900">{{ formatCurrency(metrics()!.monthlyRevenue) }}</dd>
                 </dl>
               </div>
             </div>
