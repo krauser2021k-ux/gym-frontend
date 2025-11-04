@@ -21,7 +21,7 @@ import { Exercise } from '../../shared/models';
 
       <div class="flex flex-col sm:flex-row gap-4">
         <input type="text" placeholder="Buscar ejercicios..."
-               class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70">
+               class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass ">
         <select class="px-4 py-2 border border-white/30 rounded-lg text-white glass w-full sm:w-auto">
           <option value="">Todas las categorías</option>
           <option value="Pecho">Pecho</option>

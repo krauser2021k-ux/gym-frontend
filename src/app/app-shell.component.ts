@@ -233,7 +233,7 @@ import {KeycloakService} from './core/keycloak.service';
                         [class.mb-20]="isAuthenticated()">
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="text-center">
-                            <p class="text-xs sm:text-sm text-white/60">
+                            <p class="text-xs sm:text-sm">
                                 Desarrollado por
                                 <a href="https://krauser.com.ar"
                                    target="_blank"

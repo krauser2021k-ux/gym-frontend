@@ -35,7 +35,7 @@ import { ApiService } from '../../core/api.service';
                   Nombre del Ejercicio <span class="text-red-400">*</span>
                 </label>
                 <input type="text" formControlName="name"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass"
                        placeholder="Ej: Press de banca">
                 @if (form.get('name')?.invalid && form.get('name')?.touched) {
                   <p class="mt-1 text-sm text-red-400">El nombre es obligatorio</p>
@@ -47,7 +47,7 @@ import { ApiService } from '../../core/api.service';
                   Descripción <span class="text-red-400">*</span>
                 </label>
                 <textarea formControlName="description" rows="4"
-                          class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                          class="w-full px-4 py-2 border  rounded-lg text-white glass "
                           placeholder="Describe la ejecución correcta del ejercicio..."></textarea>
                 @if (form.get('description')?.invalid && form.get('description')?.touched) {
                   <p class="mt-1 text-sm text-red-400">La descripción es obligatoria</p>
@@ -93,7 +93,7 @@ import { ApiService } from '../../core/api.service';
                   URL del Video Principal <span class="text-red-400">*</span>
                 </label>
                 <input type="url" formControlName="videoUrl"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="https://youtube.com/...">
                 @if (form.get('videoUrl')?.invalid && form.get('videoUrl')?.touched) {
                   <p class="mt-1 text-sm text-red-400">La URL del video es obligatoria</p>
@@ -105,7 +105,7 @@ import { ApiService } from '../../core/api.service';
                   URL de la Imagen/Thumbnail
                 </label>
                 <input type="url" formControlName="thumbnailUrl"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="https://...">
               </div>
 
@@ -133,7 +133,7 @@ import { ApiService } from '../../core/api.service';
                   Equipamiento (separado por comas)
                 </label>
                 <input type="text" formControlName="equipmentInput"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="Barra, Mancuernas, Banco">
               </div>
 
@@ -142,7 +142,7 @@ import { ApiService } from '../../core/api.service';
                   Músculos Trabajados (separado por comas)
                 </label>
                 <input type="text" formControlName="muscleGroupsInput"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="Pectoral mayor, Tríceps, Deltoides anterior">
               </div>
 
@@ -151,7 +151,7 @@ import { ApiService } from '../../core/api.service';
                   Series Recomendadas
                 </label>
                 <input type="text" formControlName="suggestedSets"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="3-4">
               </div>
 
@@ -160,7 +160,7 @@ import { ApiService } from '../../core/api.service';
                   Repeticiones Recomendadas
                 </label>
                 <input type="text" formControlName="suggestedReps"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="8-12">
               </div>
 
@@ -169,7 +169,7 @@ import { ApiService } from '../../core/api.service';
                   Descanso Sugerido
                 </label>
                 <input type="text" formControlName="suggestedRest"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="60-90 seg">
               </div>
 
@@ -178,7 +178,7 @@ import { ApiService } from '../../core/api.service';
                   Tempo/Cadencia
                 </label>
                 <input type="text" formControlName="tempo"
-                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                       class="w-full px-4 py-2 border border-white/30 rounded-lg text-white glass "
                        placeholder="3-1-1-0">
               </div>
 
@@ -192,7 +192,7 @@ import { ApiService } from '../../core/api.service';
                            [(ngModel)]="newVideoUrl"
                            [ngModelOptions]="{standalone: true}"
                            (keydown.enter)="addVideoUrl($event)"
-                           class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass placeholder-white/70"
+                           class="flex-1 px-4 py-2 border border-white/30 rounded-lg text-white glass "
                            placeholder="https://youtube.com/video...">
                     <button type="button"
                             (click)="addVideoUrl()"
